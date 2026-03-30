@@ -4,6 +4,7 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth.js";
 import { env } from "./config/env.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { requireAuth } from "./middleware/auth.js";
 
 const app = express();
 
@@ -14,6 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
+});
+
+app.get("/api/me", requireAuth, (req, res) => {
+  res.json({ user: req.user, session: req.session });
 });
 
 app.use(errorHandler);

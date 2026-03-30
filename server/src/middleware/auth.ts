@@ -1,19 +1,38 @@
-import type { Request, Response, NextFunction } from "express";
+import type { RequestHandler } from "express";
 import { fromNodeHeaders } from "better-auth/node";
 import { auth } from "../lib/auth.js";
-import { AppError } from "./errorHandler.js";
 
-export async function requireAuth(req: Request, _res: Response, next: NextFunction) {
-  const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-  if (!session) return next(new AppError(401, "Unauthorized"));
-  (req as any).betterAuthSession = session;
-  next();
-}
+export const requireAuth: RequestHandler = async (req, res, next) => {
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  });
 
-export async function requireAdmin(req: Request, _res: Response, next: NextFunction) {
-  const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-  if (!session) return next(new AppError(401, "Unauthorized"));
-  if (session.user.role !== "Admin") return next(new AppError(403, "Forbidden"));
-  (req as any).betterAuthSession = session;
+  if (!session) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  req.user = session.user;
+  req.session = session.session;
   next();
-}
+};
+
+export const requireAdmin: RequestHandler = async (req, res, next) => {
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  });
+
+  if (!session) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  if (session.user.role !== "Admin") {
+    res.status(403).json({ error: "Forbidden" });
+    return;
+  }
+
+  req.user = session.user;
+  req.session = session.session;
+  next();
+};
