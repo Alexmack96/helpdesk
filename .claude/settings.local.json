@@ -16,7 +16,13 @@
       "Bash(xargs -I{} taskkill //PID {} //F)",
       "mcp__context7__resolve-library-id",
       "mcp__context7__query-docs",
-      "Bash(~/.bun/bin/bun add:*)"
+      "Bash(~/.bun/bin/bun add:*)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Skill(claude-notifications-go:init)",
+      "Bash(mkdir -p \"$HOME/.claude/claude-notifications-go\")",
+      "Bash(echo \"$HOME/.claude/claude-notifications-go/config.json\")"
     ]
   }
 }
