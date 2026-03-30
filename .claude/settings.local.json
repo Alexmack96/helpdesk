@@ -46,7 +46,15 @@
       "Bash(where.exe bun:*)",
       "Bash(where.exe bun.exe 2>&1)",
       "Bash(\"/c/Users/alexm/.bun/bin/bun.exe\" run:*)",
-      "Bash(\"/c/Users/alexm/.bun/bin/bun.exe\" x:*)"
+      "Bash(\"/c/Users/alexm/.bun/bin/bun.exe\" x:*)",
+      "Bash(find C:UsersalexmsourcereposAlexmack96helpdesk/client -type f -name *.css -o -name *.scss)",
+      "Bash(find C:UsersalexmsourcereposAlexmack96helpdesk/client -type f \\\\\\(-name *.tsx -o -name *.ts \\\\\\))",
+      "Bash(/c/Users/alexm/.bun/bin/bun pm:*)",
+      "Bash(ls /c/Users/alexm/source/repos/Alexmack96/helpdesk/*.config*)",
+      "Bash(ls /c/Users/alexm/source/repos/Alexmack96/helpdesk/postcss*)",
+      "Bash(find C:/Users/alexm/source/repos/Alexmack96/helpdesk/node_modules -name package.json -path */better-auth/*)",
+      "Bash(xargs grep:*)",
+      "Bash(ls \"C:/Users/alexm/source/repos/Alexmack96/helpdesk/client/tailwind.config\"*)"
     ]
   }
 }
