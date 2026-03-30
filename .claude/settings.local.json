@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore)",
+      "Bash(bun install:*)",
+      "Bash(~/.bun/bin/bun --version)",
+      "Bash(cmd.exe /c \"bun --version\")",
+      "Bash(docker compose:*)",
+      "Bash(bun:*)",
+      "Bash(powershell -Command \"irm bun.sh/install.ps1 | iex\" 2>&1)",
+      "Bash(export PATH=\"$PATH:/c/Users/alexm/.bun/bin\")",
+      "Bash(bunx prisma:*)",
+      "Bash(curl:*)",
+      "Bash(xargs kill:*)",
+      "Bash(netstat -ano)",
+      "Bash(xargs -I{} taskkill //PID {} //F)"
+    ]
+  }
+}

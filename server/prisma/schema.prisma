@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  Admin
+  Agent
+}
+
+enum TicketStatus {
+  Open
+  Resolved
+  Closed
+}
+
+enum Priority {
+  Low
+  Medium
+  High
+}
+
+enum Category {
+  GeneralQuestion
+  TechnicalQuestion
+  RefundRequest
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role     @default(Agent)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assignedTickets Ticket[] @relation("AssignedTo")
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tickets Ticket[]
+}
+
+model Ticket {
+  id              String       @id @default(cuid())
+  subject         String
+  status          TicketStatus @default(Open)
+  priority        Priority     @default(Medium)
+  category        Category?
+  confidenceScore Float?
+  needsReview     Boolean      @default(false)
+  summary         String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  customer    Customer @relation(fields: [customerId], references: [id])
+  customerId  String
+
+  assignee   User?   @relation("AssignedTo", fields: [assigneeId], references: [id])
+  assigneeId String?
+
+  messages TicketMessage[]
+}
+
+model TicketMessage {
+  id        String   @id @default(cuid())
+  body      String
+  fromAgent Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  ticket   Ticket @relation(fields: [ticketId], references: [id])
+  ticketId String
+}
+
+model CannedResponse {
+  id        String   @id @default(cuid())
+  category  Category
+  title     String
+  body      String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model KnowledgeBaseEntry {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  tags      String[]
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
