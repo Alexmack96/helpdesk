@@ -225,6 +225,11 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.UserRole = exports.$Enums.UserRole = {
+  Admin: 'Admin',
+  Agent: 'Agent'
+};
+
 exports.TicketStatus = exports.$Enums.TicketStatus = {
   Open: 'Open',
   Resolved: 'Resolved',

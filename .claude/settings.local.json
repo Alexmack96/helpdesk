@@ -39,7 +39,14 @@
       "Bash(~/.bun/bin/bun pm:*)",
       "Bash(~/.bun/bin/bunx prisma:*)",
       "Bash(timeout 5 ~/.bun/bin/bun src/index.ts)",
-      "Bash(~/.bun/bin/bun install:*)"
+      "Bash(~/.bun/bin/bun install:*)",
+      "WebFetch(domain:betterauth.dev)",
+      "Bash(bun.exe run:*)",
+      "Read(//c/Users/alexm/AppData/Local/**)",
+      "Bash(where.exe bun:*)",
+      "Bash(where.exe bun.exe 2>&1)",
+      "Bash(\"/c/Users/alexm/.bun/bin/bun.exe\" run:*)",
+      "Bash(\"/c/Users/alexm/.bun/bin/bun.exe\" x:*)"
     ]
   }
 }

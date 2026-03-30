@@ -1,21 +1,42 @@
 import "dotenv/config";
 import { db } from "./client.js";
-import { auth } from "../lib/auth.js";
+import { UserRole } from "../generated/prisma/index.js";
+import { hashPassword } from "better-auth/crypto";
+import { randomUUID } from "crypto";
+import { env } from "../config/env.js";
 
 async function main() {
-  const existing = await db.user.findUnique({ where: { email: "admin@example.com" } });
+  const existing = await db.user.findUnique({ where: { email: env.ADMIN_EMAIL } });
   if (existing) {
     console.log("Seed already applied.");
     return;
   }
 
-  const { user } = await auth.api.signUpEmail({
-    body: { email: "admin@example.com", name: "Admin", password: "changeme" },
+  const userId = randomUUID();
+  const accountId = randomUUID();
+  const hashedPassword = await hashPassword(env.ADMIN_PASSWORD);
+
+  await db.user.create({
+    data: {
+      id: userId,
+      email: env.ADMIN_EMAIL,
+      name: "Admin",
+      role: UserRole.Admin,
+      emailVerified: true,
+    },
   });
 
-  await db.user.update({ where: { id: user.id }, data: { role: "Admin" } });
+  await db.account.create({
+    data: {
+      id: accountId,
+      accountId: userId,
+      providerId: "credential",
+      userId,
+      password: hashedPassword,
+    },
+  });
 
-  console.log("Seeded admin user: admin@example.com / changeme");
+  console.log(`Seeded admin user: ${env.ADMIN_EMAIL}`);
 }
 
 main()
