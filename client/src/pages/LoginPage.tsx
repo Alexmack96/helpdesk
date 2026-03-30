@@ -1,26 +1,30 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.js";
+import { signIn, useSession } from "../lib/authClient.js";
 
 export function LoginPage() {
-  const { login } = useAuth();
   const navigate = useNavigate();
+  const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  if (session) {
+    navigate("/dashboard", { replace: true });
+    return null;
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
-    try {
-      await login(email, password);
-      navigate("/dashboard");
-    } catch {
+    const { error } = await signIn.email({ email, password });
+    if (error) {
       setError("Invalid email or password");
-    } finally {
       setLoading(false);
+    } else {
+      navigate("/dashboard");
     }
   }
 
