@@ -1,40 +1,20 @@
 import "dotenv/config";
 import express from "express";
-import session from "express-session";
-import connectPgSimple from "connect-pg-simple";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "./lib/auth.js";
 import { env } from "./config/env.js";
-import { authRouter } from "./routes/auth.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
-const PgSession = connectPgSimple(session);
+
+app.all("/api/auth/*", toNodeHandler(auth));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  session({
-    store: new PgSession({
-      conString: env.DATABASE_URL,
-      tableName: "sessions",
-      createTableIfMissing: true,
-    }),
-    secret: env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: env.NODE_ENV === "production",
-      httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    },
-  })
-);
-
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
 });
-
-app.use("/auth", authRouter);
 
 app.use(errorHandler);
 

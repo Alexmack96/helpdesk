@@ -4,7 +4,7 @@ interface User {
   id: string;
   email: string;
   name: string;
-  role: "Admin" | "Agent";
+  role: string;
 }
 
 interface AuthContextValue {
@@ -21,24 +21,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/auth/me")
+    fetch("/api/auth/get-session")
       .then((r) => (r.ok ? r.json() : null))
-      .then((data) => setUser(data))
+      .then((data) => setUser(data?.user ?? null))
       .finally(() => setLoading(false));
   }, []);
 
   async function login(email: string, password: string) {
-    const res = await fetch("/auth/login", {
+    const res = await fetch("/api/auth/sign-in/email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
     if (!res.ok) throw new Error("Invalid credentials");
-    setUser(await res.json());
+    const data = await res.json();
+    setUser(data.user);
   }
 
   async function logout() {
-    await fetch("/auth/logout", { method: "POST" });
+    await fetch("/api/auth/sign-out", { method: "POST" });
     setUser(null);
   }
 

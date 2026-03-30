@@ -42,10 +42,7 @@ Goal: schema locked down, sessions working, seed admin user.
 - User: role (Admin/Agent), email, passwordHash
 - Customer: email, name (separate from staff users)
 
-7.  Session middleware — express-session backed by connect-pg-simple
-8.  Auth endpoints — POST /auth/login, POST /auth/logout, GET /auth/me
-9.  Auth middleware — requireAuth, requireAdmin route guards
-10. Seed script — creates initial admin user
+- we should use betterAuth for our auth strategy. We weill use db sessions over JWTs.
 
 ---
 
@@ -54,14 +51,14 @@ Phase 3 — Email Ingestion
 Goal: inbound emails create tickets; outbound replies send via
 SendGrid.
 
-11. SendGrid inbound parse webhook — POST /webhooks/email/inbound —  
+1.  SendGrid inbound parse webhook — POST /webhooks/email/inbound —  
     parse multipart, resolve/create Customer by email, create Ticket +  
     TicketMessage
-12. Webhook signature verification — validate SendGrid signed requests
-13. Outbound email service — sendEmail(to, subject, body) wrapper
-14. Reply endpoint — POST /tickets/:id/reply — saves TicketMessage,  
+2.  Webhook signature verification — validate SendGrid signed requests
+3.  Outbound email service — sendEmail(to, subject, body) wrapper
+4.  Reply endpoint — POST /tickets/:id/reply — saves TicketMessage,  
     sends via SendGrid
-15. Reopen on reply — if customer replies to a Closed ticket, reopen  
+5.  Reopen on reply — if customer replies to a Closed ticket, reopen  
     to Open
 
 ---

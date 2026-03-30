@@ -22,7 +22,24 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Skill(claude-notifications-go:init)",
       "Bash(mkdir -p \"$HOME/.claude/claude-notifications-go\")",
-      "Bash(echo \"$HOME/.claude/claude-notifications-go/config.json\")"
+      "Bash(echo \"$HOME/.claude/claude-notifications-go/config.json\")",
+      "Bash(command -v bun)",
+      "Read(//c/Users/alexm/.bun/bin/**)",
+      "Bash(/c/Users/alexm/.bun/bin/bun add:*)",
+      "Bash(/c/Users/alexm/.bun/bin/bun remove:*)",
+      "Bash(/c/Users/alexm/.bun/bin/bunx @better-auth/cli@latest generate --config src/lib/auth.ts --output prisma/schema.prisma)",
+      "Bash(node --input-type=module -e \"import\\(''''@better-auth/cli''''\\)\")",
+      "Bash(npx @better-auth/cli@latest generate --config src/lib/auth.ts --output prisma/schema.prisma)",
+      "Bash(/c/Users/alexm/.bun/bin/bunx prisma:*)",
+      "Bash(DATABASE_URL=postgresql://helpdesk:helpdesk@localhost:5432/helpdesk /c/Users/alexm/.bun/bin/bunx prisma generate)",
+      "Bash(DATABASE_URL=postgresql://helpdesk:helpdesk@localhost:5432/helpdesk BETTER_AUTH_SECRET=dev-secret-change-me-in-production-must-be-32-chars npx @better-auth/cli@latest generate --config src/lib/auth.ts --output prisma/schema.prisma)",
+      "Bash(DATABASE_URL=postgresql://helpdesk:helpdesk@localhost:5432/helpdesk /c/Users/alexm/.bun/bin/bunx prisma migrate dev --name better-auth)",
+      "Bash(psql:*)",
+      "Bash(~/.bun/bin/bun run:*)",
+      "Bash(~/.bun/bin/bun pm:*)",
+      "Bash(~/.bun/bin/bunx prisma:*)",
+      "Bash(timeout 5 ~/.bun/bin/bun src/index.ts)",
+      "Bash(~/.bun/bin/bun install:*)"
     ]
   }
 }

@@ -1,20 +1,26 @@
+
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  name         String
-  passwordHash String
-  role         Role     @default(Agent)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  role          String    @default("Agent")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  emailVerified Boolean   @default(false)
+  image         String?
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
 }
 
 model Customer {
@@ -26,18 +32,18 @@ model Customer {
 }
 
 model Ticket {
-  id              String         @id @default(cuid())
+  id              String          @id @default(cuid())
   subject         String
-  status          TicketStatus   @default(Open)
-  priority        TicketPriority @default(Medium)
-  category        TicketCategory @default(GeneralQuestion)
+  status          TicketStatus    @default(Open)
+  priority        TicketPriority  @default(Medium)
+  category        TicketCategory  @default(GeneralQuestion)
   confidenceScore Float?
-  needsReview     Boolean        @default(false)
+  needsReview     Boolean         @default(false)
   customerId      String
-  customer        Customer       @relation(fields: [customerId], references: [id])
+  customer        Customer        @relation(fields: [customerId], references: [id])
   messages        TicketMessage[]
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model TicketMessage {
@@ -65,11 +71,6 @@ model CannedResponse {
   updatedAt DateTime @updatedAt
 }
 
-enum Role {
-  Admin
-  Agent
-}
-
 enum TicketStatus {
   Open
   Resolved
@@ -86,4 +87,52 @@ enum TicketCategory {
   GeneralQuestion
   TechnicalQuestion
   RefundRequest
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }
