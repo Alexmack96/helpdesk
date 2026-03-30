@@ -1,37 +1,15 @@
 services:
-  postgres:
-    image: postgres:16-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: helpdesk
-      POSTGRES_PASSWORD: helpdesk
-      POSTGRES_DB: helpdesk
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U helpdesk"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
     restart: unless-stopped
     env_file: ./server/.env
-    environment:
-      DATABASE_URL: postgresql://helpdesk:helpdesk@postgres:5432/helpdesk
     ports:
       - "3000:3000"
     volumes:
       - ./server/src:/app/src
       - ./server/prisma:/app/prisma
-    depends_on:
-      postgres:
-        condition: service_healthy
     command: >
       sh -c "bunx prisma migrate deploy &&
              bun run db:seed &&
@@ -48,6 +26,3 @@ services:
       - ./client/src:/app/src
     depends_on:
       - server
-
-volumes:
-  postgres_data:

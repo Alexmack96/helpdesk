@@ -5,37 +5,8 @@
     "": {
       "name": "helpdesk",
     },
-    "backend": {
-      "name": "@helpdesk/backend",
-      "version": "0.0.1",
-      "dependencies": {
-        "@anthropic-ai/sdk": "^0.39.0",
-        "@prisma/client": "^6.0.0",
-        "@sendgrid/mail": "^8.1.0",
-        "bcryptjs": "^2.4.3",
-        "connect-pg-simple": "^10.0.0",
-        "express": "^4.21.0",
-        "express-rate-limit": "^7.4.0",
-        "express-session": "^1.18.0",
-        "multer": "^1.4.5-lts.1",
-        "zod": "^3.23.0",
-      },
-      "devDependencies": {
-        "@types/bcryptjs": "^2.4.6",
-        "@types/connect-pg-simple": "^7.0.3",
-        "@types/express": "^5.0.0",
-        "@types/express-session": "^1.18.0",
-        "@types/multer": "^1.4.12",
-        "@types/node": "^22.0.0",
-        "@typescript-eslint/eslint-plugin": "^8.0.0",
-        "@typescript-eslint/parser": "^8.0.0",
-        "eslint": "^9.0.0",
-        "prisma": "^6.0.0",
-        "typescript": "^5.6.0",
-      },
-    },
-    "frontend": {
-      "name": "@helpdesk/frontend",
+    "client": {
+      "name": "@helpdesk/client",
       "version": "0.0.1",
       "dependencies": {
         "react": "^18.3.0",
@@ -54,6 +25,36 @@
         "tailwindcss": "^3.4.0",
         "typescript": "^5.6.0",
         "vite": "^5.4.0",
+      },
+    },
+    "server": {
+      "name": "@helpdesk/server",
+      "version": "0.0.1",
+      "dependencies": {
+        "@anthropic-ai/sdk": "^0.39.0",
+        "@prisma/client": "^6.0.0",
+        "@sendgrid/mail": "^8.1.0",
+        "bcryptjs": "^2.4.3",
+        "connect-pg-simple": "^10.0.0",
+        "dotenv": "^17.3.1",
+        "express": "^4.21.0",
+        "express-rate-limit": "^7.4.0",
+        "express-session": "^1.18.0",
+        "multer": "^1.4.5-lts.1",
+        "zod": "^3.23.0",
+      },
+      "devDependencies": {
+        "@types/bcryptjs": "^2.4.6",
+        "@types/connect-pg-simple": "^7.0.3",
+        "@types/express": "^5.0.0",
+        "@types/express-session": "^1.18.0",
+        "@types/multer": "^1.4.12",
+        "@types/node": "^22.0.0",
+        "@typescript-eslint/eslint-plugin": "^8.0.0",
+        "@typescript-eslint/parser": "^8.0.0",
+        "eslint": "^9.0.0",
+        "prisma": "^6.0.0",
+        "typescript": "^5.6.0",
       },
     },
   },
@@ -164,9 +165,9 @@
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.4.1", "", { "dependencies": { "@eslint/core": "^0.17.0", "levn": "^0.4.1" } }, "sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA=="],
 
-    "@helpdesk/backend": ["@helpdesk/backend@workspace:backend"],
+    "@helpdesk/client": ["@helpdesk/client@workspace:client"],
 
-    "@helpdesk/frontend": ["@helpdesk/frontend@workspace:frontend"],
+    "@helpdesk/server": ["@helpdesk/server@workspace:server"],
 
     "@humanfs/core": ["@humanfs/core@0.19.1", "", {}, "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="],
 
@@ -470,7 +471,7 @@
 
     "dlv": ["dlv@1.1.3", "", {}, "sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA=="],
 
-    "dotenv": ["dotenv@16.6.1", "", {}, "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow=="],
+    "dotenv": ["dotenv@17.3.1", "", {}, "sha512-IO8C/dzEb6O3F9/twg6ZLXz164a2fhTnEWb95H23Dm4OuN+92NmEAlTrupP9VW6Jm3sO26tQlqyvyi4CsnY9GA=="],
 
     "dunder-proto": ["dunder-proto@1.0.1", "", { "dependencies": { "call-bind-apply-helpers": "^1.0.1", "es-errors": "^1.3.0", "gopd": "^1.2.0" } }, "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A=="],
 
@@ -963,6 +964,8 @@
     "body-parser/debug": ["debug@2.6.9", "", { "dependencies": { "ms": "2.0.0" } }, "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA=="],
 
     "c12/chokidar": ["chokidar@4.0.3", "", { "dependencies": { "readdirp": "^4.0.1" } }, "sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA=="],
+
+    "c12/dotenv": ["dotenv@16.6.1", "", {}, "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow=="],
 
     "c12/jiti": ["jiti@2.6.1", "", { "bin": { "jiti": "lib/jiti-cli.mjs" } }, "sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ=="],
 

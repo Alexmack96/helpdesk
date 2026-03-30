@@ -13,7 +13,10 @@
       "Bash(curl:*)",
       "Bash(xargs kill:*)",
       "Bash(netstat -ano)",
-      "Bash(xargs -I{} taskkill //PID {} //F)"
+      "Bash(xargs -I{} taskkill //PID {} //F)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "Bash(~/.bun/bin/bun add:*)"
     ]
   }
 }
