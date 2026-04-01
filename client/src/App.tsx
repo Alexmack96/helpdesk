@@ -1,8 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute.js";
+import { AdminRoute } from "./components/AdminRoute.js";
 import { Layout } from "./components/Layout.js";
 import { LoginPage } from "./pages/LoginPage.js";
 import { DashboardPage } from "./pages/DashboardPage.js";
+import { UsersPage } from "./pages/UsersPage.js";
 
 export function App() {
   return (
@@ -12,6 +14,9 @@ export function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route element={<AdminRoute />}>
+              <Route path="/users" element={<UsersPage />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

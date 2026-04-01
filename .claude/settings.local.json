@@ -55,7 +55,9 @@
       "Bash(find C:/Users/alexm/source/repos/Alexmack96/helpdesk/node_modules -name package.json -path */better-auth/*)",
       "Bash(xargs grep:*)",
       "Bash(ls \"C:/Users/alexm/source/repos/Alexmack96/helpdesk/client/tailwind.config\"*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(node -e \":*)",
+      "WebFetch(domain:better-auth.com)"
     ]
   }
 }
