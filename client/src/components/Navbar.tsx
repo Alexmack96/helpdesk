@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSession } from "../lib/authClient.js";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "../context/ThemeContext.js";
+import { Button } from "./ui/button.js";
 
 function HealthStatus() {
   const [status, setStatus] = useState<"loading" | "ok" | "error">("loading");
@@ -14,23 +17,33 @@ function HealthStatus() {
   const label =
     status === "loading" ? "Checking API..." : status === "ok" ? "API: OK" : "API: Unreachable";
   const colour =
-    status === "ok" ? "text-green-600" : status === "error" ? "text-red-600" : "text-gray-400";
+    status === "ok" ? "text-primary-foreground/70" : status === "error" ? "text-red-300" : "text-primary-foreground/40";
 
   return <span className={`text-sm font-medium ${colour}`}>{label}</span>;
 }
 
 export function Navbar({ onSignOut }: { onSignOut: () => void }) {
   const { data: session } = useSession();
+  const { theme, toggle } = useTheme();
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
-      <span className="text-lg font-semibold text-gray-900">Helpdesk</span>
+    <nav className="bg-primary px-6 py-3 flex items-center justify-between">
+      <span className="text-lg font-semibold text-primary-foreground">Helpdesk</span>
       <div className="flex items-center gap-4">
         <HealthStatus />
-        <span className="text-sm text-gray-700">{session?.user.name}</span>
+        <span className="text-sm text-primary-foreground/80">{session?.user.name}</span>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={toggle}
+          className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10"
+          aria-label="Toggle theme"
+        >
+          {theme === "dark" ? <Sun /> : <Moon />}
+        </Button>
         <button
           onClick={onSignOut}
-          className="text-sm text-red-600 hover:underline"
+          className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
         >
           Sign out
         </button>

@@ -58,19 +58,74 @@ Express + TypeScript API. Entry point: `src/index.ts`.
 - `middleware/auth.ts` — Session-based auth guards (agent vs admin).
 - `routes/` — `auth`, `tickets`, `admin`, `dashboard`, `webhooks` (SendGrid inbound).
 
-Session persistence uses `connect-pg-simple` (sessions stored in Postgres).
-
 All routes are prefixed and proxied from Vite in dev (see `client/vite.config.ts`).
 
 ### Client (`client/src/`)
 
-React 18 + React Router v6 + Tailwind. Entry: `main.tsx` → `App.tsx`.
+React 18 + React Router v6 + Tailwind v4 + shadcn/ui. Entry: `main.tsx` → `App.tsx`.
 
-- `context/AuthContext.tsx` — Global auth state; fetches `/api/me` on load.
-- `components/ProtectedRoute.tsx` / `AdminRoute.tsx` — Route guards wrapping React Router `<Outlet>`.
-- `pages/admin/` — User management, canned responses, knowledge base (admin-only routes).
+- `main.tsx` — Wraps app in `ThemeProvider` then `BrowserRouter`.
+- `context/ThemeContext.tsx` — Light/dark theme toggle; persists to `localStorage`; toggles `.dark` on `<html>`.
+- `context/AuthContext.tsx` — Global auth state via Better Auth (`useSession`).
+- `lib/authClient.ts` — Re-exports Better Auth client (`signIn`, `signOut`, `useSession`).
+- `lib/utils.ts` — `cn()` helper (clsx + tailwind-merge).
+- `components/ProtectedRoute.tsx` — Route guard; redirects to `/login` if no session.
+- `components/Layout.tsx` — Shell with `<Navbar>` + `<Outlet>`; handles sign-out.
+- `components/Navbar.tsx` — Green navbar with health status, user name, dark-mode toggle, sign-out.
+- `components/ui/` — shadcn/ui components (new-york style): `button`, `card`, `input`, `label`.
+- `pages/LoginPage.tsx` — Email/password login using shadcn Card/Input/Button + React Hook Form + Zod.
+- `pages/DashboardPage.tsx` — Placeholder welcome page.
+
+#### UI / Theming
+
+- Tailwind v4 via `@tailwindcss/vite` plugin (no `tailwind.config.*` file).
+- shadcn configured in `client/components.json`; add components with `npx shadcn@latest add <name>`.
+- `@` path alias resolves to `client/src/`.
+- Theme: green primary (`oklch(0.527 0.154 150.069)`). Dark mode uses deep Wimbledon purple backgrounds (`oklch(0.19 0.07 300)`).
+- Icons via `lucide-react`.
 
 Vite proxies `/api`, `/auth`, `/tickets`, `/admin`, `/dashboard`, `/webhooks` → `localhost:3000`.
+
+### Authentication (Better Auth)
+
+Auth is handled entirely by [Better Auth](https://better-auth.com) with database-backed sessions stored in Postgres via the Prisma adapter. There is no JWT — sessions are server-side.
+
+**Server config** — `server/src/lib/auth.ts`:
+```ts
+export const auth = betterAuth({
+  database: prismaAdapter(db, { provider: "postgresql" }),
+  emailAndPassword: { enabled: true, disableSignUp: true }, // admins create users manually
+  user: {
+    additionalFields: {
+      role: { type: "string", defaultValue: UserRole.Agent, input: false },
+    },
+  },
+});
+```
+
+Better Auth mounts its own route handler in `server/src/index.ts`:
+```ts
+app.all("/api/auth/*", toNodeHandler(auth)); // handles login, logout, session refresh, etc.
+```
+
+**Protecting routes** — `server/src/middleware/auth.ts` exports two Express middlewares:
+```ts
+requireAuth   // any logged-in user
+requireAdmin  // role === "Admin" only
+```
+Both call `auth.api.getSession({ headers: fromNodeHeaders(req.headers) })` and attach `req.user` / `req.session` for downstream handlers.
+
+**Client** — `client/src/lib/authClient.ts`:
+```ts
+export const { signIn, signOut, useSession } = createAuthClient();
+```
+- `useSession()` — React hook; returns `{ data: session | null, isPending }`.
+- `signIn.email({ email, password })` — returns `{ error }` on failure.
+- `signOut()` — clears the session cookie.
+
+`ProtectedRoute.tsx` uses `useSession()` to gate routes — redirects to `/login` while `isPending`, then to `/login` if no session.
+
+Sign-up is **disabled** (`disableSignUp: true`). New users must be created by an admin (seed script or future admin UI).
 
 ### Database (Prisma + PostgreSQL)
 

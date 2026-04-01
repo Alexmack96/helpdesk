@@ -54,7 +54,8 @@
       "Bash(ls /c/Users/alexm/source/repos/Alexmack96/helpdesk/postcss*)",
       "Bash(find C:/Users/alexm/source/repos/Alexmack96/helpdesk/node_modules -name package.json -path */better-auth/*)",
       "Bash(xargs grep:*)",
-      "Bash(ls \"C:/Users/alexm/source/repos/Alexmack96/helpdesk/client/tailwind.config\"*)"
+      "Bash(ls \"C:/Users/alexm/source/repos/Alexmack96/helpdesk/client/tailwind.config\"*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }
