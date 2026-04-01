@@ -19,21 +19,15 @@ export const requireAuth: RequestHandler = async (req, res, next) => {
 };
 
 export const requireAdmin: RequestHandler = async (req, res, next) => {
-  const session = await auth.api.getSession({
-    headers: fromNodeHeaders(req.headers),
-  });
-
-  if (!session) {
+  if (!req.user || !req.session) {
     res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
-  if (session.user.role !== UserRole.Admin) {
+  if (req.user.role !== UserRole.Admin) {
     res.status(403).json({ error: "Forbidden" });
     return;
   }
 
-  req.user = session.user;
-  req.session = session.session;
   next();
 };

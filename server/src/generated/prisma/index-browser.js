@@ -131,48 +131,20 @@ exports.Prisma.UserScalarFieldEnum = {
   image: 'image'
 };
 
-exports.Prisma.CustomerScalarFieldEnum = {
+exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
-  email: 'email',
   name: 'name',
-  createdAt: 'createdAt'
+  color: 'color'
 };
 
-exports.Prisma.TicketScalarFieldEnum = {
+exports.Prisma.TransactionScalarFieldEnum = {
   id: 'id',
-  subject: 'subject',
-  status: 'status',
-  priority: 'priority',
-  category: 'category',
-  confidenceScore: 'confidenceScore',
-  needsReview: 'needsReview',
-  customerId: 'customerId',
+  description: 'description',
+  amount: 'amount',
+  type: 'type',
+  date: 'date',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.TicketMessageScalarFieldEnum = {
-  id: 'id',
-  body: 'body',
-  fromEmail: 'fromEmail',
-  ticketId: 'ticketId',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.KnowledgeBaseEntryScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  body: 'body',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.CannedResponseScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  body: 'body',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  categoryId: 'categoryId'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
@@ -227,34 +199,18 @@ exports.Prisma.NullsOrder = {
 };
 exports.UserRole = exports.$Enums.UserRole = {
   Admin: 'Admin',
-  Agent: 'Agent'
+  User: 'User'
 };
 
-exports.TicketStatus = exports.$Enums.TicketStatus = {
-  Open: 'Open',
-  Resolved: 'Resolved',
-  Closed: 'Closed'
-};
-
-exports.TicketPriority = exports.$Enums.TicketPriority = {
-  Low: 'Low',
-  Medium: 'Medium',
-  High: 'High'
-};
-
-exports.TicketCategory = exports.$Enums.TicketCategory = {
-  GeneralQuestion: 'GeneralQuestion',
-  TechnicalQuestion: 'TechnicalQuestion',
-  RefundRequest: 'RefundRequest'
+exports.TransactionType = exports.$Enums.TransactionType = {
+  Income: 'Income',
+  Expense: 'Expense'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Customer: 'Customer',
-  Ticket: 'Ticket',
-  TicketMessage: 'TicketMessage',
-  KnowledgeBaseEntry: 'KnowledgeBaseEntry',
-  CannedResponse: 'CannedResponse',
+  Category: 'Category',
+  Transaction: 'Transaction',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification'

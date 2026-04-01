@@ -57,7 +57,10 @@
       "Bash(ls \"C:/Users/alexm/source/repos/Alexmack96/helpdesk/client/tailwind.config\"*)",
       "Bash(npx tsc:*)",
       "Bash(node -e \":*)",
-      "WebFetch(domain:better-auth.com)"
+      "WebFetch(domain:better-auth.com)",
+      "Bash(find /c/Users/alexm/source/repos/Alexmack96/helpdesk/server/src -type f \\\\\\(-name *.ts -o -name *.js \\\\\\))",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"yes\" bunx prisma migrate reset --force 2>&1)",
+      "Bash(printf \"pivot_to_finance_tracker\\\\n\")"
     ]
   }
 }

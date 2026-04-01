@@ -10,14 +10,19 @@ datasource db {
 
 enum UserRole {
   Admin
-  Agent
+  User
+}
+
+enum TransactionType {
+  Income
+  Expense
 }
 
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
   name          String
-  role          UserRole  @default(Agent)
+  role          UserRole  @default(User)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   emailVerified Boolean   @default(false)
@@ -28,70 +33,22 @@ model User {
   @@map("user")
 }
 
-model Customer {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
-  createdAt DateTime @default(now())
-  tickets   Ticket[]
+model Category {
+  id           String        @id @default(cuid())
+  name         String        @unique
+  color        String
+  transactions Transaction[]
 }
 
-model Ticket {
-  id              String          @id @default(cuid())
-  subject         String
-  status          TicketStatus    @default(Open)
-  priority        TicketPriority  @default(Medium)
-  category        TicketCategory  @default(GeneralQuestion)
-  confidenceScore Float?
-  needsReview     Boolean         @default(false)
-  customerId      String
-  customer        Customer        @relation(fields: [customerId], references: [id])
-  messages        TicketMessage[]
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-}
-
-model TicketMessage {
-  id        String   @id @default(cuid())
-  body      String
-  fromEmail String
-  ticketId  String
-  ticket    Ticket   @relation(fields: [ticketId], references: [id])
-  createdAt DateTime @default(now())
-}
-
-model KnowledgeBaseEntry {
-  id        String   @id @default(cuid())
-  title     String
-  body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model CannedResponse {
-  id        String   @id @default(cuid())
-  title     String
-  body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-enum TicketStatus {
-  Open
-  Resolved
-  Closed
-}
-
-enum TicketPriority {
-  Low
-  Medium
-  High
-}
-
-enum TicketCategory {
-  GeneralQuestion
-  TechnicalQuestion
-  RefundRequest
+model Transaction {
+  id          String          @id @default(cuid())
+  description String
+  amount      Decimal         @db.Decimal(10, 2)
+  type        TransactionType
+  date        DateTime        @default(now())
+  createdAt   DateTime        @default(now())
+  categoryId  String
+  category    Category        @relation(fields: [categoryId], references: [id])
 }
 
 model Session {

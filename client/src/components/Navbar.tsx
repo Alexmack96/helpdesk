@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useSession } from "../lib/authClient.js";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext.js";
@@ -29,14 +28,9 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
 
   return (
     <nav className="bg-primary px-6 py-3 flex items-center justify-between">
-      <span className="text-lg font-semibold text-primary-foreground">Helpdesk</span>
+      <span className="text-lg font-semibold text-primary-foreground">Clam Finance Tracker</span>
       <div className="flex items-center gap-4">
         <HealthStatus />
-        {session?.user.role === "Admin" && (
-          <Link to="/users" className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline">
-            Users
-          </Link>
-        )}
         <span className="text-sm text-primary-foreground/80">{session?.user.name}</span>
         <Button
           variant="ghost"
