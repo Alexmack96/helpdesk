@@ -28,7 +28,24 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
 
   return (
     <nav className="bg-primary px-6 py-3 flex items-center justify-between">
-      <span className="text-lg font-semibold text-primary-foreground">Clam Finance Tracker</span>
+      <div className="flex items-center gap-2">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="text-primary-foreground">
+          {/* Top shell */}
+          <path d="M14 3 C7 3 3 8 3 14 L25 14 C25 8 21 3 14 3 Z" fill="currentColor" opacity="0.45"/>
+          {/* Ridges */}
+          <path d="M14 3 L14 14" stroke="currentColor" strokeWidth="1" opacity="0.65"/>
+          <path d="M9.5 4.5 L11.5 14" stroke="currentColor" strokeWidth="1" opacity="0.65"/>
+          <path d="M18.5 4.5 L16.5 14" stroke="currentColor" strokeWidth="1" opacity="0.65"/>
+          <path d="M5.5 8.5 L9 14" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
+          <path d="M22.5 8.5 L19 14" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
+          {/* Bottom shell */}
+          <path d="M3 14 C3 21 7.5 25 14 25 C20.5 25 25 21 25 14 Z" fill="currentColor" opacity="0.85"/>
+          {/* Pearl */}
+          <circle cx="14" cy="17" r="3.5" fill="white" opacity="0.92"/>
+          <circle cx="13" cy="16" r="1.2" fill="white" opacity="0.5"/>
+        </svg>
+        <span className="text-lg font-semibold text-primary-foreground">Clam Finance Tracker</span>
+      </div>
       <div className="flex items-center gap-4">
         <HealthStatus />
         <span className="text-sm text-primary-foreground/80">{session?.user.name}</span>

@@ -60,7 +60,16 @@
       "WebFetch(domain:better-auth.com)",
       "Bash(find /c/Users/alexm/source/repos/Alexmack96/helpdesk/server/src -type f \\\\\\(-name *.ts -o -name *.js \\\\\\))",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"yes\" bunx prisma migrate reset --force 2>&1)",
-      "Bash(printf \"pivot_to_finance_tracker\\\\n\")"
+      "Bash(printf \"pivot_to_finance_tracker\\\\n\")",
+      "Bash(bunx playwright:*)",
+      "Bash(bunx tsc:*)",
+      "Bash(where psql:*)",
+      "Read(//c/Program Files/PostgreSQL/**)",
+      "Bash(/c/Program Files/PostgreSQL/18/bin/psql.exe:*)",
+      "Bash(\"/c/Program Files/PostgreSQL/18/bin/psql.exe\" -U helpdesk -c \"\\\\l\")",
+      "Bash(PGPASSWORD=helpdesk \"/c/Program Files/PostgreSQL/18/bin/psql.exe\" -U helpdesk -h localhost -c \"CREATE DATABASE helpdesk_test;\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(PGPASSWORD=helpdesk \"/c/Program Files/PostgreSQL/18/bin/psql.exe\" -U postgres -h localhost -c \"CREATE DATABASE helpdesk_test;\")"
     ]
   }
 }
