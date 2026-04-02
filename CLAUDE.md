@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Context7
 
-Always use Context7 MCP (`resolve-library-id` then `query-docs`) when working with any library, framework, or API in this codebase — Prisma, Express, React, Vite, Tailwind, Zod, Bun, SendGrid, Anthropic SDK, etc.
+Always use Context7 MCP (`resolve-library-id` then `query-docs`) when working with any library, framework, or API in this codebase — Prisma, Express, React,  Vite, Tailwind, Zod, Bun, SendGrid, Anthropic SDK, etc.
 
 ## Dev Commands
 
