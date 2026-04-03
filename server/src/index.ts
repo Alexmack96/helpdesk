@@ -28,14 +28,15 @@ app.use(helmet());
 app.use(express.json({ limit: "50kb" }));
 app.use(express.urlencoded({ extended: true, limit: "50kb" }));
 
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 20,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
-app.post("/api/auth/sign-in/*", authLimiter);
+if (env.NODE_ENV === "production") {
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+  app.post("/api/auth/sign-in/*", authLimiter);
+}
 app.all("/api/auth/*", toNodeHandler(auth));
 
 app.get("/api/health", (_req, res) => {

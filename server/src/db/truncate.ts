@@ -5,8 +5,11 @@ if (env.NODE_ENV !== "test") {
   throw new Error("truncate only allowed in test environment");
 }
 
-await db.$executeRawUnsafe(
-  `TRUNCATE "Transaction", "Category", account, session, verification, "user" CASCADE`,
-);
+await db.$executeRawUnsafe(`DELETE FROM "Transaction"`);
+await db.$executeRawUnsafe(`DELETE FROM "Category"`);
+await db.$executeRawUnsafe(`DELETE FROM session`);
+await db.$executeRawUnsafe(`DELETE FROM account`);
+await db.$executeRawUnsafe(`DELETE FROM verification`);
+await db.$executeRawUnsafe(`DELETE FROM "user"`);
 console.log("Test DB truncated.");
 await db.$disconnect();
