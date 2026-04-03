@@ -1,0 +1,1 @@
+- [E2E test conventions and infrastructure](project_e2e_conventions.md) — fixture pattern, auth state, credentials, sign-out destination, global setup/teardown

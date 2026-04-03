@@ -24,7 +24,7 @@ export default defineConfig({
   globalTeardown: "./e2e/global-teardown.ts",
   reporter: process.env.CI ? "github" : "html",
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL: "http://localhost:5175",
     storageState: "e2e/.auth/user.json",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
@@ -39,11 +39,11 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
     },
     {
-      command: "bun run dev",
+      command: "bunx vite --port 5175",
       cwd: "client",
-      port: 5173,
+      port: 5175,
       env: { API_URL: testEnv.BETTER_AUTH_URL },
-      reuseExistingServer: !process.env.CI,
+      reuseExistingServer: false,
     },
   ],
 });
