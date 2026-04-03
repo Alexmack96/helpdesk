@@ -45,6 +45,18 @@ cd server && bun run lint
 cd client && bun run lint
 ```
 
+### E2E Tests
+
+```bash
+npx playwright test          # run all e2e tests
+npx playwright test --ui     # interactive UI mode
+npx playwright show-report   # view last test report
+```
+
+## Testing
+
+Use the **playwright-e2e-writer** agent for all e2e test authoring — after building a new page or flow, when adding API endpoints that need coverage, or when explicitly asked to write tests. Do not write Playwright tests inline; delegate to the agent.
+
 ## Architecture
 
 Bun monorepo with two workspaces: `server/` and `client/`.
