@@ -35,7 +35,8 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.all("/api/auth/*", authLimiter, toNodeHandler(auth));
+app.post("/api/auth/sign-in/*", authLimiter);
+app.all("/api/auth/*", toNodeHandler(auth));
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
