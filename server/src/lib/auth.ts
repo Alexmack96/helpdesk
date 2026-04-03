@@ -5,7 +5,7 @@ import { UserRole } from "../generated/prisma/index.js";
 import { env } from "../config/env.js";
 
 export const auth = betterAuth({
-  database: prismaAdapter(db, { provider: "postgresql" }),
+  database: prismaAdapter(db, { provider: "sqlite" }),
   trustedOrigins: env.TRUSTED_ORIGINS.split(",").map((o) => o.trim()),
   emailAndPassword: { enabled: true, disableSignUp: true },
   user: {

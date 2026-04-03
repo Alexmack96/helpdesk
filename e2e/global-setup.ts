@@ -1,5 +1,6 @@
+import { chromium, request } from "@playwright/test";
 import { execSync } from "child_process";
-import { readFileSync } from "fs";
+import { mkdirSync, readFileSync } from "fs";
 import { resolve } from "path";
 
 const serverDir = resolve(process.cwd(), "server");
@@ -26,4 +27,24 @@ export default async function globalSetup() {
 
   console.log("Seeding test DB...");
   execSync("bun src/db/seed.ts", { cwd: serverDir, env, stdio: "inherit" });
+
+  console.log("Saving auth state...");
+  const browser = await chromium.launch();
+  const context = await browser.newContext();
+
+  const response = await context.request.post(
+    `${testEnv.BETTER_AUTH_URL}/api/auth/sign-in/email`,
+    {
+      data: { email: testEnv.ADMIN_EMAIL, password: testEnv.ADMIN_PASSWORD },
+      headers: { "Content-Type": "application/json" },
+    },
+  );
+
+  if (!response.ok()) {
+    throw new Error(`Login failed during global setup: ${response.status()} ${await response.text()}`);
+  }
+
+  mkdirSync(resolve(process.cwd(), "e2e/.auth"), { recursive: true });
+  await context.storageState({ path: resolve(process.cwd(), "e2e/.auth/user.json") });
+  await browser.close();
 }

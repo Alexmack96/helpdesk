@@ -69,7 +69,15 @@
       "Bash(\"/c/Program Files/PostgreSQL/18/bin/psql.exe\" -U helpdesk -c \"\\\\l\")",
       "Bash(PGPASSWORD=helpdesk \"/c/Program Files/PostgreSQL/18/bin/psql.exe\" -U helpdesk -h localhost -c \"CREATE DATABASE helpdesk_test;\")",
       "Bash(echo \"exit: $?\")",
-      "Bash(PGPASSWORD=helpdesk \"/c/Program Files/PostgreSQL/18/bin/psql.exe\" -U postgres -h localhost -c \"CREATE DATABASE helpdesk_test;\")"
+      "Bash(PGPASSWORD=helpdesk \"/c/Program Files/PostgreSQL/18/bin/psql.exe\" -U postgres -h localhost -c \"CREATE DATABASE helpdesk_test;\")",
+      "Bash(ls tsconfig*.json)",
+      "Bash(net start:*)",
+      "Bash(pg_ctl start:*)",
+      "Bash(sc query:*)",
+      "Bash(powershell:*)",
+      "WebFetch(domain:context7.com)",
+      "Bash(node -e \"const m = require\\('./node_modules/.bun/@prisma+adapter-libsql@7.6.0/node_modules/@prisma/adapter-libsql/dist/index-node.mjs'\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(bunx --bun -e \"import * as m from '@prisma/adapter-libsql'; console.log\\(Object.keys\\(m\\)\\)\")"
     ]
   }
 }
