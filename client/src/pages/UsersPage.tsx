@@ -10,6 +10,7 @@ import {
 import { Badge } from "../components/ui/badge.js";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card.js";
 import api from "../lib/api.js";
+import { Skeleton } from "../components/ui/skeleton.js";
 
 type User = {
   id: string;
@@ -42,7 +43,17 @@ export function UsersPage() {
         </CardHeader>
         <CardContent>
           {isPending ? (
-            <p className="text-muted-foreground text-sm">Loading...</p>
+            <div className="space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <Skeleton className="h-4 w-1/4" />
+                  <Skeleton className="h-4 w-1/3" />
+                  <Skeleton className="h-5 w-16 rounded-full" />
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-5 w-20 rounded-full" />
+                </div>
+              ))}
+            </div>
           ) : (
             <Table>
               <TableHeader>

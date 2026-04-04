@@ -44,17 +44,11 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
           <circle cx="14" cy="17" r="3.5" fill="white" opacity="0.92"/>
           <circle cx="13" cy="16" r="1.2" fill="white" opacity="0.5"/>
         </svg>
-        <span className="text-lg font-semibold text-primary-foreground">Clam Finance Tracker</span>
+        <Link to="/dashboard" className="text-lg font-semibold text-primary-foreground hover:text-primary-foreground/80">Clam Finance Tracker</Link>
       </div>
       <div className="flex items-center gap-4">
         <HealthStatus />
-        <Link
-          to="/dashboard"
-          className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
-        >
-          Dashboard
-        </Link>
-        {session?.user.role === "Admin" && (
+{session?.user.role === "Admin" && (
           <Link
             to="/users"
             className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"

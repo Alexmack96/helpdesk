@@ -76,10 +76,11 @@ All routes are prefixed and proxied from Vite in dev (see `client/vite.config.ts
 
 React 18 + React Router v6 + Tailwind v4 + shadcn/ui. Entry: `main.tsx` → `App.tsx`.
 
-- `main.tsx` — Wraps app in `ThemeProvider` then `BrowserRouter`.
+- `main.tsx` — Wraps app in `QueryClientProvider` → `ThemeProvider` → `BrowserRouter`.
 - `context/ThemeContext.tsx` — Light/dark theme toggle; persists to `localStorage`; toggles `.dark` on `<html>`.
 - `context/AuthContext.tsx` — Global auth state via Better Auth (`useSession`).
 - `lib/authClient.ts` — Re-exports Better Auth client (`signIn`, `signOut`, `useSession`).
+- `lib/api.ts` — Axios instance (`withCredentials: true`). **Always import this for HTTP requests — never use `fetch` directly.**
 - `lib/utils.ts` — `cn()` helper (clsx + tailwind-merge).
 - `components/ProtectedRoute.tsx` — Route guard; redirects to `/login` if no session.
 - `components/Layout.tsx` — Shell with `<Navbar>` + `<Outlet>`; handles sign-out.
@@ -87,6 +88,14 @@ React 18 + React Router v6 + Tailwind v4 + shadcn/ui. Entry: `main.tsx` → `App
 - `components/ui/` — shadcn/ui components (new-york style): `button`, `card`, `input`, `label`.
 - `pages/LoginPage.tsx` — Email/password login using shadcn Card/Input/Button + React Hook Form + Zod.
 - `pages/DashboardPage.tsx` — Placeholder welcome page.
+
+#### HTTP & Server State
+
+- **Axios** (`client/src/lib/api.ts`) is the only HTTP client. Never use `fetch` directly.
+- **TanStack Query v5** (`@tanstack/react-query`) manages all server state.
+  - GET requests → `useQuery`; mutations (POST/PUT/PATCH/DELETE) → `useMutation` with `queryClient.invalidateQueries` on success.
+  - `QueryClientProvider` is mounted at the root in `main.tsx`.
+  - Query keys: use descriptive noun arrays, e.g. `["users"]`, `["transactions", typeFilter, categoryFilter]`.
 
 #### UI / Theming
 
