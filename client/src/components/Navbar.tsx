@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useSession } from "../lib/authClient.js";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext.js";
@@ -48,6 +49,20 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
       </div>
       <div className="flex items-center gap-4">
         <HealthStatus />
+        <Link
+          to="/dashboard"
+          className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
+        >
+          Dashboard
+        </Link>
+        {session?.user.role === "Admin" && (
+          <Link
+            to="/users"
+            className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
+          >
+            Users
+          </Link>
+        )}
         <span className="text-sm text-primary-foreground/80">{session?.user.name}</span>
         <Button
           variant="ghost"
