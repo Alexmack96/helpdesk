@@ -20,6 +20,7 @@ const testEnv = loadEnvFile(resolve(process.cwd(), "server/.env.test"));
 
 export default defineConfig({
   testDir: "./e2e",
+  outputDir: "./e2e/test-results",
   globalSetup: "./e2e/global-setup.ts",
   globalTeardown: "./e2e/global-teardown.ts",
   reporter: process.env.CI ? "github" : "html",
