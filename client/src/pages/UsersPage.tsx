@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
@@ -9,6 +9,7 @@ import {
 } from "../components/ui/table.js";
 import { Badge } from "../components/ui/badge.js";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card.js";
+import api from "../lib/api.js";
 
 type User = {
   id: string;
@@ -20,15 +21,10 @@ type User = {
 };
 
 export function UsersPage() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/admin/users")
-      .then((r) => r.json())
-      .then((data) => setUsers(data))
-      .finally(() => setLoading(false));
-  }, []);
+  const { data: users = [], isPending } = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () => api.get("/api/admin/users").then((r) => r.data),
+  });
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -45,7 +41,7 @@ export function UsersPage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {loading ? (
+          {isPending ? (
             <p className="text-muted-foreground text-sm">Loading...</p>
           ) : (
             <Table>

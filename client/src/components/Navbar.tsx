@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSession } from "../lib/authClient.js";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext.js";
 import { Button } from "./ui/button.js";
+import { useQuery } from "@tanstack/react-query";
+import api from "../lib/api.js";
 
 function HealthStatus() {
-  const [status, setStatus] = useState<"loading" | "ok" | "error">("loading");
+  const { data, isError, isPending } = useQuery({
+    queryKey: ["health"],
+    queryFn: () => api.get("/api/health").then((r) => r.data),
+    refetchInterval: 30_000,
+  });
 
-  useEffect(() => {
-    fetch("/api/health")
-      .then((r) => r.json())
-      .then((data) => setStatus(data.status === "ok" ? "ok" : "error"))
-      .catch(() => setStatus("error"));
-  }, []);
-
+  const status = isPending ? "loading" : isError ? "error" : data?.status === "ok" ? "ok" : "error";
   const label =
     status === "loading" ? "Checking API..." : status === "ok" ? "API: OK" : "API: Unreachable";
   const colour =

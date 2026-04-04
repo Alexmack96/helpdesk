@@ -1,4 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "../components/ui/alert-dialog.js";
 import {
   PieChart,
   Pie,
@@ -10,6 +21,7 @@ import {
 import { Button } from "../components/ui/button.js";
 import { Input } from "../components/ui/input.js";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card.js";
+import api from "../lib/api.js";
 
 interface Category {
   id: string;
@@ -35,12 +47,10 @@ interface Summary {
 }
 
 export function DashboardPage() {
-  const [summary, setSummary] = useState<Summary | null>(null);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const queryClient = useQueryClient();
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [typeFilter, setTypeFilter] = useState<"" | "Income" | "Expense">("");
   const [categoryFilter, setCategoryFilter] = useState("");
-
   const [form, setForm] = useState({
     description: "",
     amount: "",
@@ -48,64 +58,62 @@ export function DashboardPage() {
     categoryId: "",
   });
 
-  const fetchSummary = useCallback(async () => {
-    const res = await fetch("/api/dashboard/summary");
-    if (res.ok) setSummary(await res.json());
-  }, []);
+  const { data: summary } = useQuery<Summary>({
+    queryKey: ["summary"],
+    queryFn: () => api.get("/api/dashboard/summary").then((r) => r.data),
+  });
 
-  const fetchTransactions = useCallback(async () => {
-    const params = new URLSearchParams();
-    if (typeFilter) params.set("type", typeFilter);
-    if (categoryFilter) params.set("categoryId", categoryFilter);
-    const res = await fetch(`/api/transactions?${params}`);
-    if (res.ok) setTransactions(await res.json());
-  }, [typeFilter, categoryFilter]);
+  const { data: categories = [] } = useQuery<Category[]>({
+    queryKey: ["categories"],
+    queryFn: () => api.get("/api/categories").then((r) => r.data),
+  });
 
-  useEffect(() => {
-    fetch("/api/categories")
-      .then((r) => r.json())
-      .then((data: Category[]) => {
-        setCategories(data);
-        if (data.length > 0) {
-          setForm((f) => ({ ...f, categoryId: data[0].id }));
-        }
-      });
-    fetchSummary();
-  }, [fetchSummary]);
+  const { data: transactions = [] } = useQuery<Transaction[]>({
+    queryKey: ["transactions", typeFilter, categoryFilter],
+    queryFn: () => {
+      const params = new URLSearchParams();
+      if (typeFilter) params.set("type", typeFilter);
+      if (categoryFilter) params.set("categoryId", categoryFilter);
+      return api.get(`/api/transactions?${params}`).then((r) => r.data);
+    },
+  });
 
   useEffect(() => {
-    fetchTransactions();
-  }, [fetchTransactions]);
+    if (categories.length > 0 && !form.categoryId) {
+      setForm((f) => ({ ...f, categoryId: categories[0].id }));
+    }
+  }, [categories, form.categoryId]);
 
-  async function handleAdd() {
-    if (!form.description || !form.amount || !form.categoryId) return;
-    const res = await fetch("/api/transactions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        description: form.description,
-        amount: parseFloat(form.amount),
-        type: form.type,
-        categoryId: form.categoryId,
-      }),
-    });
-    if (res.ok) {
+  const addMutation = useMutation({
+    mutationFn: (data: { description: string; amount: number; type: string; categoryId: string }) =>
+      api.post("/api/transactions", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["summary"] });
       setForm((f) => ({ ...f, description: "", amount: "" }));
-      await fetchTransactions();
-      await fetchSummary();
-    }
-  }
+    },
+  });
 
-  async function handleDelete(id: string) {
-    const res = await fetch(`/api/transactions/${id}`, { method: "DELETE" });
-    if (res.ok) {
-      await fetchTransactions();
-      await fetchSummary();
-    }
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => api.delete(`/api/transactions/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["summary"] });
+    },
+  });
+
+  function handleAdd() {
+    if (!form.description || !form.amount || !form.categoryId) return;
+    addMutation.mutate({
+      description: form.description,
+      amount: parseFloat(form.amount),
+      type: form.type,
+      categoryId: form.categoryId,
+    });
   }
 
   const fmt = (n: number) =>
-    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(n);
+    new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(n);
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -201,7 +209,11 @@ export function DashboardPage() {
                 </option>
               ))}
             </select>
-            <Button onClick={handleAdd} className="bg-blue-500 hover:bg-blue-600 text-white">
+            <Button
+              onClick={handleAdd}
+              disabled={addMutation.isPending}
+              className="bg-blue-500 hover:bg-blue-600 text-white"
+            >
               Add
             </Button>
           </div>
@@ -231,7 +243,7 @@ export function DashboardPage() {
                     <Cell key={i} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(v: number) => fmt(v)} />
+                <Tooltip formatter={(v) => fmt(v as number)} />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
@@ -325,7 +337,8 @@ export function DashboardPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => handleDelete(t.id)}
+                      disabled={deleteMutation.isPending}
+                      onClick={() => setPendingDeleteId(t.id)}
                     >
                       Delete
                     </Button>
@@ -336,6 +349,28 @@ export function DashboardPage() {
           </table>
         </CardContent>
       </Card>
+      <AlertDialog open={!!pendingDeleteId} onOpenChange={(open) => !open && setPendingDeleteId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete transaction?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500 hover:bg-red-600 text-white focus:ring-red-500"
+              onClick={() => {
+                if (pendingDeleteId) deleteMutation.mutate(pendingDeleteId);
+                setPendingDeleteId(null);
+              }}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
