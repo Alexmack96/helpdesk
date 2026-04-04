@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "../components/ui/table.js";
 import { Badge } from "../components/ui/badge.js";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card.js";
 
 type User = {
   id: string;
@@ -30,46 +31,56 @@ export function UsersPage() {
   }, []);
 
   return (
-    <div className="p-6 space-y-4">
-      <h2 className="text-xl font-semibold text-foreground">Users</h2>
-      {loading ? (
-        <p className="text-muted-foreground text-sm">Loading...</p>
-      ) : (
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Joined</TableHead>
-                <TableHead>Email Verified</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {users.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    <Badge variant={user.role === "Admin" ? "default" : "secondary"}>
-                      {user.role}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={user.emailVerified ? "default" : "outline"}>
-                      {user.emailVerified ? "Verified" : "Unverified"}
-                    </Badge>
-                  </TableCell>
+    <div className="max-w-5xl mx-auto space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold text-foreground">Users</h1>
+        <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
+          Manage user accounts
+        </p>
+      </div>
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">
+            All Users
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <p className="text-muted-foreground text-sm">Loading...</p>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Joined</TableHead>
+                  <TableHead>Email Verified</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      )}
+              </TableHeader>
+              <TableBody>
+                {users.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell className="font-medium">{user.name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>
+                      <Badge variant={user.role === "Admin" ? "default" : "secondary"}>
+                        {user.role}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      <Badge variant={user.emailVerified ? "default" : "outline"}>
+                        {user.emailVerified ? "Verified" : "Unverified"}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

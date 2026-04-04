@@ -36,9 +36,9 @@ if (env.NODE_ENV === "production") {
     standardHeaders: true,
     legacyHeaders: false,
   });
-  app.post("/api/auth/sign-in/*", authLimiter);
+  app.post("/api/auth/sign-in/*path", authLimiter);
 }
-app.all("/api/auth/*", toNodeHandler(auth));
+app.all("/api/auth/*path", toNodeHandler(auth));
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
