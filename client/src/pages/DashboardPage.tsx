@@ -47,7 +47,6 @@ interface Summary {
   alexIn: number;
   caseyIn: number;
   jointExpenses: number;
-  alexPersonal: number;
   potBalance: number;
   spendingByCategory: { name: string; color: string; value: number }[];
 }
@@ -102,7 +101,6 @@ function NoteCell({ tx, onSave }: { tx: Transaction; onSave: (note: string | nul
 }
 
 function categoryLabel(name: string) {
-  if (name === "Alex Ignore") return "ALEX IGNORE";
   return name;
 }
 
@@ -128,41 +126,32 @@ function CategoryCell({
     return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
 
-  const isIgnored = tx.category.name === "Alex Ignore";
-
   return (
     <div ref={ref} className="relative inline-block">
       <span
         onClick={() => setOpen((o) => !o)}
-        className={`cursor-pointer px-2 py-0.5 rounded-full text-xs font-medium border hover:opacity-80 ${
-          isIgnored ? "text-red-500 border-red-500" : ""
-        }`}
-        style={isIgnored ? undefined : { color: tx.category.color, borderColor: tx.category.color }}
+        className="cursor-pointer px-2 py-0.5 rounded-full text-xs font-medium border hover:opacity-80"
+        style={{ color: tx.category.color, borderColor: tx.category.color }}
         title="Click to change category"
       >
-        {categoryLabel(tx.category.name)}
+        {tx.category.name}
       </span>
       {open && (
         <div className="absolute z-50 top-full mt-1 left-0 bg-popover border border-border rounded-md shadow-lg py-1 min-w-[150px]">
-          {categories.map((c) => {
-            const isOpt = c.name === "Alex Ignore";
-            return (
-              <div
-                key={c.id}
-                onClick={() => { onSave(c.id); setOpen(false); }}
-                className="px-2 py-1 cursor-pointer hover:bg-accent"
+          {categories.map((c) => (
+            <div
+              key={c.id}
+              onClick={() => { onSave(c.id); setOpen(false); }}
+              className="px-2 py-1 cursor-pointer hover:bg-accent"
+            >
+              <span
+                className="px-2 py-0.5 rounded-full text-xs font-medium border"
+                style={{ color: c.color, borderColor: c.color }}
               >
-                <span
-                  className={`px-2 py-0.5 rounded-full text-xs font-medium border ${
-                    isOpt ? "text-red-500 border-red-500" : ""
-                  }`}
-                  style={isOpt ? undefined : { color: c.color, borderColor: c.color }}
-                >
-                  {categoryLabel(c.name)}
-                </span>
-              </div>
-            );
-          })}
+                {c.name}
+              </span>
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -314,11 +303,6 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-bold text-blue-500">{summary ? fmt(summary.alexIn) : "—"}</p>
-            {summary && summary.alexPersonal > 0 && (
-              <p className="text-xs text-muted-foreground mt-1">
-                {fmt(summary.alexPersonal)} personal · net {fmt(summary.alexIn - summary.alexPersonal)}
-              </p>
-            )}
           </CardContent>
         </Card>
         <Card className="border-pink-200 dark:border-pink-900">
@@ -461,7 +445,7 @@ export function DashboardPage() {
                 size="sm"
                 onClick={() => setCategoryFilter(categoryFilter === c.id ? "" : c.id)}
               >
-                {categoryLabel(c.name)}
+                {c.name}
               </Button>
             ))}
           </div>

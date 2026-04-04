@@ -22,7 +22,6 @@ const SYSTEM_CATEGORIES: Record<string, string> = {
   "Bank Sauce":     "#0ea5e9",  // income + transfers combined
   "Savings":        "#a855f7",
   "General":        "#64748b",
-  "Alex Ignore":    "#9ca3af",  // Alex's personal spend — not joint
   "Uncategorised":  "#d1d5db",  // fallback when no mapping is confident
 };
 
@@ -40,7 +39,7 @@ const MONZO_CATEGORY_MAP: Record<string, string> = {
   "Personal care":  "Personal Care",
   "Holidays":       "Vacation",
   "General":        "General",
-  "Golf":           "Alex Ignore",
+  "Golf":           "General",
   // "Shopping" intentionally unmapped → Uncategorised
 };
 
@@ -81,7 +80,6 @@ const ALEX_PATTERNS = [/mackintosh/i, /\balex\b/i];
 const CASEY_PATTERNS = [/liddy/i, /\bcasey\b/i];
 
 function resolveOwner(categoryName: string, merchantName: string): "Alex" | "Casey" | "Joint" {
-  if (categoryName === "Alex Ignore") return "Alex";
   if (categoryName === "Bank Sauce") {
     for (const p of ALEX_PATTERNS) if (p.test(merchantName)) return "Alex";
     for (const p of CASEY_PATTERNS) if (p.test(merchantName)) return "Casey";
@@ -115,7 +113,8 @@ export async function migrateLegacyCategories() {
     "Eating out":    "Eating Out",
     "Personal care": "Personal Care",
     "Holidays":      "Vacation",
-    "Golf":          "Alex Ignore",
+    "Golf":          "General",
+    "Alex Ignore":   "General",
     "Shopping":      "Uncategorised",
     "Income":        "Bank Sauce",
     "Transfers":     "Bank Sauce",
@@ -288,16 +287,17 @@ adminRouter.post("/process", async (_req, res) => {
 // Safe to run repeatedly — only updates transactions still on the default Joint owner
 // where the detection logic would assign something different.
 export async function migrateOwners() {
+  // Alex Ignore is gone — any remaining transactions (not yet moved by migrateLegacyCategories)
+  // should have owner=Alex set before they get reassigned to General.
   const alexIgnoreCat = await db.category.findUnique({ where: { name: "Alex Ignore" } });
-  const bankSauceCat  = await db.category.findUnique({ where: { name: "Bank Sauce" } });
-
   if (alexIgnoreCat) {
-    const updated = await db.transaction.updateMany({
-      where: { categoryId: alexIgnoreCat.id, owner: "Joint" },
+    await db.transaction.updateMany({
+      where: { categoryId: alexIgnoreCat.id },
       data: { owner: "Alex" },
     });
-    if (updated.count > 0) console.log(`Set owner=Alex on ${updated.count} Alex Ignore transactions`);
   }
+
+  const bankSauceCat  = await db.category.findUnique({ where: { name: "Bank Sauce" } });
 
   if (bankSauceCat) {
     const unowned = await db.transaction.findMany({

@@ -10,7 +10,6 @@ dashboardRouter.get("/summary", async (_req, res) => {
   let alexIn = 0;
   let caseyIn = 0;
   let jointExpenses = 0;
-  let alexPersonal = 0;
   const categoryTotals: Record<string, { name: string; color: string; value: number }> = {};
 
   for (const t of all) {
@@ -18,8 +17,6 @@ dashboardRouter.get("/summary", async (_req, res) => {
     if (t.category.name === "Bank Sauce") {
       if (t.owner === "Alex") alexIn += amount;
       else if (t.owner === "Casey") caseyIn += amount;
-    } else if (t.category.name === "Alex Ignore") {
-      alexPersonal += amount;
     } else if (t.type === TransactionType.Expense && t.owner === "Joint") {
       jointExpenses += amount;
       const key = t.categoryId;
@@ -34,7 +31,6 @@ dashboardRouter.get("/summary", async (_req, res) => {
     alexIn,
     caseyIn,
     jointExpenses,
-    alexPersonal,
     potBalance: alexIn + caseyIn - jointExpenses,
     spendingByCategory: Object.values(categoryTotals),
   });
