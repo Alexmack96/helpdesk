@@ -6,6 +6,7 @@ import { LoginPage } from "./pages/LoginPage.js";
 import { LoggedOutPage } from "./pages/LoggedOutPage.js";
 import { DashboardPage } from "./pages/DashboardPage.js";
 import { UsersPage } from "./pages/UsersPage.js";
+import { ImportPage } from "./pages/ImportPage.js";
 
 export function App() {
   return (
@@ -18,6 +19,7 @@ export function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route element={<AdminRoute />}>
               <Route path="/users" element={<UsersPage />} />
+              <Route path="/import" element={<ImportPage />} />
             </Route>
           </Route>
         </Route>

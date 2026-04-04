@@ -18,6 +18,12 @@ enum TransactionType {
   Expense
 }
 
+enum Owner {
+  Alex
+  Casey
+  Joint
+}
+
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -49,7 +55,40 @@ model Transaction {
   createdAt   DateTime        @default(now())
   categoryId  String
   category    Category        @relation(fields: [categoryId], references: [id])
+  externalId  String?         @unique
+  note        String?
+  owner       Owner           @default(Joint)
 }
+
+// One staging model per bank — each preserves that bank's raw CSV schema exactly.
+// The process step normalises all of them into the shared Transaction model.
+
+model MonzoTransaction {
+  transactionId String   @id
+  date          String
+  time          String
+  type          String
+  name          String
+  emoji         String?
+  category      String
+  amount        String
+  currency      String
+  localAmount   String
+  localCurrency String
+  notesAndTags  String?
+  address       String?
+  receipt       String?
+  description   String
+  categorySplit String?
+  moneyOut      String?
+  moneyIn       String?
+  importedAt    DateTime @default(now())
+
+  @@map("monzo_transaction")
+}
+
+// AmexTransaction and BarclaysTransaction and SantanderTransaction will follow
+// when those CSV formats are known — each gets its own columns.
 
 model Session {
   id        String   @id

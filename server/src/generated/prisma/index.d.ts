@@ -29,6 +29,11 @@ export type Category = $Result.DefaultSelection<Prisma.$CategoryPayload>
  */
 export type Transaction = $Result.DefaultSelection<Prisma.$TransactionPayload>
 /**
+ * Model MonzoTransaction
+ * 
+ */
+export type MonzoTransaction = $Result.DefaultSelection<Prisma.$MonzoTransactionPayload>
+/**
  * Model Session
  * 
  */
@@ -63,6 +68,15 @@ export const TransactionType: {
 
 export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
 
+
+export const Owner: {
+  Alex: 'Alex',
+  Casey: 'Casey',
+  Joint: 'Joint'
+};
+
+export type Owner = (typeof Owner)[keyof typeof Owner]
+
 }
 
 export type UserRole = $Enums.UserRole
@@ -72,6 +86,10 @@ export const UserRole: typeof $Enums.UserRole
 export type TransactionType = $Enums.TransactionType
 
 export const TransactionType: typeof $Enums.TransactionType
+
+export type Owner = $Enums.Owner
+
+export const Owner: typeof $Enums.Owner
 
 /**
  * ##  Prisma Client ʲˢ
@@ -223,6 +241,16 @@ export class PrismaClient<
     * ```
     */
   get transaction(): Prisma.TransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.monzoTransaction`: Exposes CRUD operations for the **MonzoTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MonzoTransactions
+    * const monzoTransactions = await prisma.monzoTransaction.findMany()
+    * ```
+    */
+  get monzoTransaction(): Prisma.MonzoTransactionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.session`: Exposes CRUD operations for the **Session** model.
@@ -690,6 +718,7 @@ export namespace Prisma {
     User: 'User',
     Category: 'Category',
     Transaction: 'Transaction',
+    MonzoTransaction: 'MonzoTransaction',
     Session: 'Session',
     Account: 'Account',
     Verification: 'Verification'
@@ -708,7 +737,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "transaction" | "session" | "account" | "verification"
+      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "session" | "account" | "verification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -931,6 +960,80 @@ export namespace Prisma {
           count: {
             args: Prisma.TransactionCountArgs<ExtArgs>
             result: $Utils.Optional<TransactionCountAggregateOutputType> | number
+          }
+        }
+      }
+      MonzoTransaction: {
+        payload: Prisma.$MonzoTransactionPayload<ExtArgs>
+        fields: Prisma.MonzoTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MonzoTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MonzoTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.MonzoTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MonzoTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.MonzoTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.MonzoTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.MonzoTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MonzoTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.MonzoTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload>
+          }
+          update: {
+            args: Prisma.MonzoTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.MonzoTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MonzoTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MonzoTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.MonzoTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonzoTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.MonzoTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMonzoTransaction>
+          }
+          groupBy: {
+            args: Prisma.MonzoTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MonzoTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MonzoTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<MonzoTransactionCountAggregateOutputType> | number
           }
         }
       }
@@ -1267,6 +1370,7 @@ export namespace Prisma {
     user?: UserOmit
     category?: CategoryOmit
     transaction?: TransactionOmit
+    monzoTransaction?: MonzoTransactionOmit
     session?: SessionOmit
     account?: AccountOmit
     verification?: VerificationOmit
@@ -3635,6 +3739,9 @@ export namespace Prisma {
     date: Date | null
     createdAt: Date | null
     categoryId: string | null
+    externalId: string | null
+    note: string | null
+    owner: $Enums.Owner | null
   }
 
   export type TransactionMaxAggregateOutputType = {
@@ -3645,6 +3752,9 @@ export namespace Prisma {
     date: Date | null
     createdAt: Date | null
     categoryId: string | null
+    externalId: string | null
+    note: string | null
+    owner: $Enums.Owner | null
   }
 
   export type TransactionCountAggregateOutputType = {
@@ -3655,6 +3765,9 @@ export namespace Prisma {
     date: number
     createdAt: number
     categoryId: number
+    externalId: number
+    note: number
+    owner: number
     _all: number
   }
 
@@ -3675,6 +3788,9 @@ export namespace Prisma {
     date?: true
     createdAt?: true
     categoryId?: true
+    externalId?: true
+    note?: true
+    owner?: true
   }
 
   export type TransactionMaxAggregateInputType = {
@@ -3685,6 +3801,9 @@ export namespace Prisma {
     date?: true
     createdAt?: true
     categoryId?: true
+    externalId?: true
+    note?: true
+    owner?: true
   }
 
   export type TransactionCountAggregateInputType = {
@@ -3695,6 +3814,9 @@ export namespace Prisma {
     date?: true
     createdAt?: true
     categoryId?: true
+    externalId?: true
+    note?: true
+    owner?: true
     _all?: true
   }
 
@@ -3792,6 +3914,9 @@ export namespace Prisma {
     date: Date
     createdAt: Date
     categoryId: string
+    externalId: string | null
+    note: string | null
+    owner: $Enums.Owner
     _count: TransactionCountAggregateOutputType | null
     _avg: TransactionAvgAggregateOutputType | null
     _sum: TransactionSumAggregateOutputType | null
@@ -3821,6 +3946,9 @@ export namespace Prisma {
     date?: boolean
     createdAt?: boolean
     categoryId?: boolean
+    externalId?: boolean
+    note?: boolean
+    owner?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -3832,6 +3960,9 @@ export namespace Prisma {
     date?: boolean
     createdAt?: boolean
     categoryId?: boolean
+    externalId?: boolean
+    note?: boolean
+    owner?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -3843,6 +3974,9 @@ export namespace Prisma {
     date?: boolean
     createdAt?: boolean
     categoryId?: boolean
+    externalId?: boolean
+    note?: boolean
+    owner?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -3854,9 +3988,12 @@ export namespace Prisma {
     date?: boolean
     createdAt?: boolean
     categoryId?: boolean
+    externalId?: boolean
+    note?: boolean
+    owner?: boolean
   }
 
-  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "description" | "amount" | "type" | "date" | "createdAt" | "categoryId", ExtArgs["result"]["transaction"]>
+  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "description" | "amount" | "type" | "date" | "createdAt" | "categoryId" | "externalId" | "note" | "owner", ExtArgs["result"]["transaction"]>
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }
@@ -3880,6 +4017,9 @@ export namespace Prisma {
       date: Date
       createdAt: Date
       categoryId: string
+      externalId: string | null
+      note: string | null
+      owner: $Enums.Owner
     }, ExtArgs["result"]["transaction"]>
     composites: {}
   }
@@ -4311,6 +4451,9 @@ export namespace Prisma {
     readonly date: FieldRef<"Transaction", 'DateTime'>
     readonly createdAt: FieldRef<"Transaction", 'DateTime'>
     readonly categoryId: FieldRef<"Transaction", 'String'>
+    readonly externalId: FieldRef<"Transaction", 'String'>
+    readonly note: FieldRef<"Transaction", 'String'>
+    readonly owner: FieldRef<"Transaction", 'Owner'>
   }
     
 
@@ -4725,6 +4868,1186 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TransactionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MonzoTransaction
+   */
+
+  export type AggregateMonzoTransaction = {
+    _count: MonzoTransactionCountAggregateOutputType | null
+    _min: MonzoTransactionMinAggregateOutputType | null
+    _max: MonzoTransactionMaxAggregateOutputType | null
+  }
+
+  export type MonzoTransactionMinAggregateOutputType = {
+    transactionId: string | null
+    date: string | null
+    time: string | null
+    type: string | null
+    name: string | null
+    emoji: string | null
+    category: string | null
+    amount: string | null
+    currency: string | null
+    localAmount: string | null
+    localCurrency: string | null
+    notesAndTags: string | null
+    address: string | null
+    receipt: string | null
+    description: string | null
+    categorySplit: string | null
+    moneyOut: string | null
+    moneyIn: string | null
+    importedAt: Date | null
+  }
+
+  export type MonzoTransactionMaxAggregateOutputType = {
+    transactionId: string | null
+    date: string | null
+    time: string | null
+    type: string | null
+    name: string | null
+    emoji: string | null
+    category: string | null
+    amount: string | null
+    currency: string | null
+    localAmount: string | null
+    localCurrency: string | null
+    notesAndTags: string | null
+    address: string | null
+    receipt: string | null
+    description: string | null
+    categorySplit: string | null
+    moneyOut: string | null
+    moneyIn: string | null
+    importedAt: Date | null
+  }
+
+  export type MonzoTransactionCountAggregateOutputType = {
+    transactionId: number
+    date: number
+    time: number
+    type: number
+    name: number
+    emoji: number
+    category: number
+    amount: number
+    currency: number
+    localAmount: number
+    localCurrency: number
+    notesAndTags: number
+    address: number
+    receipt: number
+    description: number
+    categorySplit: number
+    moneyOut: number
+    moneyIn: number
+    importedAt: number
+    _all: number
+  }
+
+
+  export type MonzoTransactionMinAggregateInputType = {
+    transactionId?: true
+    date?: true
+    time?: true
+    type?: true
+    name?: true
+    emoji?: true
+    category?: true
+    amount?: true
+    currency?: true
+    localAmount?: true
+    localCurrency?: true
+    notesAndTags?: true
+    address?: true
+    receipt?: true
+    description?: true
+    categorySplit?: true
+    moneyOut?: true
+    moneyIn?: true
+    importedAt?: true
+  }
+
+  export type MonzoTransactionMaxAggregateInputType = {
+    transactionId?: true
+    date?: true
+    time?: true
+    type?: true
+    name?: true
+    emoji?: true
+    category?: true
+    amount?: true
+    currency?: true
+    localAmount?: true
+    localCurrency?: true
+    notesAndTags?: true
+    address?: true
+    receipt?: true
+    description?: true
+    categorySplit?: true
+    moneyOut?: true
+    moneyIn?: true
+    importedAt?: true
+  }
+
+  export type MonzoTransactionCountAggregateInputType = {
+    transactionId?: true
+    date?: true
+    time?: true
+    type?: true
+    name?: true
+    emoji?: true
+    category?: true
+    amount?: true
+    currency?: true
+    localAmount?: true
+    localCurrency?: true
+    notesAndTags?: true
+    address?: true
+    receipt?: true
+    description?: true
+    categorySplit?: true
+    moneyOut?: true
+    moneyIn?: true
+    importedAt?: true
+    _all?: true
+  }
+
+  export type MonzoTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MonzoTransaction to aggregate.
+     */
+    where?: MonzoTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MonzoTransactions to fetch.
+     */
+    orderBy?: MonzoTransactionOrderByWithRelationInput | MonzoTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MonzoTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MonzoTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MonzoTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MonzoTransactions
+    **/
+    _count?: true | MonzoTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MonzoTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MonzoTransactionMaxAggregateInputType
+  }
+
+  export type GetMonzoTransactionAggregateType<T extends MonzoTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateMonzoTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMonzoTransaction[P]>
+      : GetScalarType<T[P], AggregateMonzoTransaction[P]>
+  }
+
+
+
+
+  export type MonzoTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MonzoTransactionWhereInput
+    orderBy?: MonzoTransactionOrderByWithAggregationInput | MonzoTransactionOrderByWithAggregationInput[]
+    by: MonzoTransactionScalarFieldEnum[] | MonzoTransactionScalarFieldEnum
+    having?: MonzoTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MonzoTransactionCountAggregateInputType | true
+    _min?: MonzoTransactionMinAggregateInputType
+    _max?: MonzoTransactionMaxAggregateInputType
+  }
+
+  export type MonzoTransactionGroupByOutputType = {
+    transactionId: string
+    date: string
+    time: string
+    type: string
+    name: string
+    emoji: string | null
+    category: string
+    amount: string
+    currency: string
+    localAmount: string
+    localCurrency: string
+    notesAndTags: string | null
+    address: string | null
+    receipt: string | null
+    description: string
+    categorySplit: string | null
+    moneyOut: string | null
+    moneyIn: string | null
+    importedAt: Date
+    _count: MonzoTransactionCountAggregateOutputType | null
+    _min: MonzoTransactionMinAggregateOutputType | null
+    _max: MonzoTransactionMaxAggregateOutputType | null
+  }
+
+  type GetMonzoTransactionGroupByPayload<T extends MonzoTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MonzoTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MonzoTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MonzoTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], MonzoTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MonzoTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    transactionId?: boolean
+    date?: boolean
+    time?: boolean
+    type?: boolean
+    name?: boolean
+    emoji?: boolean
+    category?: boolean
+    amount?: boolean
+    currency?: boolean
+    localAmount?: boolean
+    localCurrency?: boolean
+    notesAndTags?: boolean
+    address?: boolean
+    receipt?: boolean
+    description?: boolean
+    categorySplit?: boolean
+    moneyOut?: boolean
+    moneyIn?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["monzoTransaction"]>
+
+  export type MonzoTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    transactionId?: boolean
+    date?: boolean
+    time?: boolean
+    type?: boolean
+    name?: boolean
+    emoji?: boolean
+    category?: boolean
+    amount?: boolean
+    currency?: boolean
+    localAmount?: boolean
+    localCurrency?: boolean
+    notesAndTags?: boolean
+    address?: boolean
+    receipt?: boolean
+    description?: boolean
+    categorySplit?: boolean
+    moneyOut?: boolean
+    moneyIn?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["monzoTransaction"]>
+
+  export type MonzoTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    transactionId?: boolean
+    date?: boolean
+    time?: boolean
+    type?: boolean
+    name?: boolean
+    emoji?: boolean
+    category?: boolean
+    amount?: boolean
+    currency?: boolean
+    localAmount?: boolean
+    localCurrency?: boolean
+    notesAndTags?: boolean
+    address?: boolean
+    receipt?: boolean
+    description?: boolean
+    categorySplit?: boolean
+    moneyOut?: boolean
+    moneyIn?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["monzoTransaction"]>
+
+  export type MonzoTransactionSelectScalar = {
+    transactionId?: boolean
+    date?: boolean
+    time?: boolean
+    type?: boolean
+    name?: boolean
+    emoji?: boolean
+    category?: boolean
+    amount?: boolean
+    currency?: boolean
+    localAmount?: boolean
+    localCurrency?: boolean
+    notesAndTags?: boolean
+    address?: boolean
+    receipt?: boolean
+    description?: boolean
+    categorySplit?: boolean
+    moneyOut?: boolean
+    moneyIn?: boolean
+    importedAt?: boolean
+  }
+
+  export type MonzoTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"transactionId" | "date" | "time" | "type" | "name" | "emoji" | "category" | "amount" | "currency" | "localAmount" | "localCurrency" | "notesAndTags" | "address" | "receipt" | "description" | "categorySplit" | "moneyOut" | "moneyIn" | "importedAt", ExtArgs["result"]["monzoTransaction"]>
+
+  export type $MonzoTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MonzoTransaction"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      transactionId: string
+      date: string
+      time: string
+      type: string
+      name: string
+      emoji: string | null
+      category: string
+      amount: string
+      currency: string
+      localAmount: string
+      localCurrency: string
+      notesAndTags: string | null
+      address: string | null
+      receipt: string | null
+      description: string
+      categorySplit: string | null
+      moneyOut: string | null
+      moneyIn: string | null
+      importedAt: Date
+    }, ExtArgs["result"]["monzoTransaction"]>
+    composites: {}
+  }
+
+  type MonzoTransactionGetPayload<S extends boolean | null | undefined | MonzoTransactionDefaultArgs> = $Result.GetResult<Prisma.$MonzoTransactionPayload, S>
+
+  type MonzoTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MonzoTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MonzoTransactionCountAggregateInputType | true
+    }
+
+  export interface MonzoTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MonzoTransaction'], meta: { name: 'MonzoTransaction' } }
+    /**
+     * Find zero or one MonzoTransaction that matches the filter.
+     * @param {MonzoTransactionFindUniqueArgs} args - Arguments to find a MonzoTransaction
+     * @example
+     * // Get one MonzoTransaction
+     * const monzoTransaction = await prisma.monzoTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MonzoTransactionFindUniqueArgs>(args: SelectSubset<T, MonzoTransactionFindUniqueArgs<ExtArgs>>): Prisma__MonzoTransactionClient<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MonzoTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MonzoTransactionFindUniqueOrThrowArgs} args - Arguments to find a MonzoTransaction
+     * @example
+     * // Get one MonzoTransaction
+     * const monzoTransaction = await prisma.monzoTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MonzoTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, MonzoTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MonzoTransactionClient<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MonzoTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonzoTransactionFindFirstArgs} args - Arguments to find a MonzoTransaction
+     * @example
+     * // Get one MonzoTransaction
+     * const monzoTransaction = await prisma.monzoTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MonzoTransactionFindFirstArgs>(args?: SelectSubset<T, MonzoTransactionFindFirstArgs<ExtArgs>>): Prisma__MonzoTransactionClient<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MonzoTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonzoTransactionFindFirstOrThrowArgs} args - Arguments to find a MonzoTransaction
+     * @example
+     * // Get one MonzoTransaction
+     * const monzoTransaction = await prisma.monzoTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MonzoTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, MonzoTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__MonzoTransactionClient<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MonzoTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonzoTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MonzoTransactions
+     * const monzoTransactions = await prisma.monzoTransaction.findMany()
+     * 
+     * // Get first 10 MonzoTransactions
+     * const monzoTransactions = await prisma.monzoTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `transactionId`
+     * const monzoTransactionWithTransactionIdOnly = await prisma.monzoTransaction.findMany({ select: { transactionId: true } })
+     * 
+     */
+    findMany<T extends MonzoTransactionFindManyArgs>(args?: SelectSubset<T, MonzoTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MonzoTransaction.
+     * @param {MonzoTransactionCreateArgs} args - Arguments to create a MonzoTransaction.
+     * @example
+     * // Create one MonzoTransaction
+     * const MonzoTransaction = await prisma.monzoTransaction.create({
+     *   data: {
+     *     // ... data to create a MonzoTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends MonzoTransactionCreateArgs>(args: SelectSubset<T, MonzoTransactionCreateArgs<ExtArgs>>): Prisma__MonzoTransactionClient<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MonzoTransactions.
+     * @param {MonzoTransactionCreateManyArgs} args - Arguments to create many MonzoTransactions.
+     * @example
+     * // Create many MonzoTransactions
+     * const monzoTransaction = await prisma.monzoTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MonzoTransactionCreateManyArgs>(args?: SelectSubset<T, MonzoTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MonzoTransactions and returns the data saved in the database.
+     * @param {MonzoTransactionCreateManyAndReturnArgs} args - Arguments to create many MonzoTransactions.
+     * @example
+     * // Create many MonzoTransactions
+     * const monzoTransaction = await prisma.monzoTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MonzoTransactions and only return the `transactionId`
+     * const monzoTransactionWithTransactionIdOnly = await prisma.monzoTransaction.createManyAndReturn({
+     *   select: { transactionId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MonzoTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, MonzoTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MonzoTransaction.
+     * @param {MonzoTransactionDeleteArgs} args - Arguments to delete one MonzoTransaction.
+     * @example
+     * // Delete one MonzoTransaction
+     * const MonzoTransaction = await prisma.monzoTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one MonzoTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MonzoTransactionDeleteArgs>(args: SelectSubset<T, MonzoTransactionDeleteArgs<ExtArgs>>): Prisma__MonzoTransactionClient<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MonzoTransaction.
+     * @param {MonzoTransactionUpdateArgs} args - Arguments to update one MonzoTransaction.
+     * @example
+     * // Update one MonzoTransaction
+     * const monzoTransaction = await prisma.monzoTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MonzoTransactionUpdateArgs>(args: SelectSubset<T, MonzoTransactionUpdateArgs<ExtArgs>>): Prisma__MonzoTransactionClient<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MonzoTransactions.
+     * @param {MonzoTransactionDeleteManyArgs} args - Arguments to filter MonzoTransactions to delete.
+     * @example
+     * // Delete a few MonzoTransactions
+     * const { count } = await prisma.monzoTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MonzoTransactionDeleteManyArgs>(args?: SelectSubset<T, MonzoTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MonzoTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonzoTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MonzoTransactions
+     * const monzoTransaction = await prisma.monzoTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MonzoTransactionUpdateManyArgs>(args: SelectSubset<T, MonzoTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MonzoTransactions and returns the data updated in the database.
+     * @param {MonzoTransactionUpdateManyAndReturnArgs} args - Arguments to update many MonzoTransactions.
+     * @example
+     * // Update many MonzoTransactions
+     * const monzoTransaction = await prisma.monzoTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MonzoTransactions and only return the `transactionId`
+     * const monzoTransactionWithTransactionIdOnly = await prisma.monzoTransaction.updateManyAndReturn({
+     *   select: { transactionId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MonzoTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, MonzoTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MonzoTransaction.
+     * @param {MonzoTransactionUpsertArgs} args - Arguments to update or create a MonzoTransaction.
+     * @example
+     * // Update or create a MonzoTransaction
+     * const monzoTransaction = await prisma.monzoTransaction.upsert({
+     *   create: {
+     *     // ... data to create a MonzoTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MonzoTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MonzoTransactionUpsertArgs>(args: SelectSubset<T, MonzoTransactionUpsertArgs<ExtArgs>>): Prisma__MonzoTransactionClient<$Result.GetResult<Prisma.$MonzoTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MonzoTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonzoTransactionCountArgs} args - Arguments to filter MonzoTransactions to count.
+     * @example
+     * // Count the number of MonzoTransactions
+     * const count = await prisma.monzoTransaction.count({
+     *   where: {
+     *     // ... the filter for the MonzoTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends MonzoTransactionCountArgs>(
+      args?: Subset<T, MonzoTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MonzoTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MonzoTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonzoTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MonzoTransactionAggregateArgs>(args: Subset<T, MonzoTransactionAggregateArgs>): Prisma.PrismaPromise<GetMonzoTransactionAggregateType<T>>
+
+    /**
+     * Group by MonzoTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonzoTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MonzoTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MonzoTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: MonzoTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MonzoTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMonzoTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MonzoTransaction model
+   */
+  readonly fields: MonzoTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MonzoTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MonzoTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MonzoTransaction model
+   */
+  interface MonzoTransactionFieldRefs {
+    readonly transactionId: FieldRef<"MonzoTransaction", 'String'>
+    readonly date: FieldRef<"MonzoTransaction", 'String'>
+    readonly time: FieldRef<"MonzoTransaction", 'String'>
+    readonly type: FieldRef<"MonzoTransaction", 'String'>
+    readonly name: FieldRef<"MonzoTransaction", 'String'>
+    readonly emoji: FieldRef<"MonzoTransaction", 'String'>
+    readonly category: FieldRef<"MonzoTransaction", 'String'>
+    readonly amount: FieldRef<"MonzoTransaction", 'String'>
+    readonly currency: FieldRef<"MonzoTransaction", 'String'>
+    readonly localAmount: FieldRef<"MonzoTransaction", 'String'>
+    readonly localCurrency: FieldRef<"MonzoTransaction", 'String'>
+    readonly notesAndTags: FieldRef<"MonzoTransaction", 'String'>
+    readonly address: FieldRef<"MonzoTransaction", 'String'>
+    readonly receipt: FieldRef<"MonzoTransaction", 'String'>
+    readonly description: FieldRef<"MonzoTransaction", 'String'>
+    readonly categorySplit: FieldRef<"MonzoTransaction", 'String'>
+    readonly moneyOut: FieldRef<"MonzoTransaction", 'String'>
+    readonly moneyIn: FieldRef<"MonzoTransaction", 'String'>
+    readonly importedAt: FieldRef<"MonzoTransaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MonzoTransaction findUnique
+   */
+  export type MonzoTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which MonzoTransaction to fetch.
+     */
+    where: MonzoTransactionWhereUniqueInput
+  }
+
+  /**
+   * MonzoTransaction findUniqueOrThrow
+   */
+  export type MonzoTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which MonzoTransaction to fetch.
+     */
+    where: MonzoTransactionWhereUniqueInput
+  }
+
+  /**
+   * MonzoTransaction findFirst
+   */
+  export type MonzoTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which MonzoTransaction to fetch.
+     */
+    where?: MonzoTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MonzoTransactions to fetch.
+     */
+    orderBy?: MonzoTransactionOrderByWithRelationInput | MonzoTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MonzoTransactions.
+     */
+    cursor?: MonzoTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MonzoTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MonzoTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MonzoTransactions.
+     */
+    distinct?: MonzoTransactionScalarFieldEnum | MonzoTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * MonzoTransaction findFirstOrThrow
+   */
+  export type MonzoTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which MonzoTransaction to fetch.
+     */
+    where?: MonzoTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MonzoTransactions to fetch.
+     */
+    orderBy?: MonzoTransactionOrderByWithRelationInput | MonzoTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MonzoTransactions.
+     */
+    cursor?: MonzoTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MonzoTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MonzoTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MonzoTransactions.
+     */
+    distinct?: MonzoTransactionScalarFieldEnum | MonzoTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * MonzoTransaction findMany
+   */
+  export type MonzoTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which MonzoTransactions to fetch.
+     */
+    where?: MonzoTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MonzoTransactions to fetch.
+     */
+    orderBy?: MonzoTransactionOrderByWithRelationInput | MonzoTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MonzoTransactions.
+     */
+    cursor?: MonzoTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MonzoTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MonzoTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MonzoTransactions.
+     */
+    distinct?: MonzoTransactionScalarFieldEnum | MonzoTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * MonzoTransaction create
+   */
+  export type MonzoTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a MonzoTransaction.
+     */
+    data: XOR<MonzoTransactionCreateInput, MonzoTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * MonzoTransaction createMany
+   */
+  export type MonzoTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MonzoTransactions.
+     */
+    data: MonzoTransactionCreateManyInput | MonzoTransactionCreateManyInput[]
+  }
+
+  /**
+   * MonzoTransaction createManyAndReturn
+   */
+  export type MonzoTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many MonzoTransactions.
+     */
+    data: MonzoTransactionCreateManyInput | MonzoTransactionCreateManyInput[]
+  }
+
+  /**
+   * MonzoTransaction update
+   */
+  export type MonzoTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a MonzoTransaction.
+     */
+    data: XOR<MonzoTransactionUpdateInput, MonzoTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which MonzoTransaction to update.
+     */
+    where: MonzoTransactionWhereUniqueInput
+  }
+
+  /**
+   * MonzoTransaction updateMany
+   */
+  export type MonzoTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MonzoTransactions.
+     */
+    data: XOR<MonzoTransactionUpdateManyMutationInput, MonzoTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which MonzoTransactions to update
+     */
+    where?: MonzoTransactionWhereInput
+    /**
+     * Limit how many MonzoTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MonzoTransaction updateManyAndReturn
+   */
+  export type MonzoTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update MonzoTransactions.
+     */
+    data: XOR<MonzoTransactionUpdateManyMutationInput, MonzoTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which MonzoTransactions to update
+     */
+    where?: MonzoTransactionWhereInput
+    /**
+     * Limit how many MonzoTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MonzoTransaction upsert
+   */
+  export type MonzoTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the MonzoTransaction to update in case it exists.
+     */
+    where: MonzoTransactionWhereUniqueInput
+    /**
+     * In case the MonzoTransaction found by the `where` argument doesn't exist, create a new MonzoTransaction with this data.
+     */
+    create: XOR<MonzoTransactionCreateInput, MonzoTransactionUncheckedCreateInput>
+    /**
+     * In case the MonzoTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MonzoTransactionUpdateInput, MonzoTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * MonzoTransaction delete
+   */
+  export type MonzoTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
+    /**
+     * Filter which MonzoTransaction to delete.
+     */
+    where: MonzoTransactionWhereUniqueInput
+  }
+
+  /**
+   * MonzoTransaction deleteMany
+   */
+  export type MonzoTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MonzoTransactions to delete
+     */
+    where?: MonzoTransactionWhereInput
+    /**
+     * Limit how many MonzoTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MonzoTransaction without action
+   */
+  export type MonzoTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonzoTransaction
+     */
+    select?: MonzoTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MonzoTransaction
+     */
+    omit?: MonzoTransactionOmit<ExtArgs> | null
   }
 
 
@@ -8045,10 +9368,38 @@ export namespace Prisma {
     type: 'type',
     date: 'date',
     createdAt: 'createdAt',
-    categoryId: 'categoryId'
+    categoryId: 'categoryId',
+    externalId: 'externalId',
+    note: 'note',
+    owner: 'owner'
   };
 
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+  export const MonzoTransactionScalarFieldEnum: {
+    transactionId: 'transactionId',
+    date: 'date',
+    time: 'time',
+    type: 'type',
+    name: 'name',
+    emoji: 'emoji',
+    category: 'category',
+    amount: 'amount',
+    currency: 'currency',
+    localAmount: 'localAmount',
+    localCurrency: 'localCurrency',
+    notesAndTags: 'notesAndTags',
+    address: 'address',
+    receipt: 'receipt',
+    description: 'description',
+    categorySplit: 'categorySplit',
+    moneyOut: 'moneyOut',
+    moneyIn: 'moneyIn',
+    importedAt: 'importedAt'
+  };
+
+  export type MonzoTransactionScalarFieldEnum = (typeof MonzoTransactionScalarFieldEnum)[keyof typeof MonzoTransactionScalarFieldEnum]
 
 
   export const SessionScalarFieldEnum: {
@@ -8156,6 +9507,13 @@ export namespace Prisma {
    * Reference to a field of type 'TransactionType'
    */
   export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'Owner'
+   */
+  export type EnumOwnerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Owner'>
     
 
 
@@ -8298,6 +9656,9 @@ export namespace Prisma {
     date?: DateTimeFilter<"Transaction"> | Date | string
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     categoryId?: StringFilter<"Transaction"> | string
+    externalId?: StringNullableFilter<"Transaction"> | string | null
+    note?: StringNullableFilter<"Transaction"> | string | null
+    owner?: EnumOwnerFilter<"Transaction"> | $Enums.Owner
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
   }
 
@@ -8309,11 +9670,15 @@ export namespace Prisma {
     date?: SortOrder
     createdAt?: SortOrder
     categoryId?: SortOrder
+    externalId?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    owner?: SortOrder
     category?: CategoryOrderByWithRelationInput
   }
 
   export type TransactionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    externalId?: string
     AND?: TransactionWhereInput | TransactionWhereInput[]
     OR?: TransactionWhereInput[]
     NOT?: TransactionWhereInput | TransactionWhereInput[]
@@ -8323,8 +9688,10 @@ export namespace Prisma {
     date?: DateTimeFilter<"Transaction"> | Date | string
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     categoryId?: StringFilter<"Transaction"> | string
+    note?: StringNullableFilter<"Transaction"> | string | null
+    owner?: EnumOwnerFilter<"Transaction"> | $Enums.Owner
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
-  }, "id">
+  }, "id" | "externalId">
 
   export type TransactionOrderByWithAggregationInput = {
     id?: SortOrder
@@ -8334,6 +9701,9 @@ export namespace Prisma {
     date?: SortOrder
     createdAt?: SortOrder
     categoryId?: SortOrder
+    externalId?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    owner?: SortOrder
     _count?: TransactionCountOrderByAggregateInput
     _avg?: TransactionAvgOrderByAggregateInput
     _max?: TransactionMaxOrderByAggregateInput
@@ -8352,6 +9722,131 @@ export namespace Prisma {
     date?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
     categoryId?: StringWithAggregatesFilter<"Transaction"> | string
+    externalId?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
+    note?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
+    owner?: EnumOwnerWithAggregatesFilter<"Transaction"> | $Enums.Owner
+  }
+
+  export type MonzoTransactionWhereInput = {
+    AND?: MonzoTransactionWhereInput | MonzoTransactionWhereInput[]
+    OR?: MonzoTransactionWhereInput[]
+    NOT?: MonzoTransactionWhereInput | MonzoTransactionWhereInput[]
+    transactionId?: StringFilter<"MonzoTransaction"> | string
+    date?: StringFilter<"MonzoTransaction"> | string
+    time?: StringFilter<"MonzoTransaction"> | string
+    type?: StringFilter<"MonzoTransaction"> | string
+    name?: StringFilter<"MonzoTransaction"> | string
+    emoji?: StringNullableFilter<"MonzoTransaction"> | string | null
+    category?: StringFilter<"MonzoTransaction"> | string
+    amount?: StringFilter<"MonzoTransaction"> | string
+    currency?: StringFilter<"MonzoTransaction"> | string
+    localAmount?: StringFilter<"MonzoTransaction"> | string
+    localCurrency?: StringFilter<"MonzoTransaction"> | string
+    notesAndTags?: StringNullableFilter<"MonzoTransaction"> | string | null
+    address?: StringNullableFilter<"MonzoTransaction"> | string | null
+    receipt?: StringNullableFilter<"MonzoTransaction"> | string | null
+    description?: StringFilter<"MonzoTransaction"> | string
+    categorySplit?: StringNullableFilter<"MonzoTransaction"> | string | null
+    moneyOut?: StringNullableFilter<"MonzoTransaction"> | string | null
+    moneyIn?: StringNullableFilter<"MonzoTransaction"> | string | null
+    importedAt?: DateTimeFilter<"MonzoTransaction"> | Date | string
+  }
+
+  export type MonzoTransactionOrderByWithRelationInput = {
+    transactionId?: SortOrder
+    date?: SortOrder
+    time?: SortOrder
+    type?: SortOrder
+    name?: SortOrder
+    emoji?: SortOrderInput | SortOrder
+    category?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    localAmount?: SortOrder
+    localCurrency?: SortOrder
+    notesAndTags?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    receipt?: SortOrderInput | SortOrder
+    description?: SortOrder
+    categorySplit?: SortOrderInput | SortOrder
+    moneyOut?: SortOrderInput | SortOrder
+    moneyIn?: SortOrderInput | SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type MonzoTransactionWhereUniqueInput = Prisma.AtLeast<{
+    transactionId?: string
+    AND?: MonzoTransactionWhereInput | MonzoTransactionWhereInput[]
+    OR?: MonzoTransactionWhereInput[]
+    NOT?: MonzoTransactionWhereInput | MonzoTransactionWhereInput[]
+    date?: StringFilter<"MonzoTransaction"> | string
+    time?: StringFilter<"MonzoTransaction"> | string
+    type?: StringFilter<"MonzoTransaction"> | string
+    name?: StringFilter<"MonzoTransaction"> | string
+    emoji?: StringNullableFilter<"MonzoTransaction"> | string | null
+    category?: StringFilter<"MonzoTransaction"> | string
+    amount?: StringFilter<"MonzoTransaction"> | string
+    currency?: StringFilter<"MonzoTransaction"> | string
+    localAmount?: StringFilter<"MonzoTransaction"> | string
+    localCurrency?: StringFilter<"MonzoTransaction"> | string
+    notesAndTags?: StringNullableFilter<"MonzoTransaction"> | string | null
+    address?: StringNullableFilter<"MonzoTransaction"> | string | null
+    receipt?: StringNullableFilter<"MonzoTransaction"> | string | null
+    description?: StringFilter<"MonzoTransaction"> | string
+    categorySplit?: StringNullableFilter<"MonzoTransaction"> | string | null
+    moneyOut?: StringNullableFilter<"MonzoTransaction"> | string | null
+    moneyIn?: StringNullableFilter<"MonzoTransaction"> | string | null
+    importedAt?: DateTimeFilter<"MonzoTransaction"> | Date | string
+  }, "transactionId">
+
+  export type MonzoTransactionOrderByWithAggregationInput = {
+    transactionId?: SortOrder
+    date?: SortOrder
+    time?: SortOrder
+    type?: SortOrder
+    name?: SortOrder
+    emoji?: SortOrderInput | SortOrder
+    category?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    localAmount?: SortOrder
+    localCurrency?: SortOrder
+    notesAndTags?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    receipt?: SortOrderInput | SortOrder
+    description?: SortOrder
+    categorySplit?: SortOrderInput | SortOrder
+    moneyOut?: SortOrderInput | SortOrder
+    moneyIn?: SortOrderInput | SortOrder
+    importedAt?: SortOrder
+    _count?: MonzoTransactionCountOrderByAggregateInput
+    _max?: MonzoTransactionMaxOrderByAggregateInput
+    _min?: MonzoTransactionMinOrderByAggregateInput
+  }
+
+  export type MonzoTransactionScalarWhereWithAggregatesInput = {
+    AND?: MonzoTransactionScalarWhereWithAggregatesInput | MonzoTransactionScalarWhereWithAggregatesInput[]
+    OR?: MonzoTransactionScalarWhereWithAggregatesInput[]
+    NOT?: MonzoTransactionScalarWhereWithAggregatesInput | MonzoTransactionScalarWhereWithAggregatesInput[]
+    transactionId?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    date?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    time?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    type?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    name?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    emoji?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
+    category?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    amount?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    currency?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    localAmount?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    localCurrency?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    notesAndTags?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
+    address?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
+    receipt?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
+    description?: StringWithAggregatesFilter<"MonzoTransaction"> | string
+    categorySplit?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
+    moneyOut?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
+    moneyIn?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
+    importedAt?: DateTimeWithAggregatesFilter<"MonzoTransaction"> | Date | string
   }
 
   export type SessionWhereInput = {
@@ -8714,6 +10209,9 @@ export namespace Prisma {
     type: $Enums.TransactionType
     date?: Date | string
     createdAt?: Date | string
+    externalId?: string | null
+    note?: string | null
+    owner?: $Enums.Owner
     category: CategoryCreateNestedOneWithoutTransactionsInput
   }
 
@@ -8725,6 +10223,9 @@ export namespace Prisma {
     date?: Date | string
     createdAt?: Date | string
     categoryId: string
+    externalId?: string | null
+    note?: string | null
+    owner?: $Enums.Owner
   }
 
   export type TransactionUpdateInput = {
@@ -8734,6 +10235,9 @@ export namespace Prisma {
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    owner?: EnumOwnerFieldUpdateOperationsInput | $Enums.Owner
     category?: CategoryUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
@@ -8745,6 +10249,9 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: StringFieldUpdateOperationsInput | string
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    owner?: EnumOwnerFieldUpdateOperationsInput | $Enums.Owner
   }
 
   export type TransactionCreateManyInput = {
@@ -8755,6 +10262,9 @@ export namespace Prisma {
     date?: Date | string
     createdAt?: Date | string
     categoryId: string
+    externalId?: string | null
+    note?: string | null
+    owner?: $Enums.Owner
   }
 
   export type TransactionUpdateManyMutationInput = {
@@ -8764,6 +10274,9 @@ export namespace Prisma {
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    owner?: EnumOwnerFieldUpdateOperationsInput | $Enums.Owner
   }
 
   export type TransactionUncheckedUpdateManyInput = {
@@ -8774,6 +10287,163 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: StringFieldUpdateOperationsInput | string
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    owner?: EnumOwnerFieldUpdateOperationsInput | $Enums.Owner
+  }
+
+  export type MonzoTransactionCreateInput = {
+    transactionId: string
+    date: string
+    time: string
+    type: string
+    name: string
+    emoji?: string | null
+    category: string
+    amount: string
+    currency: string
+    localAmount: string
+    localCurrency: string
+    notesAndTags?: string | null
+    address?: string | null
+    receipt?: string | null
+    description: string
+    categorySplit?: string | null
+    moneyOut?: string | null
+    moneyIn?: string | null
+    importedAt?: Date | string
+  }
+
+  export type MonzoTransactionUncheckedCreateInput = {
+    transactionId: string
+    date: string
+    time: string
+    type: string
+    name: string
+    emoji?: string | null
+    category: string
+    amount: string
+    currency: string
+    localAmount: string
+    localCurrency: string
+    notesAndTags?: string | null
+    address?: string | null
+    receipt?: string | null
+    description: string
+    categorySplit?: string | null
+    moneyOut?: string | null
+    moneyIn?: string | null
+    importedAt?: Date | string
+  }
+
+  export type MonzoTransactionUpdateInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    currency?: StringFieldUpdateOperationsInput | string
+    localAmount?: StringFieldUpdateOperationsInput | string
+    localCurrency?: StringFieldUpdateOperationsInput | string
+    notesAndTags?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    receipt?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    categorySplit?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MonzoTransactionUncheckedUpdateInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    currency?: StringFieldUpdateOperationsInput | string
+    localAmount?: StringFieldUpdateOperationsInput | string
+    localCurrency?: StringFieldUpdateOperationsInput | string
+    notesAndTags?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    receipt?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    categorySplit?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MonzoTransactionCreateManyInput = {
+    transactionId: string
+    date: string
+    time: string
+    type: string
+    name: string
+    emoji?: string | null
+    category: string
+    amount: string
+    currency: string
+    localAmount: string
+    localCurrency: string
+    notesAndTags?: string | null
+    address?: string | null
+    receipt?: string | null
+    description: string
+    categorySplit?: string | null
+    moneyOut?: string | null
+    moneyIn?: string | null
+    importedAt?: Date | string
+  }
+
+  export type MonzoTransactionUpdateManyMutationInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    currency?: StringFieldUpdateOperationsInput | string
+    localAmount?: StringFieldUpdateOperationsInput | string
+    localCurrency?: StringFieldUpdateOperationsInput | string
+    notesAndTags?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    receipt?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    categorySplit?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MonzoTransactionUncheckedUpdateManyInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    time?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    currency?: StringFieldUpdateOperationsInput | string
+    localAmount?: StringFieldUpdateOperationsInput | string
+    localCurrency?: StringFieldUpdateOperationsInput | string
+    notesAndTags?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    receipt?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
+    categorySplit?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SessionCreateInput = {
@@ -9247,6 +10917,13 @@ export namespace Prisma {
     not?: NestedEnumTransactionTypeFilter<$PrismaModel> | $Enums.TransactionType
   }
 
+  export type EnumOwnerFilter<$PrismaModel = never> = {
+    equals?: $Enums.Owner | EnumOwnerFieldRefInput<$PrismaModel>
+    in?: $Enums.Owner[]
+    notIn?: $Enums.Owner[]
+    not?: NestedEnumOwnerFilter<$PrismaModel> | $Enums.Owner
+  }
+
   export type CategoryScalarRelationFilter = {
     is?: CategoryWhereInput
     isNot?: CategoryWhereInput
@@ -9260,6 +10937,9 @@ export namespace Prisma {
     date?: SortOrder
     createdAt?: SortOrder
     categoryId?: SortOrder
+    externalId?: SortOrder
+    note?: SortOrder
+    owner?: SortOrder
   }
 
   export type TransactionAvgOrderByAggregateInput = {
@@ -9274,6 +10954,9 @@ export namespace Prisma {
     date?: SortOrder
     createdAt?: SortOrder
     categoryId?: SortOrder
+    externalId?: SortOrder
+    note?: SortOrder
+    owner?: SortOrder
   }
 
   export type TransactionMinOrderByAggregateInput = {
@@ -9284,6 +10967,9 @@ export namespace Prisma {
     date?: SortOrder
     createdAt?: SortOrder
     categoryId?: SortOrder
+    externalId?: SortOrder
+    note?: SortOrder
+    owner?: SortOrder
   }
 
   export type TransactionSumOrderByAggregateInput = {
@@ -9314,6 +11000,82 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTransactionTypeFilter<$PrismaModel>
     _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
+  }
+
+  export type EnumOwnerWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Owner | EnumOwnerFieldRefInput<$PrismaModel>
+    in?: $Enums.Owner[]
+    notIn?: $Enums.Owner[]
+    not?: NestedEnumOwnerWithAggregatesFilter<$PrismaModel> | $Enums.Owner
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOwnerFilter<$PrismaModel>
+    _max?: NestedEnumOwnerFilter<$PrismaModel>
+  }
+
+  export type MonzoTransactionCountOrderByAggregateInput = {
+    transactionId?: SortOrder
+    date?: SortOrder
+    time?: SortOrder
+    type?: SortOrder
+    name?: SortOrder
+    emoji?: SortOrder
+    category?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    localAmount?: SortOrder
+    localCurrency?: SortOrder
+    notesAndTags?: SortOrder
+    address?: SortOrder
+    receipt?: SortOrder
+    description?: SortOrder
+    categorySplit?: SortOrder
+    moneyOut?: SortOrder
+    moneyIn?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type MonzoTransactionMaxOrderByAggregateInput = {
+    transactionId?: SortOrder
+    date?: SortOrder
+    time?: SortOrder
+    type?: SortOrder
+    name?: SortOrder
+    emoji?: SortOrder
+    category?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    localAmount?: SortOrder
+    localCurrency?: SortOrder
+    notesAndTags?: SortOrder
+    address?: SortOrder
+    receipt?: SortOrder
+    description?: SortOrder
+    categorySplit?: SortOrder
+    moneyOut?: SortOrder
+    moneyIn?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type MonzoTransactionMinOrderByAggregateInput = {
+    transactionId?: SortOrder
+    date?: SortOrder
+    time?: SortOrder
+    type?: SortOrder
+    name?: SortOrder
+    emoji?: SortOrder
+    category?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    localAmount?: SortOrder
+    localCurrency?: SortOrder
+    notesAndTags?: SortOrder
+    address?: SortOrder
+    receipt?: SortOrder
+    description?: SortOrder
+    categorySplit?: SortOrder
+    moneyOut?: SortOrder
+    moneyIn?: SortOrder
+    importedAt?: SortOrder
   }
 
   export type UserScalarRelationFilter = {
@@ -9618,6 +11380,10 @@ export namespace Prisma {
     set?: $Enums.TransactionType
   }
 
+  export type EnumOwnerFieldUpdateOperationsInput = {
+    set?: $Enums.Owner
+  }
+
   export type CategoryUpdateOneRequiredWithoutTransactionsNestedInput = {
     create?: XOR<CategoryCreateWithoutTransactionsInput, CategoryUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutTransactionsInput
@@ -9815,6 +11581,13 @@ export namespace Prisma {
     not?: NestedEnumTransactionTypeFilter<$PrismaModel> | $Enums.TransactionType
   }
 
+  export type NestedEnumOwnerFilter<$PrismaModel = never> = {
+    equals?: $Enums.Owner | EnumOwnerFieldRefInput<$PrismaModel>
+    in?: $Enums.Owner[]
+    notIn?: $Enums.Owner[]
+    not?: NestedEnumOwnerFilter<$PrismaModel> | $Enums.Owner
+  }
+
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -9839,6 +11612,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTransactionTypeFilter<$PrismaModel>
     _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumOwnerWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Owner | EnumOwnerFieldRefInput<$PrismaModel>
+    in?: $Enums.Owner[]
+    notIn?: $Enums.Owner[]
+    not?: NestedEnumOwnerWithAggregatesFilter<$PrismaModel> | $Enums.Owner
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOwnerFilter<$PrismaModel>
+    _max?: NestedEnumOwnerFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -10006,6 +11789,9 @@ export namespace Prisma {
     type: $Enums.TransactionType
     date?: Date | string
     createdAt?: Date | string
+    externalId?: string | null
+    note?: string | null
+    owner?: $Enums.Owner
   }
 
   export type TransactionUncheckedCreateWithoutCategoryInput = {
@@ -10015,6 +11801,9 @@ export namespace Prisma {
     type: $Enums.TransactionType
     date?: Date | string
     createdAt?: Date | string
+    externalId?: string | null
+    note?: string | null
+    owner?: $Enums.Owner
   }
 
   export type TransactionCreateOrConnectWithoutCategoryInput = {
@@ -10053,6 +11842,9 @@ export namespace Prisma {
     date?: DateTimeFilter<"Transaction"> | Date | string
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     categoryId?: StringFilter<"Transaction"> | string
+    externalId?: StringNullableFilter<"Transaction"> | string | null
+    note?: StringNullableFilter<"Transaction"> | string | null
+    owner?: EnumOwnerFilter<"Transaction"> | $Enums.Owner
   }
 
   export type CategoryCreateWithoutTransactionsInput = {
@@ -10330,6 +12122,9 @@ export namespace Prisma {
     type: $Enums.TransactionType
     date?: Date | string
     createdAt?: Date | string
+    externalId?: string | null
+    note?: string | null
+    owner?: $Enums.Owner
   }
 
   export type TransactionUpdateWithoutCategoryInput = {
@@ -10339,6 +12134,9 @@ export namespace Prisma {
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    owner?: EnumOwnerFieldUpdateOperationsInput | $Enums.Owner
   }
 
   export type TransactionUncheckedUpdateWithoutCategoryInput = {
@@ -10348,6 +12146,9 @@ export namespace Prisma {
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    owner?: EnumOwnerFieldUpdateOperationsInput | $Enums.Owner
   }
 
   export type TransactionUncheckedUpdateManyWithoutCategoryInput = {
@@ -10357,6 +12158,9 @@ export namespace Prisma {
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    owner?: EnumOwnerFieldUpdateOperationsInput | $Enums.Owner
   }
 
 

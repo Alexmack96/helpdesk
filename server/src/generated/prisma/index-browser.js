@@ -141,7 +141,32 @@ exports.Prisma.TransactionScalarFieldEnum = {
   type: 'type',
   date: 'date',
   createdAt: 'createdAt',
-  categoryId: 'categoryId'
+  categoryId: 'categoryId',
+  externalId: 'externalId',
+  note: 'note',
+  owner: 'owner'
+};
+
+exports.Prisma.MonzoTransactionScalarFieldEnum = {
+  transactionId: 'transactionId',
+  date: 'date',
+  time: 'time',
+  type: 'type',
+  name: 'name',
+  emoji: 'emoji',
+  category: 'category',
+  amount: 'amount',
+  currency: 'currency',
+  localAmount: 'localAmount',
+  localCurrency: 'localCurrency',
+  notesAndTags: 'notesAndTags',
+  address: 'address',
+  receipt: 'receipt',
+  description: 'description',
+  categorySplit: 'categorySplit',
+  moneyOut: 'moneyOut',
+  moneyIn: 'moneyIn',
+  importedAt: 'importedAt'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
@@ -199,10 +224,17 @@ exports.TransactionType = exports.$Enums.TransactionType = {
   Expense: 'Expense'
 };
 
+exports.Owner = exports.$Enums.Owner = {
+  Alex: 'Alex',
+  Casey: 'Casey',
+  Joint: 'Joint'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Category: 'Category',
   Transaction: 'Transaction',
+  MonzoTransaction: 'MonzoTransaction',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification'

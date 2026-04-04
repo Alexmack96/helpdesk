@@ -49,12 +49,20 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
       <div className="flex items-center gap-4">
         <HealthStatus />
 {session?.user.role === "Admin" && (
-          <Link
-            to="/users"
-            className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
-          >
-            Users
-          </Link>
+          <>
+            <Link
+              to="/users"
+              className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
+            >
+              Users
+            </Link>
+            <Link
+              to="/import"
+              className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
+            >
+              Import
+            </Link>
+          </>
         )}
         <span className="text-sm text-primary-foreground/80">{session?.user.name}</span>
         <Button

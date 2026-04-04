@@ -14,11 +14,12 @@ const createSchema = z.object({
 });
 
 transactionsRouter.get("/", async (req, res) => {
-  const { type, categoryId } = req.query;
+  const { type, categoryId, owner } = req.query;
   const transactions = await db.transaction.findMany({
     where: {
       ...(type ? { type: type as TransactionType } : {}),
       ...(categoryId ? { categoryId: categoryId as string } : {}),
+      ...(owner ? { owner: owner as string } : {}),
     },
     include: { category: true },
     orderBy: { date: "desc" },
@@ -39,6 +40,26 @@ transactionsRouter.post("/", async (req, res) => {
     include: { category: true },
   });
   res.status(201).json(transaction);
+});
+
+const updateSchema = z.object({
+  note: z.string().nullable().optional(),
+  categoryId: z.string().min(1).optional(),
+  owner: z.enum(["Alex", "Casey", "Joint"]).optional(),
+});
+
+transactionsRouter.patch("/:id", async (req, res) => {
+  const body = updateSchema.parse(req.body);
+  const transaction = await db.transaction.update({
+    where: { id: req.params.id },
+    data: {
+      ...(body.note !== undefined ? { note: body.note } : {}),
+      ...(body.categoryId ? { categoryId: body.categoryId } : {}),
+      ...(body.owner ? { owner: body.owner } : {}),
+    },
+    include: { category: true },
+  });
+  res.json(transaction);
 });
 
 transactionsRouter.delete("/:id", async (req, res) => {

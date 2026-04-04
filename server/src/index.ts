@@ -8,7 +8,7 @@ import { auth } from "./lib/auth.js";
 import { env } from "./config/env.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { requireAuth, requireAdmin } from "./middleware/auth.js";
-import { adminRouter } from "./routes/admin.js";
+import { adminRouter, initSystemCategories, migrateLegacyCategories, migrateOwners } from "./routes/admin.js";
 import { categoriesRouter } from "./routes/categories.js";
 import { transactionsRouter } from "./routes/transactions.js";
 import { dashboardRouter } from "./routes/dashboard.js";
@@ -56,6 +56,9 @@ app.use("/api/dashboard", requireAuth, dashboardRouter);
 
 app.use(errorHandler);
 
-app.listen(env.PORT, () => {
+app.listen(env.PORT, async () => {
   console.log(`Backend running on port ${env.PORT}`);
+  await initSystemCategories();
+  await migrateLegacyCategories();
+  await migrateOwners();
 });
