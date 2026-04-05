@@ -21,7 +21,6 @@ const USERS = [
     email: "alice@example.com",
     role: "Admin" as const,
     createdAt: "2024-01-15T00:00:00.000Z",
-    emailVerified: true,
   },
   {
     id: "2",
@@ -29,7 +28,6 @@ const USERS = [
     email: "bob@example.com",
     role: "User" as const,
     createdAt: "2024-03-20T00:00:00.000Z",
-    emailVerified: false,
   },
 ];
 
@@ -67,16 +65,6 @@ describe("UsersPage", () => {
 
     expect(screen.getByText("Admin")).toBeInTheDocument();
     expect(screen.getByText("User")).toBeInTheDocument();
-  });
-
-  it("shows Verified / Unverified badges based on emailVerified", async () => {
-    mockedApi.get.mockResolvedValue({ data: USERS });
-    renderPage();
-
-    await screen.findByText("Alice Admin");
-
-    expect(screen.getByText("Verified")).toBeInTheDocument();
-    expect(screen.getByText("Unverified")).toBeInTheDocument();
   });
 
   it("renders an empty table when no users are returned", async () => {

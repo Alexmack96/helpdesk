@@ -8,7 +8,9 @@ import { auth } from "./lib/auth.js";
 import { env } from "./config/env.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { requireAuth, requireAdmin } from "./middleware/auth.js";
-import { adminRouter, initSystemCategories, migrateLegacyCategories, migrateOwners } from "./routes/admin.js";
+import { initSystemCategories, migrateLegacyCategories, migrateOwners } from "./routes/admin.js";
+import { usersRouter } from "./routes/users.js";
+import { importRouter } from "./routes/import.js";
 import { categoriesRouter } from "./routes/categories.js";
 import { transactionsRouter } from "./routes/transactions.js";
 import { dashboardRouter } from "./routes/dashboard.js";
@@ -49,7 +51,8 @@ app.get("/api/me", requireAuth, (req, res) => {
   res.json({ user: { id, email, name, role } });
 });
 
-app.use("/api/admin", requireAuth, requireAdmin, adminRouter);
+app.use("/api/admin/users", requireAuth, requireAdmin, usersRouter);
+app.use("/api/admin", requireAuth, requireAdmin, importRouter);
 app.use("/api/categories", requireAuth, categoriesRouter);
 app.use("/api/transactions", requireAuth, transactionsRouter);
 app.use("/api/dashboard", requireAuth, dashboardRouter);

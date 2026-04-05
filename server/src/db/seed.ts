@@ -22,7 +22,6 @@ async function main() {
       email: env.ADMIN_EMAIL,
       name: "Admin",
       role: UserRole.Admin,
-      emailVerified: true,
     },
   });
 
