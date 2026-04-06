@@ -42,6 +42,7 @@ model Category {
   id           String        @id @default(cuid())
   name         String        @unique
   color        String
+  isFixed      Boolean       @default(false)
   transactions Transaction[]
 }
 
@@ -86,8 +87,45 @@ model MonzoTransaction {
   @@map("monzo_transaction")
 }
 
-// AmexTransaction and BarclaysTransaction and SantanderTransaction will follow
-// when those CSV formats are known — each gets its own columns.
+model AmexTransaction {
+  id              Int      @id @default(autoincrement())
+  transactionDate String
+  processDate     String
+  description     String
+  amount          String
+  isCredit        Boolean  @default(false)
+  foreignCurrency String?
+  foreignAmount   String?
+  statementDate   String
+  importedAt      DateTime @default(now())
+
+  @@map("amex_transaction")
+}
+
+model BarclaysTransaction {
+  id            Int      @id @default(autoincrement())
+  date          String
+  description   String
+  amount        String
+  isCredit      Boolean  @default(false)
+  statementDate String
+  importedAt    DateTime @default(now())
+
+  @@map("barclays_transaction")
+}
+
+model SantanderTransaction {
+  id            Int      @id @default(autoincrement())
+  date          String
+  description   String
+  moneyIn       String?
+  moneyOut      String?
+  balance       String
+  statementDate String
+  importedAt    DateTime @default(now())
+
+  @@map("santander_transaction")
+}
 
 model Session {
   id        String   @id

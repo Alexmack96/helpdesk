@@ -76,9 +76,22 @@ npx playwright show-report   # view last test report
 
 Use the **playwright-e2e-writer** agent for all e2e test authoring. Do not write Playwright tests inline.
 
+## Forms (Client)
+
+Use **React Hook Form** + **Zod** for all forms. Define schemas in `@helpdesk/core` if they're shared with the server; define them locally only if client-only. Wire with `useForm({ resolver: zodResolver(schema) })` and `{...register("field")}`.
+
+## Shared Schemas (`core/`)
+
+`core/` is a third workspace (`@helpdesk/core`) containing Zod schemas shared between server and client.
+
+- `core/src/schemas/` — one file per domain (e.g. `users.ts`)
+- `core/src/index.ts` — barrel re-export
+- Import: `import { createUserSchema } from "@helpdesk/core"`
+- Always add new shared validation schemas here; never duplicate them across server and client.
+
 ## Architecture
 
-Bun monorepo with two workspaces: `server/` and `client/`.
+Bun monorepo with three workspaces: `server/`, `client/`, and `core/`.
 
 ### Server (`server/src/`)
 

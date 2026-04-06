@@ -1,7 +1,7 @@
 {
   "name": "helpdesk",
   "private": true,
-  "workspaces": ["client", "server"],
+  "workspaces": ["client", "server", "core"],
   "scripts": {
     "dev": "bun run --filter '*' dev",
     "test:e2e": "playwright test",

@@ -2,55 +2,54 @@ import { db } from "../db/client.js";
 
 // ─── System categories ───────────────────────────────────────────────────────
 
-const SYSTEM_CATEGORIES: Record<string, string> = {
-  "Groceries":      "#22c55e",
-  "Night Out":      "#f97316",
-  "Takeout":        "#fb923c",
-  "Transport":      "#3b82f6",
-  "Entertainment":  "#ec4899",
-  "Vacation":       "#eab308",
-  "Personal Care":  "#f43f5e",
-  "Bank Sauce":     "#0ea5e9",
-  "Savings":        "#a855f7",
-  "General":        "#64748b",
-  "Uncategorised":  "#d1d5db",
+const SYSTEM_CATEGORIES: Record<string, { color: string; isFixed: boolean }> = {
+  "Activities":     { color: "#8b5cf6", isFixed: false },
+  "Bank Sauce":     { color: "#0ea5e9", isFixed: false },
+  "Eating Out":     { color: "#fb923c", isFixed: false },
+  "Groceries":      { color: "#22c55e", isFixed: false },
+  "Night Out":      { color: "#f97316", isFixed: false },
+  "Personal Care":  { color: "#f43f5e", isFixed: false },
+  "Rent & Bills":   { color: "#64748b", isFixed: true  },
+  "Savings":        { color: "#a855f7", isFixed: true  },
+  "Transport":      { color: "#3b82f6", isFixed: true  },
+  "Uncategorised":  { color: "#d1d5db", isFixed: false },
+  "Vacation":       { color: "#eab308", isFixed: false },
 };
 
 export async function initSystemCategories() {
-  for (const [name, color] of Object.entries(SYSTEM_CATEGORIES)) {
+  for (const [name, { color, isFixed }] of Object.entries(SYSTEM_CATEGORIES)) {
     await db.category.upsert({
       where: { name },
-      create: { name, color },
-      update: {},
+      create: { name, color, isFixed },
+      update: { isFixed },
     });
   }
 }
 
-export async function migrateLegacyCategories() {
-  const legacyMap: Record<string, string> = {
+export async function mapMonzoCategories() {
+  const monzoMap: Record<string, string> = {
     "Eating out":    "Eating Out",
-    "Personal care": "Personal Care",
+    "Entertainment": "Activities",
+    "Golf":          "Activities",
     "Holidays":      "Vacation",
-    "Golf":          "General",
-    "Alex Ignore":   "General",
-    "Shopping":      "Uncategorised",
     "Income":        "Bank Sauce",
+    "Personal care": "Personal Care",
+    "Shopping":      "Uncategorised",
     "Transfers":     "Bank Sauce",
-    "Eating Out":    "Night Out",
   };
 
-  for (const [legacy, canonical] of Object.entries(legacyMap)) {
-    const legacyCat = await db.category.findUnique({ where: { name: legacy } });
-    if (!legacyCat) continue;
+  for (const [monzo, canonical] of Object.entries(monzoMap)) {
+    const monzoCat = await db.category.findUnique({ where: { name: monzo } });
+    if (!monzoCat) continue;
     const canonicalCat = await db.category.findUnique({ where: { name: canonical } });
     if (!canonicalCat) continue;
 
     await db.transaction.updateMany({
-      where: { categoryId: legacyCat.id },
+      where: { categoryId: monzoCat.id },
       data: { categoryId: canonicalCat.id },
     });
-    await db.category.delete({ where: { id: legacyCat.id } });
-    console.log(`Migrated category: "${legacy}" → "${canonical}"`);
+    await db.category.delete({ where: { id: monzoCat.id } });
+    console.log(`Mapped Monzo category: "${monzo}" → "${canonical}"`);
   }
 }
 

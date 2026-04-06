@@ -5,9 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card.
 import { Button } from "../components/ui/button.js";
 import api from "../lib/api.js";
 
-type ImportResult = { imported: number; duplicates: string[] };
+type ImportResult = { imported: number; duplicates?: string[] };
 type ProcessResult = { processed: number };
-type StagedInfo = { monzo: number; processedCount: number };
+type StagedInfo = { monzo: number; amex: number; barclays: number; santander: number; processedCount: number };
 
 function BankUploadCard({
   title,
@@ -20,6 +20,7 @@ function BankUploadCard({
   onFileChange,
   file,
   fileRef,
+  accept = ".csv",
 }: {
   title: string;
   description: string;
@@ -31,6 +32,7 @@ function BankUploadCard({
   onFileChange: (f: File | null) => void;
   file: File | null;
   fileRef: React.RefObject<HTMLInputElement | null>;
+  accept?: string;
 }) {
   const [showDuplicates, setShowDuplicates] = useState(false);
   const inputId = `file-${title.toLowerCase()}`;
@@ -56,7 +58,7 @@ function BankUploadCard({
             ref={fileRef}
             id={inputId}
             type="file"
-            accept=".csv"
+            accept={accept}
             className="sr-only"
             onChange={(e) => {
               onFileChange(e.target.files?.[0] ?? null);
@@ -73,13 +75,13 @@ function BankUploadCard({
             <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
               <CheckCircle className="h-4 w-4" />
               {result.imported.toLocaleString()} rows staged
-              {result.duplicates.length > 0 && (
+              {(result.duplicates?.length ?? 0) > 0 && (
                 <span className="text-muted-foreground">
-                  · {result.duplicates.length} already existed
+                  · {result.duplicates!.length} already existed
                 </span>
               )}
             </div>
-            {result.duplicates.length > 0 && (
+            {(result.duplicates?.length ?? 0) > 0 && (
               <div>
                 <button
                   className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
@@ -90,7 +92,7 @@ function BankUploadCard({
                 </button>
                 {showDuplicates && (
                   <div className="mt-2 rounded-md border border-input bg-muted/50 p-3 max-h-48 overflow-y-auto">
-                    {result.duplicates.map((id) => (
+                    {result.duplicates!.map((id) => (
                       <div key={id} className="font-mono text-xs text-muted-foreground">
                         {id}
                       </div>
@@ -116,7 +118,13 @@ function BankUploadCard({
 export function ImportPage() {
   const queryClient = useQueryClient();
   const monzoFileRef = useRef<HTMLInputElement>(null);
+  const amexFileRef = useRef<HTMLInputElement>(null);
+  const barclaysFileRef = useRef<HTMLInputElement>(null);
+  const santanderFileRef = useRef<HTMLInputElement>(null);
   const [monzoFile, setMonzoFile] = useState<File | null>(null);
+  const [amexFile, setAmexFile] = useState<File | null>(null);
+  const [barclaysFile, setBarclaysFile] = useState<File | null>(null);
+  const [santanderFile, setSantanderFile] = useState<File | null>(null);
 
   const { data: staged, refetch: refetchStaged } = useQuery<StagedInfo>({
     queryKey: ["staged"],
@@ -136,6 +144,45 @@ export function ImportPage() {
     },
   });
 
+  const amexMutation = useMutation<ImportResult, Error, File>({
+    mutationFn: (f) => {
+      const form = new FormData();
+      form.append("file", f);
+      return api.post("/api/admin/import/amex", form).then((r) => r.data);
+    },
+    onSuccess: () => {
+      refetchStaged();
+      setAmexFile(null);
+      if (amexFileRef.current) amexFileRef.current.value = "";
+    },
+  });
+
+  const barclaysMutation = useMutation<ImportResult, Error, File>({
+    mutationFn: (f) => {
+      const form = new FormData();
+      form.append("file", f);
+      return api.post("/api/admin/import/barclays", form).then((r) => r.data);
+    },
+    onSuccess: () => {
+      refetchStaged();
+      setBarclaysFile(null);
+      if (barclaysFileRef.current) barclaysFileRef.current.value = "";
+    },
+  });
+
+  const santanderMutation = useMutation<ImportResult, Error, File>({
+    mutationFn: (f) => {
+      const form = new FormData();
+      form.append("file", f);
+      return api.post("/api/admin/import/santander", form).then((r) => r.data);
+    },
+    onSuccess: () => {
+      refetchStaged();
+      setSantanderFile(null);
+      if (santanderFileRef.current) santanderFileRef.current.value = "";
+    },
+  });
+
   const processMutation = useMutation<ProcessResult, Error>({
     mutationFn: () => api.post("/api/admin/process").then((r) => r.data),
     onSuccess: () => {
@@ -145,7 +192,7 @@ export function ImportPage() {
     },
   });
 
-  const totalStaged = staged?.monzo ?? 0;
+  const totalStaged = (staged?.monzo ?? 0) + (staged?.amex ?? 0) + (staged?.barclays ?? 0) + (staged?.santander ?? 0);
   const unprocessed = totalStaged - (staged?.processedCount ?? 0);
 
   return (
@@ -173,6 +220,18 @@ export function ImportPage() {
                 <div>
                   <span className="font-medium text-foreground">Monzo</span>
                   <span className="text-muted-foreground ml-1">{staged?.monzo.toLocaleString()} rows</span>
+                </div>
+                <div>
+                  <span className="font-medium text-foreground">Amex</span>
+                  <span className="text-muted-foreground ml-1">{staged?.amex.toLocaleString()} rows</span>
+                </div>
+                <div>
+                  <span className="font-medium text-foreground">Barclays</span>
+                  <span className="text-muted-foreground ml-1">{staged?.barclays.toLocaleString()} rows</span>
+                </div>
+                <div>
+                  <span className="font-medium text-foreground">Santander</span>
+                  <span className="text-muted-foreground ml-1">{staged?.santander.toLocaleString()} rows</span>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -215,21 +274,47 @@ export function ImportPage() {
         error={monzoMutation.error}
       />
 
-      {/* Coming-soon banks */}
-      <div className="grid grid-cols-3 gap-4">
-        {["Amex", "Barclays", "Santander"].map((bank) => (
-          <Card key={bank} className="opacity-50">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">
-                {bank}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">Coming soon</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <BankUploadCard
+        title="Amex"
+        description="Download from Amex online → Statements → View/Download PDF."
+        accept=".pdf"
+        file={amexFile}
+        fileRef={amexFileRef}
+        onFileChange={(f) => { setAmexFile(f); amexMutation.reset(); }}
+        onUpload={() => amexFile && amexMutation.mutate(amexFile)}
+        result={amexMutation.data}
+        isPending={amexMutation.isPending}
+        isError={amexMutation.isError}
+        error={amexMutation.error}
+      />
+
+      <BankUploadCard
+        title="Barclays"
+        description="Download from Barclays online → Statements → View statement → Save as PDF."
+        accept=".pdf"
+        file={barclaysFile}
+        fileRef={barclaysFileRef}
+        onFileChange={(f) => { setBarclaysFile(f); barclaysMutation.reset(); }}
+        onUpload={() => barclaysFile && barclaysMutation.mutate(barclaysFile)}
+        result={barclaysMutation.data}
+        isPending={barclaysMutation.isPending}
+        isError={barclaysMutation.isError}
+        error={barclaysMutation.error}
+      />
+
+      <BankUploadCard
+        title="Santander"
+        description="Download from Santander online → My Accounts → Statements → Download PDF."
+        accept=".pdf"
+        file={santanderFile}
+        fileRef={santanderFileRef}
+        onFileChange={(f) => { setSantanderFile(f); santanderMutation.reset(); }}
+        onUpload={() => santanderFile && santanderMutation.mutate(santanderFile)}
+        result={santanderMutation.data}
+        isPending={santanderMutation.isPending}
+        isError={santanderMutation.isError}
+        error={santanderMutation.error}
+      />
     </div>
   );
 }

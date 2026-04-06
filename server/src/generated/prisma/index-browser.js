@@ -130,7 +130,8 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  color: 'color'
+  color: 'color',
+  isFixed: 'isFixed'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
@@ -165,6 +166,40 @@ exports.Prisma.MonzoTransactionScalarFieldEnum = {
   categorySplit: 'categorySplit',
   moneyOut: 'moneyOut',
   moneyIn: 'moneyIn',
+  importedAt: 'importedAt'
+};
+
+exports.Prisma.AmexTransactionScalarFieldEnum = {
+  id: 'id',
+  transactionDate: 'transactionDate',
+  processDate: 'processDate',
+  description: 'description',
+  amount: 'amount',
+  isCredit: 'isCredit',
+  foreignCurrency: 'foreignCurrency',
+  foreignAmount: 'foreignAmount',
+  statementDate: 'statementDate',
+  importedAt: 'importedAt'
+};
+
+exports.Prisma.BarclaysTransactionScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  description: 'description',
+  amount: 'amount',
+  isCredit: 'isCredit',
+  statementDate: 'statementDate',
+  importedAt: 'importedAt'
+};
+
+exports.Prisma.SantanderTransactionScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  description: 'description',
+  moneyIn: 'moneyIn',
+  moneyOut: 'moneyOut',
+  balance: 'balance',
+  statementDate: 'statementDate',
   importedAt: 'importedAt'
 };
 
@@ -234,6 +269,9 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Transaction: 'Transaction',
   MonzoTransaction: 'MonzoTransaction',
+  AmexTransaction: 'AmexTransaction',
+  BarclaysTransaction: 'BarclaysTransaction',
+  SantanderTransaction: 'SantanderTransaction',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification'

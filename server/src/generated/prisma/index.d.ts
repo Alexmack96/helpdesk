@@ -34,6 +34,21 @@ export type Transaction = $Result.DefaultSelection<Prisma.$TransactionPayload>
  */
 export type MonzoTransaction = $Result.DefaultSelection<Prisma.$MonzoTransactionPayload>
 /**
+ * Model AmexTransaction
+ * 
+ */
+export type AmexTransaction = $Result.DefaultSelection<Prisma.$AmexTransactionPayload>
+/**
+ * Model BarclaysTransaction
+ * 
+ */
+export type BarclaysTransaction = $Result.DefaultSelection<Prisma.$BarclaysTransactionPayload>
+/**
+ * Model SantanderTransaction
+ * 
+ */
+export type SantanderTransaction = $Result.DefaultSelection<Prisma.$SantanderTransactionPayload>
+/**
  * Model Session
  * 
  */
@@ -251,6 +266,36 @@ export class PrismaClient<
     * ```
     */
   get monzoTransaction(): Prisma.MonzoTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.amexTransaction`: Exposes CRUD operations for the **AmexTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AmexTransactions
+    * const amexTransactions = await prisma.amexTransaction.findMany()
+    * ```
+    */
+  get amexTransaction(): Prisma.AmexTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.barclaysTransaction`: Exposes CRUD operations for the **BarclaysTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BarclaysTransactions
+    * const barclaysTransactions = await prisma.barclaysTransaction.findMany()
+    * ```
+    */
+  get barclaysTransaction(): Prisma.BarclaysTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.santanderTransaction`: Exposes CRUD operations for the **SantanderTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SantanderTransactions
+    * const santanderTransactions = await prisma.santanderTransaction.findMany()
+    * ```
+    */
+  get santanderTransaction(): Prisma.SantanderTransactionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.session`: Exposes CRUD operations for the **Session** model.
@@ -719,6 +764,9 @@ export namespace Prisma {
     Category: 'Category',
     Transaction: 'Transaction',
     MonzoTransaction: 'MonzoTransaction',
+    AmexTransaction: 'AmexTransaction',
+    BarclaysTransaction: 'BarclaysTransaction',
+    SantanderTransaction: 'SantanderTransaction',
     Session: 'Session',
     Account: 'Account',
     Verification: 'Verification'
@@ -737,7 +785,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "session" | "account" | "verification"
+      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "session" | "account" | "verification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1034,6 +1082,228 @@ export namespace Prisma {
           count: {
             args: Prisma.MonzoTransactionCountArgs<ExtArgs>
             result: $Utils.Optional<MonzoTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
+      AmexTransaction: {
+        payload: Prisma.$AmexTransactionPayload<ExtArgs>
+        fields: Prisma.AmexTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AmexTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AmexTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.AmexTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AmexTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.AmexTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.AmexTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.AmexTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AmexTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.AmexTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload>
+          }
+          update: {
+            args: Prisma.AmexTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.AmexTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AmexTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AmexTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.AmexTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AmexTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.AmexTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAmexTransaction>
+          }
+          groupBy: {
+            args: Prisma.AmexTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AmexTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AmexTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<AmexTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
+      BarclaysTransaction: {
+        payload: Prisma.$BarclaysTransactionPayload<ExtArgs>
+        fields: Prisma.BarclaysTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BarclaysTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BarclaysTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.BarclaysTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BarclaysTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.BarclaysTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.BarclaysTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.BarclaysTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BarclaysTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.BarclaysTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload>
+          }
+          update: {
+            args: Prisma.BarclaysTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.BarclaysTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BarclaysTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BarclaysTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.BarclaysTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BarclaysTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.BarclaysTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBarclaysTransaction>
+          }
+          groupBy: {
+            args: Prisma.BarclaysTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BarclaysTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BarclaysTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<BarclaysTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
+      SantanderTransaction: {
+        payload: Prisma.$SantanderTransactionPayload<ExtArgs>
+        fields: Prisma.SantanderTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SantanderTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SantanderTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.SantanderTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SantanderTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.SantanderTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.SantanderTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.SantanderTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SantanderTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.SantanderTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload>
+          }
+          update: {
+            args: Prisma.SantanderTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SantanderTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SantanderTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SantanderTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.SantanderTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SantanderTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.SantanderTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSantanderTransaction>
+          }
+          groupBy: {
+            args: Prisma.SantanderTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SantanderTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SantanderTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<SantanderTransactionCountAggregateOutputType> | number
           }
         }
       }
@@ -1371,6 +1641,9 @@ export namespace Prisma {
     category?: CategoryOmit
     transaction?: TransactionOmit
     monzoTransaction?: MonzoTransactionOmit
+    amexTransaction?: AmexTransactionOmit
+    barclaysTransaction?: BarclaysTransactionOmit
+    santanderTransaction?: SantanderTransactionOmit
     session?: SessionOmit
     account?: AccountOmit
     verification?: VerificationOmit
@@ -2665,18 +2938,21 @@ export namespace Prisma {
     id: string | null
     name: string | null
     color: string | null
+    isFixed: boolean | null
   }
 
   export type CategoryMaxAggregateOutputType = {
     id: string | null
     name: string | null
     color: string | null
+    isFixed: boolean | null
   }
 
   export type CategoryCountAggregateOutputType = {
     id: number
     name: number
     color: number
+    isFixed: number
     _all: number
   }
 
@@ -2685,18 +2961,21 @@ export namespace Prisma {
     id?: true
     name?: true
     color?: true
+    isFixed?: true
   }
 
   export type CategoryMaxAggregateInputType = {
     id?: true
     name?: true
     color?: true
+    isFixed?: true
   }
 
   export type CategoryCountAggregateInputType = {
     id?: true
     name?: true
     color?: true
+    isFixed?: true
     _all?: true
   }
 
@@ -2776,6 +3055,7 @@ export namespace Prisma {
     id: string
     name: string
     color: string
+    isFixed: boolean
     _count: CategoryCountAggregateOutputType | null
     _min: CategoryMinAggregateOutputType | null
     _max: CategoryMaxAggregateOutputType | null
@@ -2799,6 +3079,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     color?: boolean
+    isFixed?: boolean
     transactions?: boolean | Category$transactionsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
@@ -2807,21 +3088,24 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     color?: boolean
+    isFixed?: boolean
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     color?: boolean
+    isFixed?: boolean
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectScalar = {
     id?: boolean
     name?: boolean
     color?: boolean
+    isFixed?: boolean
   }
 
-  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color", ExtArgs["result"]["category"]>
+  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "isFixed", ExtArgs["result"]["category"]>
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     transactions?: boolean | Category$transactionsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -2838,6 +3122,7 @@ export namespace Prisma {
       id: string
       name: string
       color: string
+      isFixed: boolean
     }, ExtArgs["result"]["category"]>
     composites: {}
   }
@@ -3265,6 +3550,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Category", 'String'>
     readonly name: FieldRef<"Category", 'String'>
     readonly color: FieldRef<"Category", 'String'>
+    readonly isFixed: FieldRef<"Category", 'Boolean'>
   }
     
 
@@ -6035,6 +6321,3232 @@ export namespace Prisma {
      * Omit specific fields from the MonzoTransaction
      */
     omit?: MonzoTransactionOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AmexTransaction
+   */
+
+  export type AggregateAmexTransaction = {
+    _count: AmexTransactionCountAggregateOutputType | null
+    _avg: AmexTransactionAvgAggregateOutputType | null
+    _sum: AmexTransactionSumAggregateOutputType | null
+    _min: AmexTransactionMinAggregateOutputType | null
+    _max: AmexTransactionMaxAggregateOutputType | null
+  }
+
+  export type AmexTransactionAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AmexTransactionSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AmexTransactionMinAggregateOutputType = {
+    id: number | null
+    transactionDate: string | null
+    processDate: string | null
+    description: string | null
+    amount: string | null
+    isCredit: boolean | null
+    foreignCurrency: string | null
+    foreignAmount: string | null
+    statementDate: string | null
+    importedAt: Date | null
+  }
+
+  export type AmexTransactionMaxAggregateOutputType = {
+    id: number | null
+    transactionDate: string | null
+    processDate: string | null
+    description: string | null
+    amount: string | null
+    isCredit: boolean | null
+    foreignCurrency: string | null
+    foreignAmount: string | null
+    statementDate: string | null
+    importedAt: Date | null
+  }
+
+  export type AmexTransactionCountAggregateOutputType = {
+    id: number
+    transactionDate: number
+    processDate: number
+    description: number
+    amount: number
+    isCredit: number
+    foreignCurrency: number
+    foreignAmount: number
+    statementDate: number
+    importedAt: number
+    _all: number
+  }
+
+
+  export type AmexTransactionAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type AmexTransactionSumAggregateInputType = {
+    id?: true
+  }
+
+  export type AmexTransactionMinAggregateInputType = {
+    id?: true
+    transactionDate?: true
+    processDate?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    foreignCurrency?: true
+    foreignAmount?: true
+    statementDate?: true
+    importedAt?: true
+  }
+
+  export type AmexTransactionMaxAggregateInputType = {
+    id?: true
+    transactionDate?: true
+    processDate?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    foreignCurrency?: true
+    foreignAmount?: true
+    statementDate?: true
+    importedAt?: true
+  }
+
+  export type AmexTransactionCountAggregateInputType = {
+    id?: true
+    transactionDate?: true
+    processDate?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    foreignCurrency?: true
+    foreignAmount?: true
+    statementDate?: true
+    importedAt?: true
+    _all?: true
+  }
+
+  export type AmexTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AmexTransaction to aggregate.
+     */
+    where?: AmexTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AmexTransactions to fetch.
+     */
+    orderBy?: AmexTransactionOrderByWithRelationInput | AmexTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AmexTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AmexTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AmexTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AmexTransactions
+    **/
+    _count?: true | AmexTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AmexTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AmexTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AmexTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AmexTransactionMaxAggregateInputType
+  }
+
+  export type GetAmexTransactionAggregateType<T extends AmexTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateAmexTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAmexTransaction[P]>
+      : GetScalarType<T[P], AggregateAmexTransaction[P]>
+  }
+
+
+
+
+  export type AmexTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AmexTransactionWhereInput
+    orderBy?: AmexTransactionOrderByWithAggregationInput | AmexTransactionOrderByWithAggregationInput[]
+    by: AmexTransactionScalarFieldEnum[] | AmexTransactionScalarFieldEnum
+    having?: AmexTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AmexTransactionCountAggregateInputType | true
+    _avg?: AmexTransactionAvgAggregateInputType
+    _sum?: AmexTransactionSumAggregateInputType
+    _min?: AmexTransactionMinAggregateInputType
+    _max?: AmexTransactionMaxAggregateInputType
+  }
+
+  export type AmexTransactionGroupByOutputType = {
+    id: number
+    transactionDate: string
+    processDate: string
+    description: string
+    amount: string
+    isCredit: boolean
+    foreignCurrency: string | null
+    foreignAmount: string | null
+    statementDate: string
+    importedAt: Date
+    _count: AmexTransactionCountAggregateOutputType | null
+    _avg: AmexTransactionAvgAggregateOutputType | null
+    _sum: AmexTransactionSumAggregateOutputType | null
+    _min: AmexTransactionMinAggregateOutputType | null
+    _max: AmexTransactionMaxAggregateOutputType | null
+  }
+
+  type GetAmexTransactionGroupByPayload<T extends AmexTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AmexTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AmexTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AmexTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], AmexTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AmexTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionDate?: boolean
+    processDate?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    foreignCurrency?: boolean
+    foreignAmount?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["amexTransaction"]>
+
+  export type AmexTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionDate?: boolean
+    processDate?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    foreignCurrency?: boolean
+    foreignAmount?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["amexTransaction"]>
+
+  export type AmexTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionDate?: boolean
+    processDate?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    foreignCurrency?: boolean
+    foreignAmount?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["amexTransaction"]>
+
+  export type AmexTransactionSelectScalar = {
+    id?: boolean
+    transactionDate?: boolean
+    processDate?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    foreignCurrency?: boolean
+    foreignAmount?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }
+
+  export type AmexTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "transactionDate" | "processDate" | "description" | "amount" | "isCredit" | "foreignCurrency" | "foreignAmount" | "statementDate" | "importedAt", ExtArgs["result"]["amexTransaction"]>
+
+  export type $AmexTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AmexTransaction"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      transactionDate: string
+      processDate: string
+      description: string
+      amount: string
+      isCredit: boolean
+      foreignCurrency: string | null
+      foreignAmount: string | null
+      statementDate: string
+      importedAt: Date
+    }, ExtArgs["result"]["amexTransaction"]>
+    composites: {}
+  }
+
+  type AmexTransactionGetPayload<S extends boolean | null | undefined | AmexTransactionDefaultArgs> = $Result.GetResult<Prisma.$AmexTransactionPayload, S>
+
+  type AmexTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AmexTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AmexTransactionCountAggregateInputType | true
+    }
+
+  export interface AmexTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AmexTransaction'], meta: { name: 'AmexTransaction' } }
+    /**
+     * Find zero or one AmexTransaction that matches the filter.
+     * @param {AmexTransactionFindUniqueArgs} args - Arguments to find a AmexTransaction
+     * @example
+     * // Get one AmexTransaction
+     * const amexTransaction = await prisma.amexTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AmexTransactionFindUniqueArgs>(args: SelectSubset<T, AmexTransactionFindUniqueArgs<ExtArgs>>): Prisma__AmexTransactionClient<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AmexTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AmexTransactionFindUniqueOrThrowArgs} args - Arguments to find a AmexTransaction
+     * @example
+     * // Get one AmexTransaction
+     * const amexTransaction = await prisma.amexTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AmexTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, AmexTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AmexTransactionClient<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AmexTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AmexTransactionFindFirstArgs} args - Arguments to find a AmexTransaction
+     * @example
+     * // Get one AmexTransaction
+     * const amexTransaction = await prisma.amexTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AmexTransactionFindFirstArgs>(args?: SelectSubset<T, AmexTransactionFindFirstArgs<ExtArgs>>): Prisma__AmexTransactionClient<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AmexTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AmexTransactionFindFirstOrThrowArgs} args - Arguments to find a AmexTransaction
+     * @example
+     * // Get one AmexTransaction
+     * const amexTransaction = await prisma.amexTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AmexTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, AmexTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__AmexTransactionClient<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AmexTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AmexTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AmexTransactions
+     * const amexTransactions = await prisma.amexTransaction.findMany()
+     * 
+     * // Get first 10 AmexTransactions
+     * const amexTransactions = await prisma.amexTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const amexTransactionWithIdOnly = await prisma.amexTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AmexTransactionFindManyArgs>(args?: SelectSubset<T, AmexTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AmexTransaction.
+     * @param {AmexTransactionCreateArgs} args - Arguments to create a AmexTransaction.
+     * @example
+     * // Create one AmexTransaction
+     * const AmexTransaction = await prisma.amexTransaction.create({
+     *   data: {
+     *     // ... data to create a AmexTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends AmexTransactionCreateArgs>(args: SelectSubset<T, AmexTransactionCreateArgs<ExtArgs>>): Prisma__AmexTransactionClient<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AmexTransactions.
+     * @param {AmexTransactionCreateManyArgs} args - Arguments to create many AmexTransactions.
+     * @example
+     * // Create many AmexTransactions
+     * const amexTransaction = await prisma.amexTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AmexTransactionCreateManyArgs>(args?: SelectSubset<T, AmexTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AmexTransactions and returns the data saved in the database.
+     * @param {AmexTransactionCreateManyAndReturnArgs} args - Arguments to create many AmexTransactions.
+     * @example
+     * // Create many AmexTransactions
+     * const amexTransaction = await prisma.amexTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AmexTransactions and only return the `id`
+     * const amexTransactionWithIdOnly = await prisma.amexTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AmexTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, AmexTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AmexTransaction.
+     * @param {AmexTransactionDeleteArgs} args - Arguments to delete one AmexTransaction.
+     * @example
+     * // Delete one AmexTransaction
+     * const AmexTransaction = await prisma.amexTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one AmexTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AmexTransactionDeleteArgs>(args: SelectSubset<T, AmexTransactionDeleteArgs<ExtArgs>>): Prisma__AmexTransactionClient<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AmexTransaction.
+     * @param {AmexTransactionUpdateArgs} args - Arguments to update one AmexTransaction.
+     * @example
+     * // Update one AmexTransaction
+     * const amexTransaction = await prisma.amexTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AmexTransactionUpdateArgs>(args: SelectSubset<T, AmexTransactionUpdateArgs<ExtArgs>>): Prisma__AmexTransactionClient<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AmexTransactions.
+     * @param {AmexTransactionDeleteManyArgs} args - Arguments to filter AmexTransactions to delete.
+     * @example
+     * // Delete a few AmexTransactions
+     * const { count } = await prisma.amexTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AmexTransactionDeleteManyArgs>(args?: SelectSubset<T, AmexTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AmexTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AmexTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AmexTransactions
+     * const amexTransaction = await prisma.amexTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AmexTransactionUpdateManyArgs>(args: SelectSubset<T, AmexTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AmexTransactions and returns the data updated in the database.
+     * @param {AmexTransactionUpdateManyAndReturnArgs} args - Arguments to update many AmexTransactions.
+     * @example
+     * // Update many AmexTransactions
+     * const amexTransaction = await prisma.amexTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AmexTransactions and only return the `id`
+     * const amexTransactionWithIdOnly = await prisma.amexTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AmexTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, AmexTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AmexTransaction.
+     * @param {AmexTransactionUpsertArgs} args - Arguments to update or create a AmexTransaction.
+     * @example
+     * // Update or create a AmexTransaction
+     * const amexTransaction = await prisma.amexTransaction.upsert({
+     *   create: {
+     *     // ... data to create a AmexTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AmexTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AmexTransactionUpsertArgs>(args: SelectSubset<T, AmexTransactionUpsertArgs<ExtArgs>>): Prisma__AmexTransactionClient<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AmexTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AmexTransactionCountArgs} args - Arguments to filter AmexTransactions to count.
+     * @example
+     * // Count the number of AmexTransactions
+     * const count = await prisma.amexTransaction.count({
+     *   where: {
+     *     // ... the filter for the AmexTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends AmexTransactionCountArgs>(
+      args?: Subset<T, AmexTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AmexTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AmexTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AmexTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AmexTransactionAggregateArgs>(args: Subset<T, AmexTransactionAggregateArgs>): Prisma.PrismaPromise<GetAmexTransactionAggregateType<T>>
+
+    /**
+     * Group by AmexTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AmexTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AmexTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AmexTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: AmexTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AmexTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAmexTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AmexTransaction model
+   */
+  readonly fields: AmexTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AmexTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AmexTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AmexTransaction model
+   */
+  interface AmexTransactionFieldRefs {
+    readonly id: FieldRef<"AmexTransaction", 'Int'>
+    readonly transactionDate: FieldRef<"AmexTransaction", 'String'>
+    readonly processDate: FieldRef<"AmexTransaction", 'String'>
+    readonly description: FieldRef<"AmexTransaction", 'String'>
+    readonly amount: FieldRef<"AmexTransaction", 'String'>
+    readonly isCredit: FieldRef<"AmexTransaction", 'Boolean'>
+    readonly foreignCurrency: FieldRef<"AmexTransaction", 'String'>
+    readonly foreignAmount: FieldRef<"AmexTransaction", 'String'>
+    readonly statementDate: FieldRef<"AmexTransaction", 'String'>
+    readonly importedAt: FieldRef<"AmexTransaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AmexTransaction findUnique
+   */
+  export type AmexTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which AmexTransaction to fetch.
+     */
+    where: AmexTransactionWhereUniqueInput
+  }
+
+  /**
+   * AmexTransaction findUniqueOrThrow
+   */
+  export type AmexTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which AmexTransaction to fetch.
+     */
+    where: AmexTransactionWhereUniqueInput
+  }
+
+  /**
+   * AmexTransaction findFirst
+   */
+  export type AmexTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which AmexTransaction to fetch.
+     */
+    where?: AmexTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AmexTransactions to fetch.
+     */
+    orderBy?: AmexTransactionOrderByWithRelationInput | AmexTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AmexTransactions.
+     */
+    cursor?: AmexTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AmexTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AmexTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AmexTransactions.
+     */
+    distinct?: AmexTransactionScalarFieldEnum | AmexTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * AmexTransaction findFirstOrThrow
+   */
+  export type AmexTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which AmexTransaction to fetch.
+     */
+    where?: AmexTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AmexTransactions to fetch.
+     */
+    orderBy?: AmexTransactionOrderByWithRelationInput | AmexTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AmexTransactions.
+     */
+    cursor?: AmexTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AmexTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AmexTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AmexTransactions.
+     */
+    distinct?: AmexTransactionScalarFieldEnum | AmexTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * AmexTransaction findMany
+   */
+  export type AmexTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which AmexTransactions to fetch.
+     */
+    where?: AmexTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AmexTransactions to fetch.
+     */
+    orderBy?: AmexTransactionOrderByWithRelationInput | AmexTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AmexTransactions.
+     */
+    cursor?: AmexTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AmexTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AmexTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AmexTransactions.
+     */
+    distinct?: AmexTransactionScalarFieldEnum | AmexTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * AmexTransaction create
+   */
+  export type AmexTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AmexTransaction.
+     */
+    data: XOR<AmexTransactionCreateInput, AmexTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * AmexTransaction createMany
+   */
+  export type AmexTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AmexTransactions.
+     */
+    data: AmexTransactionCreateManyInput | AmexTransactionCreateManyInput[]
+  }
+
+  /**
+   * AmexTransaction createManyAndReturn
+   */
+  export type AmexTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many AmexTransactions.
+     */
+    data: AmexTransactionCreateManyInput | AmexTransactionCreateManyInput[]
+  }
+
+  /**
+   * AmexTransaction update
+   */
+  export type AmexTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AmexTransaction.
+     */
+    data: XOR<AmexTransactionUpdateInput, AmexTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which AmexTransaction to update.
+     */
+    where: AmexTransactionWhereUniqueInput
+  }
+
+  /**
+   * AmexTransaction updateMany
+   */
+  export type AmexTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AmexTransactions.
+     */
+    data: XOR<AmexTransactionUpdateManyMutationInput, AmexTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which AmexTransactions to update
+     */
+    where?: AmexTransactionWhereInput
+    /**
+     * Limit how many AmexTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AmexTransaction updateManyAndReturn
+   */
+  export type AmexTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update AmexTransactions.
+     */
+    data: XOR<AmexTransactionUpdateManyMutationInput, AmexTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which AmexTransactions to update
+     */
+    where?: AmexTransactionWhereInput
+    /**
+     * Limit how many AmexTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AmexTransaction upsert
+   */
+  export type AmexTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AmexTransaction to update in case it exists.
+     */
+    where: AmexTransactionWhereUniqueInput
+    /**
+     * In case the AmexTransaction found by the `where` argument doesn't exist, create a new AmexTransaction with this data.
+     */
+    create: XOR<AmexTransactionCreateInput, AmexTransactionUncheckedCreateInput>
+    /**
+     * In case the AmexTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AmexTransactionUpdateInput, AmexTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * AmexTransaction delete
+   */
+  export type AmexTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+    /**
+     * Filter which AmexTransaction to delete.
+     */
+    where: AmexTransactionWhereUniqueInput
+  }
+
+  /**
+   * AmexTransaction deleteMany
+   */
+  export type AmexTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AmexTransactions to delete
+     */
+    where?: AmexTransactionWhereInput
+    /**
+     * Limit how many AmexTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AmexTransaction without action
+   */
+  export type AmexTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AmexTransaction
+     */
+    select?: AmexTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AmexTransaction
+     */
+    omit?: AmexTransactionOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BarclaysTransaction
+   */
+
+  export type AggregateBarclaysTransaction = {
+    _count: BarclaysTransactionCountAggregateOutputType | null
+    _avg: BarclaysTransactionAvgAggregateOutputType | null
+    _sum: BarclaysTransactionSumAggregateOutputType | null
+    _min: BarclaysTransactionMinAggregateOutputType | null
+    _max: BarclaysTransactionMaxAggregateOutputType | null
+  }
+
+  export type BarclaysTransactionAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type BarclaysTransactionSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type BarclaysTransactionMinAggregateOutputType = {
+    id: number | null
+    date: string | null
+    description: string | null
+    amount: string | null
+    isCredit: boolean | null
+    statementDate: string | null
+    importedAt: Date | null
+  }
+
+  export type BarclaysTransactionMaxAggregateOutputType = {
+    id: number | null
+    date: string | null
+    description: string | null
+    amount: string | null
+    isCredit: boolean | null
+    statementDate: string | null
+    importedAt: Date | null
+  }
+
+  export type BarclaysTransactionCountAggregateOutputType = {
+    id: number
+    date: number
+    description: number
+    amount: number
+    isCredit: number
+    statementDate: number
+    importedAt: number
+    _all: number
+  }
+
+
+  export type BarclaysTransactionAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type BarclaysTransactionSumAggregateInputType = {
+    id?: true
+  }
+
+  export type BarclaysTransactionMinAggregateInputType = {
+    id?: true
+    date?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    statementDate?: true
+    importedAt?: true
+  }
+
+  export type BarclaysTransactionMaxAggregateInputType = {
+    id?: true
+    date?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    statementDate?: true
+    importedAt?: true
+  }
+
+  export type BarclaysTransactionCountAggregateInputType = {
+    id?: true
+    date?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    statementDate?: true
+    importedAt?: true
+    _all?: true
+  }
+
+  export type BarclaysTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BarclaysTransaction to aggregate.
+     */
+    where?: BarclaysTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BarclaysTransactions to fetch.
+     */
+    orderBy?: BarclaysTransactionOrderByWithRelationInput | BarclaysTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BarclaysTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BarclaysTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BarclaysTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BarclaysTransactions
+    **/
+    _count?: true | BarclaysTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BarclaysTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BarclaysTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BarclaysTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BarclaysTransactionMaxAggregateInputType
+  }
+
+  export type GetBarclaysTransactionAggregateType<T extends BarclaysTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateBarclaysTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBarclaysTransaction[P]>
+      : GetScalarType<T[P], AggregateBarclaysTransaction[P]>
+  }
+
+
+
+
+  export type BarclaysTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BarclaysTransactionWhereInput
+    orderBy?: BarclaysTransactionOrderByWithAggregationInput | BarclaysTransactionOrderByWithAggregationInput[]
+    by: BarclaysTransactionScalarFieldEnum[] | BarclaysTransactionScalarFieldEnum
+    having?: BarclaysTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BarclaysTransactionCountAggregateInputType | true
+    _avg?: BarclaysTransactionAvgAggregateInputType
+    _sum?: BarclaysTransactionSumAggregateInputType
+    _min?: BarclaysTransactionMinAggregateInputType
+    _max?: BarclaysTransactionMaxAggregateInputType
+  }
+
+  export type BarclaysTransactionGroupByOutputType = {
+    id: number
+    date: string
+    description: string
+    amount: string
+    isCredit: boolean
+    statementDate: string
+    importedAt: Date
+    _count: BarclaysTransactionCountAggregateOutputType | null
+    _avg: BarclaysTransactionAvgAggregateOutputType | null
+    _sum: BarclaysTransactionSumAggregateOutputType | null
+    _min: BarclaysTransactionMinAggregateOutputType | null
+    _max: BarclaysTransactionMaxAggregateOutputType | null
+  }
+
+  type GetBarclaysTransactionGroupByPayload<T extends BarclaysTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BarclaysTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BarclaysTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BarclaysTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], BarclaysTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BarclaysTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["barclaysTransaction"]>
+
+  export type BarclaysTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["barclaysTransaction"]>
+
+  export type BarclaysTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["barclaysTransaction"]>
+
+  export type BarclaysTransactionSelectScalar = {
+    id?: boolean
+    date?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }
+
+  export type BarclaysTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "amount" | "isCredit" | "statementDate" | "importedAt", ExtArgs["result"]["barclaysTransaction"]>
+
+  export type $BarclaysTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BarclaysTransaction"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      date: string
+      description: string
+      amount: string
+      isCredit: boolean
+      statementDate: string
+      importedAt: Date
+    }, ExtArgs["result"]["barclaysTransaction"]>
+    composites: {}
+  }
+
+  type BarclaysTransactionGetPayload<S extends boolean | null | undefined | BarclaysTransactionDefaultArgs> = $Result.GetResult<Prisma.$BarclaysTransactionPayload, S>
+
+  type BarclaysTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BarclaysTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BarclaysTransactionCountAggregateInputType | true
+    }
+
+  export interface BarclaysTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BarclaysTransaction'], meta: { name: 'BarclaysTransaction' } }
+    /**
+     * Find zero or one BarclaysTransaction that matches the filter.
+     * @param {BarclaysTransactionFindUniqueArgs} args - Arguments to find a BarclaysTransaction
+     * @example
+     * // Get one BarclaysTransaction
+     * const barclaysTransaction = await prisma.barclaysTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BarclaysTransactionFindUniqueArgs>(args: SelectSubset<T, BarclaysTransactionFindUniqueArgs<ExtArgs>>): Prisma__BarclaysTransactionClient<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BarclaysTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BarclaysTransactionFindUniqueOrThrowArgs} args - Arguments to find a BarclaysTransaction
+     * @example
+     * // Get one BarclaysTransaction
+     * const barclaysTransaction = await prisma.barclaysTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BarclaysTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, BarclaysTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BarclaysTransactionClient<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BarclaysTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BarclaysTransactionFindFirstArgs} args - Arguments to find a BarclaysTransaction
+     * @example
+     * // Get one BarclaysTransaction
+     * const barclaysTransaction = await prisma.barclaysTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BarclaysTransactionFindFirstArgs>(args?: SelectSubset<T, BarclaysTransactionFindFirstArgs<ExtArgs>>): Prisma__BarclaysTransactionClient<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BarclaysTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BarclaysTransactionFindFirstOrThrowArgs} args - Arguments to find a BarclaysTransaction
+     * @example
+     * // Get one BarclaysTransaction
+     * const barclaysTransaction = await prisma.barclaysTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BarclaysTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, BarclaysTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__BarclaysTransactionClient<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BarclaysTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BarclaysTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BarclaysTransactions
+     * const barclaysTransactions = await prisma.barclaysTransaction.findMany()
+     * 
+     * // Get first 10 BarclaysTransactions
+     * const barclaysTransactions = await prisma.barclaysTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const barclaysTransactionWithIdOnly = await prisma.barclaysTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BarclaysTransactionFindManyArgs>(args?: SelectSubset<T, BarclaysTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BarclaysTransaction.
+     * @param {BarclaysTransactionCreateArgs} args - Arguments to create a BarclaysTransaction.
+     * @example
+     * // Create one BarclaysTransaction
+     * const BarclaysTransaction = await prisma.barclaysTransaction.create({
+     *   data: {
+     *     // ... data to create a BarclaysTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends BarclaysTransactionCreateArgs>(args: SelectSubset<T, BarclaysTransactionCreateArgs<ExtArgs>>): Prisma__BarclaysTransactionClient<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BarclaysTransactions.
+     * @param {BarclaysTransactionCreateManyArgs} args - Arguments to create many BarclaysTransactions.
+     * @example
+     * // Create many BarclaysTransactions
+     * const barclaysTransaction = await prisma.barclaysTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BarclaysTransactionCreateManyArgs>(args?: SelectSubset<T, BarclaysTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BarclaysTransactions and returns the data saved in the database.
+     * @param {BarclaysTransactionCreateManyAndReturnArgs} args - Arguments to create many BarclaysTransactions.
+     * @example
+     * // Create many BarclaysTransactions
+     * const barclaysTransaction = await prisma.barclaysTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BarclaysTransactions and only return the `id`
+     * const barclaysTransactionWithIdOnly = await prisma.barclaysTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BarclaysTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, BarclaysTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BarclaysTransaction.
+     * @param {BarclaysTransactionDeleteArgs} args - Arguments to delete one BarclaysTransaction.
+     * @example
+     * // Delete one BarclaysTransaction
+     * const BarclaysTransaction = await prisma.barclaysTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one BarclaysTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BarclaysTransactionDeleteArgs>(args: SelectSubset<T, BarclaysTransactionDeleteArgs<ExtArgs>>): Prisma__BarclaysTransactionClient<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BarclaysTransaction.
+     * @param {BarclaysTransactionUpdateArgs} args - Arguments to update one BarclaysTransaction.
+     * @example
+     * // Update one BarclaysTransaction
+     * const barclaysTransaction = await prisma.barclaysTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BarclaysTransactionUpdateArgs>(args: SelectSubset<T, BarclaysTransactionUpdateArgs<ExtArgs>>): Prisma__BarclaysTransactionClient<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BarclaysTransactions.
+     * @param {BarclaysTransactionDeleteManyArgs} args - Arguments to filter BarclaysTransactions to delete.
+     * @example
+     * // Delete a few BarclaysTransactions
+     * const { count } = await prisma.barclaysTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BarclaysTransactionDeleteManyArgs>(args?: SelectSubset<T, BarclaysTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BarclaysTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BarclaysTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BarclaysTransactions
+     * const barclaysTransaction = await prisma.barclaysTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BarclaysTransactionUpdateManyArgs>(args: SelectSubset<T, BarclaysTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BarclaysTransactions and returns the data updated in the database.
+     * @param {BarclaysTransactionUpdateManyAndReturnArgs} args - Arguments to update many BarclaysTransactions.
+     * @example
+     * // Update many BarclaysTransactions
+     * const barclaysTransaction = await prisma.barclaysTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BarclaysTransactions and only return the `id`
+     * const barclaysTransactionWithIdOnly = await prisma.barclaysTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BarclaysTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, BarclaysTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BarclaysTransaction.
+     * @param {BarclaysTransactionUpsertArgs} args - Arguments to update or create a BarclaysTransaction.
+     * @example
+     * // Update or create a BarclaysTransaction
+     * const barclaysTransaction = await prisma.barclaysTransaction.upsert({
+     *   create: {
+     *     // ... data to create a BarclaysTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BarclaysTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BarclaysTransactionUpsertArgs>(args: SelectSubset<T, BarclaysTransactionUpsertArgs<ExtArgs>>): Prisma__BarclaysTransactionClient<$Result.GetResult<Prisma.$BarclaysTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BarclaysTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BarclaysTransactionCountArgs} args - Arguments to filter BarclaysTransactions to count.
+     * @example
+     * // Count the number of BarclaysTransactions
+     * const count = await prisma.barclaysTransaction.count({
+     *   where: {
+     *     // ... the filter for the BarclaysTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends BarclaysTransactionCountArgs>(
+      args?: Subset<T, BarclaysTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BarclaysTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BarclaysTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BarclaysTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BarclaysTransactionAggregateArgs>(args: Subset<T, BarclaysTransactionAggregateArgs>): Prisma.PrismaPromise<GetBarclaysTransactionAggregateType<T>>
+
+    /**
+     * Group by BarclaysTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BarclaysTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BarclaysTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BarclaysTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: BarclaysTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BarclaysTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBarclaysTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BarclaysTransaction model
+   */
+  readonly fields: BarclaysTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BarclaysTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BarclaysTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BarclaysTransaction model
+   */
+  interface BarclaysTransactionFieldRefs {
+    readonly id: FieldRef<"BarclaysTransaction", 'Int'>
+    readonly date: FieldRef<"BarclaysTransaction", 'String'>
+    readonly description: FieldRef<"BarclaysTransaction", 'String'>
+    readonly amount: FieldRef<"BarclaysTransaction", 'String'>
+    readonly isCredit: FieldRef<"BarclaysTransaction", 'Boolean'>
+    readonly statementDate: FieldRef<"BarclaysTransaction", 'String'>
+    readonly importedAt: FieldRef<"BarclaysTransaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BarclaysTransaction findUnique
+   */
+  export type BarclaysTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which BarclaysTransaction to fetch.
+     */
+    where: BarclaysTransactionWhereUniqueInput
+  }
+
+  /**
+   * BarclaysTransaction findUniqueOrThrow
+   */
+  export type BarclaysTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which BarclaysTransaction to fetch.
+     */
+    where: BarclaysTransactionWhereUniqueInput
+  }
+
+  /**
+   * BarclaysTransaction findFirst
+   */
+  export type BarclaysTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which BarclaysTransaction to fetch.
+     */
+    where?: BarclaysTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BarclaysTransactions to fetch.
+     */
+    orderBy?: BarclaysTransactionOrderByWithRelationInput | BarclaysTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BarclaysTransactions.
+     */
+    cursor?: BarclaysTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BarclaysTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BarclaysTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BarclaysTransactions.
+     */
+    distinct?: BarclaysTransactionScalarFieldEnum | BarclaysTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * BarclaysTransaction findFirstOrThrow
+   */
+  export type BarclaysTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which BarclaysTransaction to fetch.
+     */
+    where?: BarclaysTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BarclaysTransactions to fetch.
+     */
+    orderBy?: BarclaysTransactionOrderByWithRelationInput | BarclaysTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BarclaysTransactions.
+     */
+    cursor?: BarclaysTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BarclaysTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BarclaysTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BarclaysTransactions.
+     */
+    distinct?: BarclaysTransactionScalarFieldEnum | BarclaysTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * BarclaysTransaction findMany
+   */
+  export type BarclaysTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which BarclaysTransactions to fetch.
+     */
+    where?: BarclaysTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BarclaysTransactions to fetch.
+     */
+    orderBy?: BarclaysTransactionOrderByWithRelationInput | BarclaysTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BarclaysTransactions.
+     */
+    cursor?: BarclaysTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BarclaysTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BarclaysTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BarclaysTransactions.
+     */
+    distinct?: BarclaysTransactionScalarFieldEnum | BarclaysTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * BarclaysTransaction create
+   */
+  export type BarclaysTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a BarclaysTransaction.
+     */
+    data: XOR<BarclaysTransactionCreateInput, BarclaysTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * BarclaysTransaction createMany
+   */
+  export type BarclaysTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BarclaysTransactions.
+     */
+    data: BarclaysTransactionCreateManyInput | BarclaysTransactionCreateManyInput[]
+  }
+
+  /**
+   * BarclaysTransaction createManyAndReturn
+   */
+  export type BarclaysTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many BarclaysTransactions.
+     */
+    data: BarclaysTransactionCreateManyInput | BarclaysTransactionCreateManyInput[]
+  }
+
+  /**
+   * BarclaysTransaction update
+   */
+  export type BarclaysTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a BarclaysTransaction.
+     */
+    data: XOR<BarclaysTransactionUpdateInput, BarclaysTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which BarclaysTransaction to update.
+     */
+    where: BarclaysTransactionWhereUniqueInput
+  }
+
+  /**
+   * BarclaysTransaction updateMany
+   */
+  export type BarclaysTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BarclaysTransactions.
+     */
+    data: XOR<BarclaysTransactionUpdateManyMutationInput, BarclaysTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which BarclaysTransactions to update
+     */
+    where?: BarclaysTransactionWhereInput
+    /**
+     * Limit how many BarclaysTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BarclaysTransaction updateManyAndReturn
+   */
+  export type BarclaysTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update BarclaysTransactions.
+     */
+    data: XOR<BarclaysTransactionUpdateManyMutationInput, BarclaysTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which BarclaysTransactions to update
+     */
+    where?: BarclaysTransactionWhereInput
+    /**
+     * Limit how many BarclaysTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BarclaysTransaction upsert
+   */
+  export type BarclaysTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the BarclaysTransaction to update in case it exists.
+     */
+    where: BarclaysTransactionWhereUniqueInput
+    /**
+     * In case the BarclaysTransaction found by the `where` argument doesn't exist, create a new BarclaysTransaction with this data.
+     */
+    create: XOR<BarclaysTransactionCreateInput, BarclaysTransactionUncheckedCreateInput>
+    /**
+     * In case the BarclaysTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BarclaysTransactionUpdateInput, BarclaysTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * BarclaysTransaction delete
+   */
+  export type BarclaysTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+    /**
+     * Filter which BarclaysTransaction to delete.
+     */
+    where: BarclaysTransactionWhereUniqueInput
+  }
+
+  /**
+   * BarclaysTransaction deleteMany
+   */
+  export type BarclaysTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BarclaysTransactions to delete
+     */
+    where?: BarclaysTransactionWhereInput
+    /**
+     * Limit how many BarclaysTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BarclaysTransaction without action
+   */
+  export type BarclaysTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BarclaysTransaction
+     */
+    select?: BarclaysTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BarclaysTransaction
+     */
+    omit?: BarclaysTransactionOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SantanderTransaction
+   */
+
+  export type AggregateSantanderTransaction = {
+    _count: SantanderTransactionCountAggregateOutputType | null
+    _avg: SantanderTransactionAvgAggregateOutputType | null
+    _sum: SantanderTransactionSumAggregateOutputType | null
+    _min: SantanderTransactionMinAggregateOutputType | null
+    _max: SantanderTransactionMaxAggregateOutputType | null
+  }
+
+  export type SantanderTransactionAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SantanderTransactionSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SantanderTransactionMinAggregateOutputType = {
+    id: number | null
+    date: string | null
+    description: string | null
+    moneyIn: string | null
+    moneyOut: string | null
+    balance: string | null
+    statementDate: string | null
+    importedAt: Date | null
+  }
+
+  export type SantanderTransactionMaxAggregateOutputType = {
+    id: number | null
+    date: string | null
+    description: string | null
+    moneyIn: string | null
+    moneyOut: string | null
+    balance: string | null
+    statementDate: string | null
+    importedAt: Date | null
+  }
+
+  export type SantanderTransactionCountAggregateOutputType = {
+    id: number
+    date: number
+    description: number
+    moneyIn: number
+    moneyOut: number
+    balance: number
+    statementDate: number
+    importedAt: number
+    _all: number
+  }
+
+
+  export type SantanderTransactionAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SantanderTransactionSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SantanderTransactionMinAggregateInputType = {
+    id?: true
+    date?: true
+    description?: true
+    moneyIn?: true
+    moneyOut?: true
+    balance?: true
+    statementDate?: true
+    importedAt?: true
+  }
+
+  export type SantanderTransactionMaxAggregateInputType = {
+    id?: true
+    date?: true
+    description?: true
+    moneyIn?: true
+    moneyOut?: true
+    balance?: true
+    statementDate?: true
+    importedAt?: true
+  }
+
+  export type SantanderTransactionCountAggregateInputType = {
+    id?: true
+    date?: true
+    description?: true
+    moneyIn?: true
+    moneyOut?: true
+    balance?: true
+    statementDate?: true
+    importedAt?: true
+    _all?: true
+  }
+
+  export type SantanderTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SantanderTransaction to aggregate.
+     */
+    where?: SantanderTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SantanderTransactions to fetch.
+     */
+    orderBy?: SantanderTransactionOrderByWithRelationInput | SantanderTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SantanderTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SantanderTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SantanderTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SantanderTransactions
+    **/
+    _count?: true | SantanderTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SantanderTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SantanderTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SantanderTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SantanderTransactionMaxAggregateInputType
+  }
+
+  export type GetSantanderTransactionAggregateType<T extends SantanderTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSantanderTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSantanderTransaction[P]>
+      : GetScalarType<T[P], AggregateSantanderTransaction[P]>
+  }
+
+
+
+
+  export type SantanderTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SantanderTransactionWhereInput
+    orderBy?: SantanderTransactionOrderByWithAggregationInput | SantanderTransactionOrderByWithAggregationInput[]
+    by: SantanderTransactionScalarFieldEnum[] | SantanderTransactionScalarFieldEnum
+    having?: SantanderTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SantanderTransactionCountAggregateInputType | true
+    _avg?: SantanderTransactionAvgAggregateInputType
+    _sum?: SantanderTransactionSumAggregateInputType
+    _min?: SantanderTransactionMinAggregateInputType
+    _max?: SantanderTransactionMaxAggregateInputType
+  }
+
+  export type SantanderTransactionGroupByOutputType = {
+    id: number
+    date: string
+    description: string
+    moneyIn: string | null
+    moneyOut: string | null
+    balance: string
+    statementDate: string
+    importedAt: Date
+    _count: SantanderTransactionCountAggregateOutputType | null
+    _avg: SantanderTransactionAvgAggregateOutputType | null
+    _sum: SantanderTransactionSumAggregateOutputType | null
+    _min: SantanderTransactionMinAggregateOutputType | null
+    _max: SantanderTransactionMaxAggregateOutputType | null
+  }
+
+  type GetSantanderTransactionGroupByPayload<T extends SantanderTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SantanderTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SantanderTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SantanderTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], SantanderTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SantanderTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    description?: boolean
+    moneyIn?: boolean
+    moneyOut?: boolean
+    balance?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["santanderTransaction"]>
+
+  export type SantanderTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    description?: boolean
+    moneyIn?: boolean
+    moneyOut?: boolean
+    balance?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["santanderTransaction"]>
+
+  export type SantanderTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    description?: boolean
+    moneyIn?: boolean
+    moneyOut?: boolean
+    balance?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }, ExtArgs["result"]["santanderTransaction"]>
+
+  export type SantanderTransactionSelectScalar = {
+    id?: boolean
+    date?: boolean
+    description?: boolean
+    moneyIn?: boolean
+    moneyOut?: boolean
+    balance?: boolean
+    statementDate?: boolean
+    importedAt?: boolean
+  }
+
+  export type SantanderTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "moneyIn" | "moneyOut" | "balance" | "statementDate" | "importedAt", ExtArgs["result"]["santanderTransaction"]>
+
+  export type $SantanderTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SantanderTransaction"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      date: string
+      description: string
+      moneyIn: string | null
+      moneyOut: string | null
+      balance: string
+      statementDate: string
+      importedAt: Date
+    }, ExtArgs["result"]["santanderTransaction"]>
+    composites: {}
+  }
+
+  type SantanderTransactionGetPayload<S extends boolean | null | undefined | SantanderTransactionDefaultArgs> = $Result.GetResult<Prisma.$SantanderTransactionPayload, S>
+
+  type SantanderTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SantanderTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SantanderTransactionCountAggregateInputType | true
+    }
+
+  export interface SantanderTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SantanderTransaction'], meta: { name: 'SantanderTransaction' } }
+    /**
+     * Find zero or one SantanderTransaction that matches the filter.
+     * @param {SantanderTransactionFindUniqueArgs} args - Arguments to find a SantanderTransaction
+     * @example
+     * // Get one SantanderTransaction
+     * const santanderTransaction = await prisma.santanderTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SantanderTransactionFindUniqueArgs>(args: SelectSubset<T, SantanderTransactionFindUniqueArgs<ExtArgs>>): Prisma__SantanderTransactionClient<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SantanderTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SantanderTransactionFindUniqueOrThrowArgs} args - Arguments to find a SantanderTransaction
+     * @example
+     * // Get one SantanderTransaction
+     * const santanderTransaction = await prisma.santanderTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SantanderTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, SantanderTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SantanderTransactionClient<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SantanderTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SantanderTransactionFindFirstArgs} args - Arguments to find a SantanderTransaction
+     * @example
+     * // Get one SantanderTransaction
+     * const santanderTransaction = await prisma.santanderTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SantanderTransactionFindFirstArgs>(args?: SelectSubset<T, SantanderTransactionFindFirstArgs<ExtArgs>>): Prisma__SantanderTransactionClient<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SantanderTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SantanderTransactionFindFirstOrThrowArgs} args - Arguments to find a SantanderTransaction
+     * @example
+     * // Get one SantanderTransaction
+     * const santanderTransaction = await prisma.santanderTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SantanderTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, SantanderTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SantanderTransactionClient<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SantanderTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SantanderTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SantanderTransactions
+     * const santanderTransactions = await prisma.santanderTransaction.findMany()
+     * 
+     * // Get first 10 SantanderTransactions
+     * const santanderTransactions = await prisma.santanderTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const santanderTransactionWithIdOnly = await prisma.santanderTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SantanderTransactionFindManyArgs>(args?: SelectSubset<T, SantanderTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SantanderTransaction.
+     * @param {SantanderTransactionCreateArgs} args - Arguments to create a SantanderTransaction.
+     * @example
+     * // Create one SantanderTransaction
+     * const SantanderTransaction = await prisma.santanderTransaction.create({
+     *   data: {
+     *     // ... data to create a SantanderTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends SantanderTransactionCreateArgs>(args: SelectSubset<T, SantanderTransactionCreateArgs<ExtArgs>>): Prisma__SantanderTransactionClient<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SantanderTransactions.
+     * @param {SantanderTransactionCreateManyArgs} args - Arguments to create many SantanderTransactions.
+     * @example
+     * // Create many SantanderTransactions
+     * const santanderTransaction = await prisma.santanderTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SantanderTransactionCreateManyArgs>(args?: SelectSubset<T, SantanderTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SantanderTransactions and returns the data saved in the database.
+     * @param {SantanderTransactionCreateManyAndReturnArgs} args - Arguments to create many SantanderTransactions.
+     * @example
+     * // Create many SantanderTransactions
+     * const santanderTransaction = await prisma.santanderTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SantanderTransactions and only return the `id`
+     * const santanderTransactionWithIdOnly = await prisma.santanderTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SantanderTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, SantanderTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SantanderTransaction.
+     * @param {SantanderTransactionDeleteArgs} args - Arguments to delete one SantanderTransaction.
+     * @example
+     * // Delete one SantanderTransaction
+     * const SantanderTransaction = await prisma.santanderTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one SantanderTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SantanderTransactionDeleteArgs>(args: SelectSubset<T, SantanderTransactionDeleteArgs<ExtArgs>>): Prisma__SantanderTransactionClient<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SantanderTransaction.
+     * @param {SantanderTransactionUpdateArgs} args - Arguments to update one SantanderTransaction.
+     * @example
+     * // Update one SantanderTransaction
+     * const santanderTransaction = await prisma.santanderTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SantanderTransactionUpdateArgs>(args: SelectSubset<T, SantanderTransactionUpdateArgs<ExtArgs>>): Prisma__SantanderTransactionClient<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SantanderTransactions.
+     * @param {SantanderTransactionDeleteManyArgs} args - Arguments to filter SantanderTransactions to delete.
+     * @example
+     * // Delete a few SantanderTransactions
+     * const { count } = await prisma.santanderTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SantanderTransactionDeleteManyArgs>(args?: SelectSubset<T, SantanderTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SantanderTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SantanderTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SantanderTransactions
+     * const santanderTransaction = await prisma.santanderTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SantanderTransactionUpdateManyArgs>(args: SelectSubset<T, SantanderTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SantanderTransactions and returns the data updated in the database.
+     * @param {SantanderTransactionUpdateManyAndReturnArgs} args - Arguments to update many SantanderTransactions.
+     * @example
+     * // Update many SantanderTransactions
+     * const santanderTransaction = await prisma.santanderTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SantanderTransactions and only return the `id`
+     * const santanderTransactionWithIdOnly = await prisma.santanderTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SantanderTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, SantanderTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SantanderTransaction.
+     * @param {SantanderTransactionUpsertArgs} args - Arguments to update or create a SantanderTransaction.
+     * @example
+     * // Update or create a SantanderTransaction
+     * const santanderTransaction = await prisma.santanderTransaction.upsert({
+     *   create: {
+     *     // ... data to create a SantanderTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SantanderTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SantanderTransactionUpsertArgs>(args: SelectSubset<T, SantanderTransactionUpsertArgs<ExtArgs>>): Prisma__SantanderTransactionClient<$Result.GetResult<Prisma.$SantanderTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SantanderTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SantanderTransactionCountArgs} args - Arguments to filter SantanderTransactions to count.
+     * @example
+     * // Count the number of SantanderTransactions
+     * const count = await prisma.santanderTransaction.count({
+     *   where: {
+     *     // ... the filter for the SantanderTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends SantanderTransactionCountArgs>(
+      args?: Subset<T, SantanderTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SantanderTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SantanderTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SantanderTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SantanderTransactionAggregateArgs>(args: Subset<T, SantanderTransactionAggregateArgs>): Prisma.PrismaPromise<GetSantanderTransactionAggregateType<T>>
+
+    /**
+     * Group by SantanderTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SantanderTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SantanderTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SantanderTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: SantanderTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SantanderTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSantanderTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SantanderTransaction model
+   */
+  readonly fields: SantanderTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SantanderTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SantanderTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SantanderTransaction model
+   */
+  interface SantanderTransactionFieldRefs {
+    readonly id: FieldRef<"SantanderTransaction", 'Int'>
+    readonly date: FieldRef<"SantanderTransaction", 'String'>
+    readonly description: FieldRef<"SantanderTransaction", 'String'>
+    readonly moneyIn: FieldRef<"SantanderTransaction", 'String'>
+    readonly moneyOut: FieldRef<"SantanderTransaction", 'String'>
+    readonly balance: FieldRef<"SantanderTransaction", 'String'>
+    readonly statementDate: FieldRef<"SantanderTransaction", 'String'>
+    readonly importedAt: FieldRef<"SantanderTransaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SantanderTransaction findUnique
+   */
+  export type SantanderTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SantanderTransaction to fetch.
+     */
+    where: SantanderTransactionWhereUniqueInput
+  }
+
+  /**
+   * SantanderTransaction findUniqueOrThrow
+   */
+  export type SantanderTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SantanderTransaction to fetch.
+     */
+    where: SantanderTransactionWhereUniqueInput
+  }
+
+  /**
+   * SantanderTransaction findFirst
+   */
+  export type SantanderTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SantanderTransaction to fetch.
+     */
+    where?: SantanderTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SantanderTransactions to fetch.
+     */
+    orderBy?: SantanderTransactionOrderByWithRelationInput | SantanderTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SantanderTransactions.
+     */
+    cursor?: SantanderTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SantanderTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SantanderTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SantanderTransactions.
+     */
+    distinct?: SantanderTransactionScalarFieldEnum | SantanderTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * SantanderTransaction findFirstOrThrow
+   */
+  export type SantanderTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SantanderTransaction to fetch.
+     */
+    where?: SantanderTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SantanderTransactions to fetch.
+     */
+    orderBy?: SantanderTransactionOrderByWithRelationInput | SantanderTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SantanderTransactions.
+     */
+    cursor?: SantanderTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SantanderTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SantanderTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SantanderTransactions.
+     */
+    distinct?: SantanderTransactionScalarFieldEnum | SantanderTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * SantanderTransaction findMany
+   */
+  export type SantanderTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SantanderTransactions to fetch.
+     */
+    where?: SantanderTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SantanderTransactions to fetch.
+     */
+    orderBy?: SantanderTransactionOrderByWithRelationInput | SantanderTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SantanderTransactions.
+     */
+    cursor?: SantanderTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SantanderTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SantanderTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SantanderTransactions.
+     */
+    distinct?: SantanderTransactionScalarFieldEnum | SantanderTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * SantanderTransaction create
+   */
+  export type SantanderTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SantanderTransaction.
+     */
+    data: XOR<SantanderTransactionCreateInput, SantanderTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * SantanderTransaction createMany
+   */
+  export type SantanderTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SantanderTransactions.
+     */
+    data: SantanderTransactionCreateManyInput | SantanderTransactionCreateManyInput[]
+  }
+
+  /**
+   * SantanderTransaction createManyAndReturn
+   */
+  export type SantanderTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many SantanderTransactions.
+     */
+    data: SantanderTransactionCreateManyInput | SantanderTransactionCreateManyInput[]
+  }
+
+  /**
+   * SantanderTransaction update
+   */
+  export type SantanderTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SantanderTransaction.
+     */
+    data: XOR<SantanderTransactionUpdateInput, SantanderTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which SantanderTransaction to update.
+     */
+    where: SantanderTransactionWhereUniqueInput
+  }
+
+  /**
+   * SantanderTransaction updateMany
+   */
+  export type SantanderTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SantanderTransactions.
+     */
+    data: XOR<SantanderTransactionUpdateManyMutationInput, SantanderTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which SantanderTransactions to update
+     */
+    where?: SantanderTransactionWhereInput
+    /**
+     * Limit how many SantanderTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SantanderTransaction updateManyAndReturn
+   */
+  export type SantanderTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update SantanderTransactions.
+     */
+    data: XOR<SantanderTransactionUpdateManyMutationInput, SantanderTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which SantanderTransactions to update
+     */
+    where?: SantanderTransactionWhereInput
+    /**
+     * Limit how many SantanderTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SantanderTransaction upsert
+   */
+  export type SantanderTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SantanderTransaction to update in case it exists.
+     */
+    where: SantanderTransactionWhereUniqueInput
+    /**
+     * In case the SantanderTransaction found by the `where` argument doesn't exist, create a new SantanderTransaction with this data.
+     */
+    create: XOR<SantanderTransactionCreateInput, SantanderTransactionUncheckedCreateInput>
+    /**
+     * In case the SantanderTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SantanderTransactionUpdateInput, SantanderTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * SantanderTransaction delete
+   */
+  export type SantanderTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
+    /**
+     * Filter which SantanderTransaction to delete.
+     */
+    where: SantanderTransactionWhereUniqueInput
+  }
+
+  /**
+   * SantanderTransaction deleteMany
+   */
+  export type SantanderTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SantanderTransactions to delete
+     */
+    where?: SantanderTransactionWhereInput
+    /**
+     * Limit how many SantanderTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SantanderTransaction without action
+   */
+  export type SantanderTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantanderTransaction
+     */
+    select?: SantanderTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SantanderTransaction
+     */
+    omit?: SantanderTransactionOmit<ExtArgs> | null
   }
 
 
@@ -9341,7 +12853,8 @@ export namespace Prisma {
   export const CategoryScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    color: 'color'
+    color: 'color',
+    isFixed: 'isFixed'
   };
 
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -9386,6 +12899,49 @@ export namespace Prisma {
   };
 
   export type MonzoTransactionScalarFieldEnum = (typeof MonzoTransactionScalarFieldEnum)[keyof typeof MonzoTransactionScalarFieldEnum]
+
+
+  export const AmexTransactionScalarFieldEnum: {
+    id: 'id',
+    transactionDate: 'transactionDate',
+    processDate: 'processDate',
+    description: 'description',
+    amount: 'amount',
+    isCredit: 'isCredit',
+    foreignCurrency: 'foreignCurrency',
+    foreignAmount: 'foreignAmount',
+    statementDate: 'statementDate',
+    importedAt: 'importedAt'
+  };
+
+  export type AmexTransactionScalarFieldEnum = (typeof AmexTransactionScalarFieldEnum)[keyof typeof AmexTransactionScalarFieldEnum]
+
+
+  export const BarclaysTransactionScalarFieldEnum: {
+    id: 'id',
+    date: 'date',
+    description: 'description',
+    amount: 'amount',
+    isCredit: 'isCredit',
+    statementDate: 'statementDate',
+    importedAt: 'importedAt'
+  };
+
+  export type BarclaysTransactionScalarFieldEnum = (typeof BarclaysTransactionScalarFieldEnum)[keyof typeof BarclaysTransactionScalarFieldEnum]
+
+
+  export const SantanderTransactionScalarFieldEnum: {
+    id: 'id',
+    date: 'date',
+    description: 'description',
+    moneyIn: 'moneyIn',
+    moneyOut: 'moneyOut',
+    balance: 'balance',
+    statementDate: 'statementDate',
+    importedAt: 'importedAt'
+  };
+
+  export type SantanderTransactionScalarFieldEnum = (typeof SantanderTransactionScalarFieldEnum)[keyof typeof SantanderTransactionScalarFieldEnum]
 
 
   export const SessionScalarFieldEnum: {
@@ -9476,6 +13032,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Decimal'
    */
   export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -9500,6 +13063,13 @@ export namespace Prisma {
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
   /**
    * Deep Input Types
@@ -9581,6 +13151,7 @@ export namespace Prisma {
     id?: StringFilter<"Category"> | string
     name?: StringFilter<"Category"> | string
     color?: StringFilter<"Category"> | string
+    isFixed?: BoolFilter<"Category"> | boolean
     transactions?: TransactionListRelationFilter
   }
 
@@ -9588,6 +13159,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     color?: SortOrder
+    isFixed?: SortOrder
     transactions?: TransactionOrderByRelationAggregateInput
   }
 
@@ -9598,6 +13170,7 @@ export namespace Prisma {
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     color?: StringFilter<"Category"> | string
+    isFixed?: BoolFilter<"Category"> | boolean
     transactions?: TransactionListRelationFilter
   }, "id" | "name">
 
@@ -9605,6 +13178,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     color?: SortOrder
+    isFixed?: SortOrder
     _count?: CategoryCountOrderByAggregateInput
     _max?: CategoryMaxOrderByAggregateInput
     _min?: CategoryMinOrderByAggregateInput
@@ -9617,6 +13191,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Category"> | string
     name?: StringWithAggregatesFilter<"Category"> | string
     color?: StringWithAggregatesFilter<"Category"> | string
+    isFixed?: BoolWithAggregatesFilter<"Category"> | boolean
   }
 
   export type TransactionWhereInput = {
@@ -9821,6 +13396,218 @@ export namespace Prisma {
     moneyOut?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
     moneyIn?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
     importedAt?: DateTimeWithAggregatesFilter<"MonzoTransaction"> | Date | string
+  }
+
+  export type AmexTransactionWhereInput = {
+    AND?: AmexTransactionWhereInput | AmexTransactionWhereInput[]
+    OR?: AmexTransactionWhereInput[]
+    NOT?: AmexTransactionWhereInput | AmexTransactionWhereInput[]
+    id?: IntFilter<"AmexTransaction"> | number
+    transactionDate?: StringFilter<"AmexTransaction"> | string
+    processDate?: StringFilter<"AmexTransaction"> | string
+    description?: StringFilter<"AmexTransaction"> | string
+    amount?: StringFilter<"AmexTransaction"> | string
+    isCredit?: BoolFilter<"AmexTransaction"> | boolean
+    foreignCurrency?: StringNullableFilter<"AmexTransaction"> | string | null
+    foreignAmount?: StringNullableFilter<"AmexTransaction"> | string | null
+    statementDate?: StringFilter<"AmexTransaction"> | string
+    importedAt?: DateTimeFilter<"AmexTransaction"> | Date | string
+  }
+
+  export type AmexTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    transactionDate?: SortOrder
+    processDate?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    foreignCurrency?: SortOrderInput | SortOrder
+    foreignAmount?: SortOrderInput | SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type AmexTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AmexTransactionWhereInput | AmexTransactionWhereInput[]
+    OR?: AmexTransactionWhereInput[]
+    NOT?: AmexTransactionWhereInput | AmexTransactionWhereInput[]
+    transactionDate?: StringFilter<"AmexTransaction"> | string
+    processDate?: StringFilter<"AmexTransaction"> | string
+    description?: StringFilter<"AmexTransaction"> | string
+    amount?: StringFilter<"AmexTransaction"> | string
+    isCredit?: BoolFilter<"AmexTransaction"> | boolean
+    foreignCurrency?: StringNullableFilter<"AmexTransaction"> | string | null
+    foreignAmount?: StringNullableFilter<"AmexTransaction"> | string | null
+    statementDate?: StringFilter<"AmexTransaction"> | string
+    importedAt?: DateTimeFilter<"AmexTransaction"> | Date | string
+  }, "id">
+
+  export type AmexTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    transactionDate?: SortOrder
+    processDate?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    foreignCurrency?: SortOrderInput | SortOrder
+    foreignAmount?: SortOrderInput | SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+    _count?: AmexTransactionCountOrderByAggregateInput
+    _avg?: AmexTransactionAvgOrderByAggregateInput
+    _max?: AmexTransactionMaxOrderByAggregateInput
+    _min?: AmexTransactionMinOrderByAggregateInput
+    _sum?: AmexTransactionSumOrderByAggregateInput
+  }
+
+  export type AmexTransactionScalarWhereWithAggregatesInput = {
+    AND?: AmexTransactionScalarWhereWithAggregatesInput | AmexTransactionScalarWhereWithAggregatesInput[]
+    OR?: AmexTransactionScalarWhereWithAggregatesInput[]
+    NOT?: AmexTransactionScalarWhereWithAggregatesInput | AmexTransactionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AmexTransaction"> | number
+    transactionDate?: StringWithAggregatesFilter<"AmexTransaction"> | string
+    processDate?: StringWithAggregatesFilter<"AmexTransaction"> | string
+    description?: StringWithAggregatesFilter<"AmexTransaction"> | string
+    amount?: StringWithAggregatesFilter<"AmexTransaction"> | string
+    isCredit?: BoolWithAggregatesFilter<"AmexTransaction"> | boolean
+    foreignCurrency?: StringNullableWithAggregatesFilter<"AmexTransaction"> | string | null
+    foreignAmount?: StringNullableWithAggregatesFilter<"AmexTransaction"> | string | null
+    statementDate?: StringWithAggregatesFilter<"AmexTransaction"> | string
+    importedAt?: DateTimeWithAggregatesFilter<"AmexTransaction"> | Date | string
+  }
+
+  export type BarclaysTransactionWhereInput = {
+    AND?: BarclaysTransactionWhereInput | BarclaysTransactionWhereInput[]
+    OR?: BarclaysTransactionWhereInput[]
+    NOT?: BarclaysTransactionWhereInput | BarclaysTransactionWhereInput[]
+    id?: IntFilter<"BarclaysTransaction"> | number
+    date?: StringFilter<"BarclaysTransaction"> | string
+    description?: StringFilter<"BarclaysTransaction"> | string
+    amount?: StringFilter<"BarclaysTransaction"> | string
+    isCredit?: BoolFilter<"BarclaysTransaction"> | boolean
+    statementDate?: StringFilter<"BarclaysTransaction"> | string
+    importedAt?: DateTimeFilter<"BarclaysTransaction"> | Date | string
+  }
+
+  export type BarclaysTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type BarclaysTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: BarclaysTransactionWhereInput | BarclaysTransactionWhereInput[]
+    OR?: BarclaysTransactionWhereInput[]
+    NOT?: BarclaysTransactionWhereInput | BarclaysTransactionWhereInput[]
+    date?: StringFilter<"BarclaysTransaction"> | string
+    description?: StringFilter<"BarclaysTransaction"> | string
+    amount?: StringFilter<"BarclaysTransaction"> | string
+    isCredit?: BoolFilter<"BarclaysTransaction"> | boolean
+    statementDate?: StringFilter<"BarclaysTransaction"> | string
+    importedAt?: DateTimeFilter<"BarclaysTransaction"> | Date | string
+  }, "id">
+
+  export type BarclaysTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+    _count?: BarclaysTransactionCountOrderByAggregateInput
+    _avg?: BarclaysTransactionAvgOrderByAggregateInput
+    _max?: BarclaysTransactionMaxOrderByAggregateInput
+    _min?: BarclaysTransactionMinOrderByAggregateInput
+    _sum?: BarclaysTransactionSumOrderByAggregateInput
+  }
+
+  export type BarclaysTransactionScalarWhereWithAggregatesInput = {
+    AND?: BarclaysTransactionScalarWhereWithAggregatesInput | BarclaysTransactionScalarWhereWithAggregatesInput[]
+    OR?: BarclaysTransactionScalarWhereWithAggregatesInput[]
+    NOT?: BarclaysTransactionScalarWhereWithAggregatesInput | BarclaysTransactionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"BarclaysTransaction"> | number
+    date?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
+    description?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
+    amount?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
+    isCredit?: BoolWithAggregatesFilter<"BarclaysTransaction"> | boolean
+    statementDate?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
+    importedAt?: DateTimeWithAggregatesFilter<"BarclaysTransaction"> | Date | string
+  }
+
+  export type SantanderTransactionWhereInput = {
+    AND?: SantanderTransactionWhereInput | SantanderTransactionWhereInput[]
+    OR?: SantanderTransactionWhereInput[]
+    NOT?: SantanderTransactionWhereInput | SantanderTransactionWhereInput[]
+    id?: IntFilter<"SantanderTransaction"> | number
+    date?: StringFilter<"SantanderTransaction"> | string
+    description?: StringFilter<"SantanderTransaction"> | string
+    moneyIn?: StringNullableFilter<"SantanderTransaction"> | string | null
+    moneyOut?: StringNullableFilter<"SantanderTransaction"> | string | null
+    balance?: StringFilter<"SantanderTransaction"> | string
+    statementDate?: StringFilter<"SantanderTransaction"> | string
+    importedAt?: DateTimeFilter<"SantanderTransaction"> | Date | string
+  }
+
+  export type SantanderTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    moneyIn?: SortOrderInput | SortOrder
+    moneyOut?: SortOrderInput | SortOrder
+    balance?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type SantanderTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: SantanderTransactionWhereInput | SantanderTransactionWhereInput[]
+    OR?: SantanderTransactionWhereInput[]
+    NOT?: SantanderTransactionWhereInput | SantanderTransactionWhereInput[]
+    date?: StringFilter<"SantanderTransaction"> | string
+    description?: StringFilter<"SantanderTransaction"> | string
+    moneyIn?: StringNullableFilter<"SantanderTransaction"> | string | null
+    moneyOut?: StringNullableFilter<"SantanderTransaction"> | string | null
+    balance?: StringFilter<"SantanderTransaction"> | string
+    statementDate?: StringFilter<"SantanderTransaction"> | string
+    importedAt?: DateTimeFilter<"SantanderTransaction"> | Date | string
+  }, "id">
+
+  export type SantanderTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    moneyIn?: SortOrderInput | SortOrder
+    moneyOut?: SortOrderInput | SortOrder
+    balance?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+    _count?: SantanderTransactionCountOrderByAggregateInput
+    _avg?: SantanderTransactionAvgOrderByAggregateInput
+    _max?: SantanderTransactionMaxOrderByAggregateInput
+    _min?: SantanderTransactionMinOrderByAggregateInput
+    _sum?: SantanderTransactionSumOrderByAggregateInput
+  }
+
+  export type SantanderTransactionScalarWhereWithAggregatesInput = {
+    AND?: SantanderTransactionScalarWhereWithAggregatesInput | SantanderTransactionScalarWhereWithAggregatesInput[]
+    OR?: SantanderTransactionScalarWhereWithAggregatesInput[]
+    NOT?: SantanderTransactionScalarWhereWithAggregatesInput | SantanderTransactionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SantanderTransaction"> | number
+    date?: StringWithAggregatesFilter<"SantanderTransaction"> | string
+    description?: StringWithAggregatesFilter<"SantanderTransaction"> | string
+    moneyIn?: StringNullableWithAggregatesFilter<"SantanderTransaction"> | string | null
+    moneyOut?: StringNullableWithAggregatesFilter<"SantanderTransaction"> | string | null
+    balance?: StringWithAggregatesFilter<"SantanderTransaction"> | string
+    statementDate?: StringWithAggregatesFilter<"SantanderTransaction"> | string
+    importedAt?: DateTimeWithAggregatesFilter<"SantanderTransaction"> | Date | string
   }
 
   export type SessionWhereInput = {
@@ -10127,6 +13914,7 @@ export namespace Prisma {
     id?: string
     name: string
     color: string
+    isFixed?: boolean
     transactions?: TransactionCreateNestedManyWithoutCategoryInput
   }
 
@@ -10134,6 +13922,7 @@ export namespace Prisma {
     id?: string
     name: string
     color: string
+    isFixed?: boolean
     transactions?: TransactionUncheckedCreateNestedManyWithoutCategoryInput
   }
 
@@ -10141,6 +13930,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
+    isFixed?: BoolFieldUpdateOperationsInput | boolean
     transactions?: TransactionUpdateManyWithoutCategoryNestedInput
   }
 
@@ -10148,6 +13938,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
+    isFixed?: BoolFieldUpdateOperationsInput | boolean
     transactions?: TransactionUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
@@ -10155,18 +13946,21 @@ export namespace Prisma {
     id?: string
     name: string
     color: string
+    isFixed?: boolean
   }
 
   export type CategoryUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
+    isFixed?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CategoryUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
+    isFixed?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type TransactionCreateInput = {
@@ -10410,6 +14204,235 @@ export namespace Prisma {
     categorySplit?: NullableStringFieldUpdateOperationsInput | string | null
     moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
     moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AmexTransactionCreateInput = {
+    transactionDate: string
+    processDate: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    foreignCurrency?: string | null
+    foreignAmount?: string | null
+    statementDate: string
+    importedAt?: Date | string
+  }
+
+  export type AmexTransactionUncheckedCreateInput = {
+    id?: number
+    transactionDate: string
+    processDate: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    foreignCurrency?: string | null
+    foreignAmount?: string | null
+    statementDate: string
+    importedAt?: Date | string
+  }
+
+  export type AmexTransactionUpdateInput = {
+    transactionDate?: StringFieldUpdateOperationsInput | string
+    processDate?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    foreignCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    foreignAmount?: NullableStringFieldUpdateOperationsInput | string | null
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AmexTransactionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transactionDate?: StringFieldUpdateOperationsInput | string
+    processDate?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    foreignCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    foreignAmount?: NullableStringFieldUpdateOperationsInput | string | null
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AmexTransactionCreateManyInput = {
+    id?: number
+    transactionDate: string
+    processDate: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    foreignCurrency?: string | null
+    foreignAmount?: string | null
+    statementDate: string
+    importedAt?: Date | string
+  }
+
+  export type AmexTransactionUpdateManyMutationInput = {
+    transactionDate?: StringFieldUpdateOperationsInput | string
+    processDate?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    foreignCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    foreignAmount?: NullableStringFieldUpdateOperationsInput | string | null
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AmexTransactionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transactionDate?: StringFieldUpdateOperationsInput | string
+    processDate?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    foreignCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    foreignAmount?: NullableStringFieldUpdateOperationsInput | string | null
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BarclaysTransactionCreateInput = {
+    date: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    statementDate: string
+    importedAt?: Date | string
+  }
+
+  export type BarclaysTransactionUncheckedCreateInput = {
+    id?: number
+    date: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    statementDate: string
+    importedAt?: Date | string
+  }
+
+  export type BarclaysTransactionUpdateInput = {
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BarclaysTransactionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BarclaysTransactionCreateManyInput = {
+    id?: number
+    date: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    statementDate: string
+    importedAt?: Date | string
+  }
+
+  export type BarclaysTransactionUpdateManyMutationInput = {
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BarclaysTransactionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SantanderTransactionCreateInput = {
+    date: string
+    description: string
+    moneyIn?: string | null
+    moneyOut?: string | null
+    balance: string
+    statementDate: string
+    importedAt?: Date | string
+  }
+
+  export type SantanderTransactionUncheckedCreateInput = {
+    id?: number
+    date: string
+    description: string
+    moneyIn?: string | null
+    moneyOut?: string | null
+    balance: string
+    statementDate: string
+    importedAt?: Date | string
+  }
+
+  export type SantanderTransactionUpdateInput = {
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    balance?: StringFieldUpdateOperationsInput | string
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SantanderTransactionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    balance?: StringFieldUpdateOperationsInput | string
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SantanderTransactionCreateManyInput = {
+    id?: number
+    date: string
+    description: string
+    moneyIn?: string | null
+    moneyOut?: string | null
+    balance: string
+    statementDate: string
+    importedAt?: Date | string
+  }
+
+  export type SantanderTransactionUpdateManyMutationInput = {
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    balance?: StringFieldUpdateOperationsInput | string
+    statementDate?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SantanderTransactionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    balance?: StringFieldUpdateOperationsInput | string
+    statementDate?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -10822,6 +14845,11 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type TransactionListRelationFilter = {
     every?: TransactionWhereInput
     some?: TransactionWhereInput
@@ -10836,18 +14864,29 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     color?: SortOrder
+    isFixed?: SortOrder
   }
 
   export type CategoryMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     color?: SortOrder
+    isFixed?: SortOrder
   }
 
   export type CategoryMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     color?: SortOrder
+    isFixed?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DecimalFilter<$PrismaModel = never> = {
@@ -11027,6 +15066,159 @@ export namespace Prisma {
     moneyOut?: SortOrder
     moneyIn?: SortOrder
     importedAt?: SortOrder
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type AmexTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    transactionDate?: SortOrder
+    processDate?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    foreignCurrency?: SortOrder
+    foreignAmount?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type AmexTransactionAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type AmexTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    transactionDate?: SortOrder
+    processDate?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    foreignCurrency?: SortOrder
+    foreignAmount?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type AmexTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    transactionDate?: SortOrder
+    processDate?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    foreignCurrency?: SortOrder
+    foreignAmount?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type AmexTransactionSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type BarclaysTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type BarclaysTransactionAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BarclaysTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type BarclaysTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type BarclaysTransactionSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SantanderTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    moneyIn?: SortOrder
+    moneyOut?: SortOrder
+    balance?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type SantanderTransactionAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SantanderTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    moneyIn?: SortOrder
+    moneyOut?: SortOrder
+    balance?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type SantanderTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    moneyIn?: SortOrder
+    moneyOut?: SortOrder
+    balance?: SortOrder
+    statementDate?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type SantanderTransactionSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type UserScalarRelationFilter = {
@@ -11281,6 +15473,10 @@ export namespace Prisma {
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type TransactionUpdateManyWithoutCategoryNestedInput = {
     create?: XOR<TransactionCreateWithoutCategoryInput, TransactionUncheckedCreateWithoutCategoryInput> | TransactionCreateWithoutCategoryInput[] | TransactionUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutCategoryInput | TransactionCreateOrConnectWithoutCategoryInput[]
@@ -11337,6 +15533,14 @@ export namespace Prisma {
     upsert?: CategoryUpsertWithoutTransactionsInput
     connect?: CategoryWhereUniqueInput
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutTransactionsInput, CategoryUpdateWithoutTransactionsInput>, CategoryUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -11497,6 +15701,19 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDecimalFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -11556,6 +15773,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumOwnerFilter<$PrismaModel>
     _max?: NestedEnumOwnerFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -11785,12 +16029,14 @@ export namespace Prisma {
     id?: string
     name: string
     color: string
+    isFixed?: boolean
   }
 
   export type CategoryUncheckedCreateWithoutTransactionsInput = {
     id?: string
     name: string
     color: string
+    isFixed?: boolean
   }
 
   export type CategoryCreateOrConnectWithoutTransactionsInput = {
@@ -11813,12 +16059,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
+    isFixed?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CategoryUncheckedUpdateWithoutTransactionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
+    isFixed?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserCreateWithoutSessionsInput = {

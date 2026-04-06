@@ -5,6 +5,7 @@ import { Layout } from "./components/Layout.js";
 import { LoginPage } from "./pages/LoginPage.js";
 import { LoggedOutPage } from "./pages/LoggedOutPage.js";
 import { DashboardPage } from "./pages/DashboardPage.js";
+import { AnalyticsPage } from "./pages/AnalyticsPage.js";
 import { UsersPage } from "./pages/UsersPage.js";
 import { ImportPage } from "./pages/ImportPage.js";
 
@@ -17,6 +18,7 @@ export function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
             <Route element={<AdminRoute />}>
               <Route path="/users" element={<UsersPage />} />
               <Route path="/import" element={<ImportPage />} />

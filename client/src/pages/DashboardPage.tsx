@@ -10,14 +10,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../components/ui/alert-dialog.js";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 import { Button } from "../components/ui/button.js";
 import { Input } from "../components/ui/input.js";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card.js";
@@ -359,7 +351,7 @@ function CategoryFilter({ value, categories, onChange }: { value: string; catego
         </div>
       </PopoverTrigger>
       <PopoverContent className="p-0 w-[--radix-popover-trigger-width]" align="start">
-        <Command>
+        <Command shouldFilter={false}>
           <CommandList>
             <CommandGroup>
               <CommandItem value="" onSelect={() => { onChange(""); setOpen(false); }} className="text-xs text-muted-foreground/60">All</CommandItem>
@@ -583,43 +575,6 @@ export function DashboardPage() {
           </div>
         </CardContent>
       </Card>
-
-      {/* Pie chart — joint expenses only */}
-      {summary && summary.spendingByCategory.length > 0 && (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">
-              Joint Spending by Category
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={summary.spendingByCategory}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="38%"
-                  innerRadius={75}
-                  outerRadius={125}
-                  paddingAngle={2}
-                >
-                  {summary.spendingByCategory.map((entry, i) => (
-                    <Cell key={i} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(v) => fmt(v as number)} />
-                <Legend
-                  layout="vertical"
-                  align="right"
-                  verticalAlign="middle"
-                  wrapperStyle={{ paddingLeft: "24px", lineHeight: "1.8" }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Transactions list */}
       <Card>

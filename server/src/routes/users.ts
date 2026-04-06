@@ -1,17 +1,11 @@
 import { Router } from "express";
 import { randomUUID } from "crypto";
-import { z } from "zod";
 import { db } from "../db/client.js";
 import { Prisma, UserRole } from "../generated/prisma/index.js";
 import { hashPassword } from "better-auth/crypto";
+import { createUserSchema } from "@helpdesk/core";
 
 export const usersRouter = Router();
-
-const createUserSchema = z.object({
-  name:     z.string().min(3, "Name must be at least 3 characters"),
-  email:    z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
 
 usersRouter.post("/", async (req, res) => {
   const parsed = createUserSchema.safeParse(req.body);

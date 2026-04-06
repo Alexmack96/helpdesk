@@ -48,6 +48,12 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
       </div>
       <div className="flex items-center gap-4">
         <HealthStatus />
+        <Link
+          to="/analytics"
+          className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
+        >
+          Analytics
+        </Link>
 {session?.user.role === "Admin" && (
           <>
             <Link

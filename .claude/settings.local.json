@@ -6,7 +6,13 @@
       "Bash(pg_ctl:*)",
       "Bash(net start:*)",
       "Bash(sc query:*)",
-      "WebFetch(domain:better-auth.com)"
+      "WebFetch(domain:better-auth.com)",
+      "Bash(DATABASE_URL=file:./test.db bun run db:migrate:deploy)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(DATABASE_URL=\"file:./test.db\" bunx prisma migrate deploy)",
+      "Bash(kill %1)"
     ]
   }
 }

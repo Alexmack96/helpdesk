@@ -8,7 +8,7 @@ import { auth } from "./lib/auth.js";
 import { env } from "./config/env.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { requireAuth, requireAdmin } from "./middleware/auth.js";
-import { initSystemCategories, migrateLegacyCategories, migrateOwners } from "./routes/admin.js";
+import { initSystemCategories, mapMonzoCategories, migrateOwners } from "./routes/admin.js";
 import { usersRouter } from "./routes/users.js";
 import { importRouter } from "./routes/import.js";
 import { categoriesRouter } from "./routes/categories.js";
@@ -62,6 +62,6 @@ app.use(errorHandler);
 app.listen(env.PORT, async () => {
   console.log(`Backend running on port ${env.PORT}`);
   await initSystemCategories();
-  await migrateLegacyCategories();
+  await mapMonzoCategories();
   await migrateOwners();
 });
