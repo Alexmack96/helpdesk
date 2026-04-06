@@ -61,11 +61,21 @@ dashboardRouter.get("/analytics", async (_req, res) => {
     };
   });
 
-  const monthlyFlow = MONTHS.slice(0, currentMonthIdx + 1).map((month, i) => ({
-    month,
-    income:  transactions.filter((t) => new Date(t.date).getMonth() === i && t.type === TransactionType.Income).reduce((s, t) => s + Number(t.amount), 0),
-    expense: expenses.filter((t) => new Date(t.date).getMonth() === i).reduce((s, t) => s + Number(t.amount), 0),
-  }));
+  const FUN_CATEGORIES = ["Food & Social", "Activities"];
+  const funCats = await db.category.findMany({ where: { name: { in: FUN_CATEGORIES } } });
+  const funCatMap = Object.fromEntries(funCats.map((c) => [c.name, c]));
+
+  const monthlyFun = MONTHS.slice(0, currentMonthIdx + 1).map((month, i) => {
+    const monthExp = expenses.filter((t) => new Date(t.date).getMonth() === i);
+    const entry: Record<string, number | string> = { month };
+    for (const name of FUN_CATEGORIES) {
+      const cat = funCatMap[name];
+      entry[name] = cat
+        ? monthExp.filter((t) => t.categoryId === cat.id).reduce((s, t) => s + Number(t.amount), 0)
+        : 0;
+    }
+    return entry;
+  });
 
   const catMap: Record<string, { name: string; color: string; value: number }> = {};
   for (const t of expenses) {
@@ -87,5 +97,33 @@ dashboardRouter.get("/analytics", async (_req, res) => {
     .sort((a, b) => b.amount - a.amount)
     .slice(0, 10);
 
-  res.json({ fixedVsVariable, monthlyFlow, spendingByCategory, ownerBreakdown, topMerchants });
+  const funCategories = FUN_CATEGORIES.map((name) => ({ name, color: funCatMap[name]?.color ?? "#888" }));
+
+  const vacationCat = await db.category.findUnique({ where: { name: "Vacation" } });
+  const monthlyVacation = MONTHS.slice(0, currentMonthIdx + 1).map((month, i) => ({
+    month,
+    amount: vacationCat
+      ? expenses.filter((t) => t.categoryId === vacationCat.id && new Date(t.date).getMonth() === i).reduce((s, t) => s + Number(t.amount), 0)
+      : 0,
+  }));
+  const vacationColor = vacationCat?.color ?? "#eab308";
+
+  const FOOD_CATEGORIES = ["Food & Social", "Groceries", "Takeout"];
+  const foodCats = await db.category.findMany({ where: { name: { in: FOOD_CATEGORIES } } });
+  const foodCatMap = Object.fromEntries(foodCats.map((c) => [c.name, c]));
+
+  const monthlyFood = MONTHS.slice(0, currentMonthIdx + 1).map((month, i) => {
+    const monthExp = expenses.filter((t) => new Date(t.date).getMonth() === i);
+    const entry: Record<string, number | string> = { month };
+    for (const name of FOOD_CATEGORIES) {
+      const cat = foodCatMap[name];
+      entry[name] = cat
+        ? monthExp.filter((t) => t.categoryId === cat.id).reduce((s, t) => s + Number(t.amount), 0)
+        : 0;
+    }
+    return entry;
+  });
+  const foodCategories = FOOD_CATEGORIES.map((name) => ({ name, color: foodCatMap[name]?.color ?? "#888" }));
+
+  res.json({ fixedVsVariable, monthlyFun, funCategories, monthlyVacation, vacationColor, monthlyFood, foodCategories, spendingByCategory, ownerBreakdown, topMerchants });
 });

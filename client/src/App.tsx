@@ -8,6 +8,7 @@ import { DashboardPage } from "./pages/DashboardPage.js";
 import { AnalyticsPage } from "./pages/AnalyticsPage.js";
 import { UsersPage } from "./pages/UsersPage.js";
 import { ImportPage } from "./pages/ImportPage.js";
+import { UtilitiesPage } from "./pages/UtilitiesPage.js";
 
 export function App() {
   return (
@@ -19,6 +20,7 @@ export function App() {
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/utilities" element={<UtilitiesPage />} />
             <Route element={<AdminRoute />}>
               <Route path="/users" element={<UsersPage />} />
               <Route path="/import" element={<ImportPage />} />

@@ -8,12 +8,13 @@ import { auth } from "./lib/auth.js";
 import { env } from "./config/env.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { requireAuth, requireAdmin } from "./middleware/auth.js";
-import { initSystemCategories, mapMonzoCategories, migrateOwners } from "./routes/admin.js";
+import { initSystemCategories, mapMonzoCategories, migrateOwners, consolidateFoodCategories, migrateTakeout } from "./routes/admin.js";
 import { usersRouter } from "./routes/users.js";
 import { importRouter } from "./routes/import.js";
 import { categoriesRouter } from "./routes/categories.js";
 import { transactionsRouter } from "./routes/transactions.js";
 import { dashboardRouter } from "./routes/dashboard.js";
+import { utilitiesRouter } from "./routes/utilities.js";
 
 const app = express();
 
@@ -56,12 +57,15 @@ app.use("/api/admin", requireAuth, requireAdmin, importRouter);
 app.use("/api/categories", requireAuth, categoriesRouter);
 app.use("/api/transactions", requireAuth, transactionsRouter);
 app.use("/api/dashboard", requireAuth, dashboardRouter);
+app.use("/api/utilities", requireAuth, utilitiesRouter);
 
 app.use(errorHandler);
 
 app.listen(env.PORT, async () => {
   console.log(`Backend running on port ${env.PORT}`);
   await initSystemCategories();
+  await consolidateFoodCategories();
+  await migrateTakeout();
   await mapMonzoCategories();
   await migrateOwners();
 });

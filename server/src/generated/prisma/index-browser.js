@@ -131,7 +131,8 @@ exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   color: 'color',
-  isFixed: 'isFixed'
+  isFixed: 'isFixed',
+  isDirectDebit: 'isDirectDebit'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {

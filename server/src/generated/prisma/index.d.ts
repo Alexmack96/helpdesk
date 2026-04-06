@@ -2939,6 +2939,7 @@ export namespace Prisma {
     name: string | null
     color: string | null
     isFixed: boolean | null
+    isDirectDebit: boolean | null
   }
 
   export type CategoryMaxAggregateOutputType = {
@@ -2946,6 +2947,7 @@ export namespace Prisma {
     name: string | null
     color: string | null
     isFixed: boolean | null
+    isDirectDebit: boolean | null
   }
 
   export type CategoryCountAggregateOutputType = {
@@ -2953,6 +2955,7 @@ export namespace Prisma {
     name: number
     color: number
     isFixed: number
+    isDirectDebit: number
     _all: number
   }
 
@@ -2962,6 +2965,7 @@ export namespace Prisma {
     name?: true
     color?: true
     isFixed?: true
+    isDirectDebit?: true
   }
 
   export type CategoryMaxAggregateInputType = {
@@ -2969,6 +2973,7 @@ export namespace Prisma {
     name?: true
     color?: true
     isFixed?: true
+    isDirectDebit?: true
   }
 
   export type CategoryCountAggregateInputType = {
@@ -2976,6 +2981,7 @@ export namespace Prisma {
     name?: true
     color?: true
     isFixed?: true
+    isDirectDebit?: true
     _all?: true
   }
 
@@ -3056,6 +3062,7 @@ export namespace Prisma {
     name: string
     color: string
     isFixed: boolean
+    isDirectDebit: boolean
     _count: CategoryCountAggregateOutputType | null
     _min: CategoryMinAggregateOutputType | null
     _max: CategoryMaxAggregateOutputType | null
@@ -3080,6 +3087,7 @@ export namespace Prisma {
     name?: boolean
     color?: boolean
     isFixed?: boolean
+    isDirectDebit?: boolean
     transactions?: boolean | Category$transactionsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
@@ -3089,6 +3097,7 @@ export namespace Prisma {
     name?: boolean
     color?: boolean
     isFixed?: boolean
+    isDirectDebit?: boolean
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3096,6 +3105,7 @@ export namespace Prisma {
     name?: boolean
     color?: boolean
     isFixed?: boolean
+    isDirectDebit?: boolean
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectScalar = {
@@ -3103,9 +3113,10 @@ export namespace Prisma {
     name?: boolean
     color?: boolean
     isFixed?: boolean
+    isDirectDebit?: boolean
   }
 
-  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "isFixed", ExtArgs["result"]["category"]>
+  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "isFixed" | "isDirectDebit", ExtArgs["result"]["category"]>
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     transactions?: boolean | Category$transactionsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -3123,6 +3134,7 @@ export namespace Prisma {
       name: string
       color: string
       isFixed: boolean
+      isDirectDebit: boolean
     }, ExtArgs["result"]["category"]>
     composites: {}
   }
@@ -3551,6 +3563,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Category", 'String'>
     readonly color: FieldRef<"Category", 'String'>
     readonly isFixed: FieldRef<"Category", 'Boolean'>
+    readonly isDirectDebit: FieldRef<"Category", 'Boolean'>
   }
     
 
@@ -12854,7 +12867,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     color: 'color',
-    isFixed: 'isFixed'
+    isFixed: 'isFixed',
+    isDirectDebit: 'isDirectDebit'
   };
 
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -13152,6 +13166,7 @@ export namespace Prisma {
     name?: StringFilter<"Category"> | string
     color?: StringFilter<"Category"> | string
     isFixed?: BoolFilter<"Category"> | boolean
+    isDirectDebit?: BoolFilter<"Category"> | boolean
     transactions?: TransactionListRelationFilter
   }
 
@@ -13160,6 +13175,7 @@ export namespace Prisma {
     name?: SortOrder
     color?: SortOrder
     isFixed?: SortOrder
+    isDirectDebit?: SortOrder
     transactions?: TransactionOrderByRelationAggregateInput
   }
 
@@ -13171,6 +13187,7 @@ export namespace Prisma {
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     color?: StringFilter<"Category"> | string
     isFixed?: BoolFilter<"Category"> | boolean
+    isDirectDebit?: BoolFilter<"Category"> | boolean
     transactions?: TransactionListRelationFilter
   }, "id" | "name">
 
@@ -13179,6 +13196,7 @@ export namespace Prisma {
     name?: SortOrder
     color?: SortOrder
     isFixed?: SortOrder
+    isDirectDebit?: SortOrder
     _count?: CategoryCountOrderByAggregateInput
     _max?: CategoryMaxOrderByAggregateInput
     _min?: CategoryMinOrderByAggregateInput
@@ -13192,6 +13210,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Category"> | string
     color?: StringWithAggregatesFilter<"Category"> | string
     isFixed?: BoolWithAggregatesFilter<"Category"> | boolean
+    isDirectDebit?: BoolWithAggregatesFilter<"Category"> | boolean
   }
 
   export type TransactionWhereInput = {
@@ -13915,6 +13934,7 @@ export namespace Prisma {
     name: string
     color: string
     isFixed?: boolean
+    isDirectDebit?: boolean
     transactions?: TransactionCreateNestedManyWithoutCategoryInput
   }
 
@@ -13923,6 +13943,7 @@ export namespace Prisma {
     name: string
     color: string
     isFixed?: boolean
+    isDirectDebit?: boolean
     transactions?: TransactionUncheckedCreateNestedManyWithoutCategoryInput
   }
 
@@ -13931,6 +13952,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
     isFixed?: BoolFieldUpdateOperationsInput | boolean
+    isDirectDebit?: BoolFieldUpdateOperationsInput | boolean
     transactions?: TransactionUpdateManyWithoutCategoryNestedInput
   }
 
@@ -13939,6 +13961,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
     isFixed?: BoolFieldUpdateOperationsInput | boolean
+    isDirectDebit?: BoolFieldUpdateOperationsInput | boolean
     transactions?: TransactionUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
@@ -13947,6 +13970,7 @@ export namespace Prisma {
     name: string
     color: string
     isFixed?: boolean
+    isDirectDebit?: boolean
   }
 
   export type CategoryUpdateManyMutationInput = {
@@ -13954,6 +13978,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
     isFixed?: BoolFieldUpdateOperationsInput | boolean
+    isDirectDebit?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CategoryUncheckedUpdateManyInput = {
@@ -13961,6 +13986,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
     isFixed?: BoolFieldUpdateOperationsInput | boolean
+    isDirectDebit?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type TransactionCreateInput = {
@@ -14865,6 +14891,7 @@ export namespace Prisma {
     name?: SortOrder
     color?: SortOrder
     isFixed?: SortOrder
+    isDirectDebit?: SortOrder
   }
 
   export type CategoryMaxOrderByAggregateInput = {
@@ -14872,6 +14899,7 @@ export namespace Prisma {
     name?: SortOrder
     color?: SortOrder
     isFixed?: SortOrder
+    isDirectDebit?: SortOrder
   }
 
   export type CategoryMinOrderByAggregateInput = {
@@ -14879,6 +14907,7 @@ export namespace Prisma {
     name?: SortOrder
     color?: SortOrder
     isFixed?: SortOrder
+    isDirectDebit?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -16030,6 +16059,7 @@ export namespace Prisma {
     name: string
     color: string
     isFixed?: boolean
+    isDirectDebit?: boolean
   }
 
   export type CategoryUncheckedCreateWithoutTransactionsInput = {
@@ -16037,6 +16067,7 @@ export namespace Prisma {
     name: string
     color: string
     isFixed?: boolean
+    isDirectDebit?: boolean
   }
 
   export type CategoryCreateOrConnectWithoutTransactionsInput = {
@@ -16060,6 +16091,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
     isFixed?: BoolFieldUpdateOperationsInput | boolean
+    isDirectDebit?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CategoryUncheckedUpdateWithoutTransactionsInput = {
@@ -16067,6 +16099,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     color?: StringFieldUpdateOperationsInput | string
     isFixed?: BoolFieldUpdateOperationsInput | boolean
+    isDirectDebit?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserCreateWithoutSessionsInput = {

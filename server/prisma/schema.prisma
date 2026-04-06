@@ -40,11 +40,12 @@ model User {
 }
 
 model Category {
-  id           String        @id @default(cuid())
-  name         String        @unique
-  color        String
-  isFixed      Boolean       @default(false)
-  transactions Transaction[]
+  id             String        @id @default(cuid())
+  name           String        @unique
+  color          String
+  isFixed        Boolean       @default(false)
+  isDirectDebit  Boolean       @default(false)
+  transactions   Transaction[]
 }
 
 model Transaction {

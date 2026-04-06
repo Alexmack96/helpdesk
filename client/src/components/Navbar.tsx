@@ -54,6 +54,12 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
         >
           Analytics
         </Link>
+        <Link
+          to="/utilities"
+          className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
+        >
+          Utilities
+        </Link>
 {session?.user.role === "Admin" && (
           <>
             <Link

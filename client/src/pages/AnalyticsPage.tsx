@@ -21,9 +21,13 @@ const OWNER_COLORS: Record<string, string> = {
 
 interface AnalyticsData {
   fixedVsVariable:    { month: string; fixed: number; variable: number }[];
-  monthlyFlow:        { month: string; income: number; expense: number }[];
+  monthlyFun:         Record<string, number | string>[];
+  funCategories:      { name: string; color: string }[];
+  monthlyVacation:    { month: string; amount: number }[];
+  vacationColor:      string;
+  monthlyFood:        Record<string, number | string>[];
+  foodCategories:     { name: string; color: string }[];
   spendingByCategory: { name: string; color: string; value: number }[];
-  ownerBreakdown:     { owner: string; amount: number }[];
   topMerchants:       { name: string; amount: number }[];
 }
 
@@ -66,24 +70,52 @@ export function AnalyticsPage() {
         </CardContent>
       </Card>
 
+      {/* Vacation — full width */}
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Vacation Spending</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isPending ? <ChartSkeleton /> : (
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={data!.monthlyVacation} margin={{ top: 4, right: 16, left: 8, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke={GRID} />
+                <XAxis dataKey="month" tick={{ fill: TICK, fontSize: 12 }} axisLine={false} tickLine={false} />
+                <YAxis tickFormatter={(v) => `£${v}`} tick={{ fill: TICK, fontSize: 11 }} axisLine={false} tickLine={false} width={56} />
+                <Tooltip formatter={(v) => fmt(v as number)} contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 8 }} />
+                <Bar dataKey="amount" name="Vacation" fill={data!.vacationColor} radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Row 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Monthly flow */}
+        {/* Monthly fun */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Monthly Income vs Expense</CardTitle>
+            <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Monthly Fun Spending</CardTitle>
           </CardHeader>
           <CardContent>
             {isPending ? <ChartSkeleton /> : (
               <ResponsiveContainer width="100%" height={280}>
-                <BarChart data={data!.monthlyFlow} margin={{ top: 4, right: 16, left: 8, bottom: 0 }}>
+                <BarChart data={data!.monthlyFun} margin={{ top: 4, right: 16, left: 8, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke={GRID} />
                   <XAxis dataKey="month" tick={{ fill: TICK, fontSize: 12 }} axisLine={false} tickLine={false} />
                   <YAxis tickFormatter={(v) => `£${v}`} tick={{ fill: TICK, fontSize: 11 }} axisLine={false} tickLine={false} width={56} />
                   <Tooltip formatter={(v) => fmt(v as number)} contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 8 }} />
                   <Legend wrapperStyle={{ fontSize: 12 }} />
-                  <Bar dataKey="income" name="Income" fill="#22c55e" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="expense" name="Expense" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                  {data!.funCategories.map((cat, i) => (
+                    <Bar
+                      key={cat.name}
+                      dataKey={cat.name}
+                      name={cat.name}
+                      stackId="fun"
+                      fill={cat.color}
+                      radius={i === data!.funCategories.length - 1 ? [4, 4, 0, 0] : undefined}
+                    />
+                  ))}
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -123,31 +155,31 @@ export function AnalyticsPage() {
 
       {/* Row 3 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Owner breakdown */}
+        {/* Food breakdown */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Spending by Owner</CardTitle>
+            <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Food Breakdown</CardTitle>
           </CardHeader>
           <CardContent>
             {isPending ? <ChartSkeleton /> : (
               <ResponsiveContainer width="100%" height={280}>
-                <PieChart>
-                  <Pie
-                    data={data!.ownerBreakdown}
-                    dataKey="amount"
-                    nameKey="owner"
-                    cx="40%"
-                    innerRadius={70}
-                    outerRadius={110}
-                    paddingAngle={2}
-                  >
-                    {data!.ownerBreakdown.map((entry, i) => (
-                      <Cell key={i} fill={OWNER_COLORS[entry.owner] ?? "#888"} />
-                    ))}
-                  </Pie>
+                <BarChart data={data!.monthlyFood} margin={{ top: 4, right: 16, left: 8, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke={GRID} />
+                  <XAxis dataKey="month" tick={{ fill: TICK, fontSize: 12 }} axisLine={false} tickLine={false} />
+                  <YAxis tickFormatter={(v) => `£${v}`} tick={{ fill: TICK, fontSize: 11 }} axisLine={false} tickLine={false} width={56} />
                   <Tooltip formatter={(v) => fmt(v as number)} contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 8 }} />
-                  <Legend layout="vertical" align="right" verticalAlign="middle" wrapperStyle={{ fontSize: 12, paddingLeft: 16 }} />
-                </PieChart>
+                  <Legend wrapperStyle={{ fontSize: 12 }} />
+                  {data!.foodCategories.map((cat, i) => (
+                    <Bar
+                      key={cat.name}
+                      dataKey={cat.name}
+                      name={cat.name}
+                      stackId="food"
+                      fill={cat.color}
+                      radius={i === data!.foodCategories.length - 1 ? [4, 4, 0, 0] : undefined}
+                    />
+                  ))}
+                </BarChart>
               </ResponsiveContainer>
             )}
           </CardContent>

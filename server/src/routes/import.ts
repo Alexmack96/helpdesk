@@ -11,7 +11,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 // ─── Monzo category → system category ───────────────────────────────────────
 
 const MONZO_CATEGORY_MAP: Record<string, string> = {
-  "Eating out":     "Eating Out",
+  "Eating out":     "Food & Social",
   "Entertainment":  "Activities",
   "Groceries":      "Groceries",
   "Holidays":       "Vacation",
@@ -39,8 +39,8 @@ const MERCHANT_OVERRIDES: { pattern: RegExp; category: string }[] = [
     category: "Savings",
   },
   {
-    pattern: /deliveroo/i,
-    category: "Eating Out",
+    pattern: /deliveroo|uber.?eats|wingstop/i,
+    category: "Takeout",
   },
 ];
 

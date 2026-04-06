@@ -25,6 +25,8 @@ interface Category {
   color: string;
 }
 
+type BankSource = "Monzo" | "Amex" | "Barclays" | "Santander" | "Manual";
+
 interface Transaction {
   id: string;
   description: string;
@@ -35,7 +37,25 @@ interface Transaction {
   category: Category;
   categoryId: string;
   owner: Owner;
+  externalId: string | null;
 }
+
+function bankSource(externalId: string | null): BankSource {
+  if (!externalId) return "Manual";
+  if (externalId.startsWith("monzo:")) return "Monzo";
+  if (externalId.startsWith("amex:")) return "Amex";
+  if (externalId.startsWith("barclays:")) return "Barclays";
+  if (externalId.startsWith("santander:")) return "Santander";
+  return "Manual";
+}
+
+const SOURCE_STYLES: Record<BankSource, string> = {
+  Monzo:     "text-orange-500 border-orange-500",
+  Amex:      "text-blue-500 border-blue-500",
+  Barclays:  "text-sky-500 border-sky-500",
+  Santander: "text-red-500 border-red-500",
+  Manual:    "text-muted-foreground border-muted-foreground/40",
+};
 
 interface Summary {
   caseyIn: number;
@@ -388,6 +408,7 @@ export function DashboardPage() {
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState("");
   const [ownerFilter, setOwnerFilter] = useState<"" | Owner>("");
+  const [sourceFilter, setSourceFilter] = useState<"" | BankSource>("");
   const [colFilters, setColFilters] = useState({ date: "", description: "", note: "", amount: "" });
   const [form, setForm] = useState({
     description: "",
@@ -471,6 +492,7 @@ export function DashboardPage() {
     if (colFilters.description && !t.description.toLowerCase().includes(colFilters.description.toLowerCase())) return false;
     if (colFilters.note && !(t.note ?? "").toLowerCase().includes(colFilters.note.toLowerCase())) return false;
     if (colFilters.amount && !Math.abs(parseFloat(t.amount)).toFixed(2).includes(colFilters.amount)) return false;
+    if (sourceFilter && bankSource(t.externalId) !== sourceFilter) return false;
     return true;
   });
 
@@ -487,7 +509,7 @@ export function DashboardPage() {
       <div className="grid grid-cols-3 gap-4">
         <Card className="border-green-200 dark:border-green-900">
           <CardHeader className="pb-1">
-            <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Casey Bank Sauce</CardTitle>
+            <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Casey Monzo Sauce</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-bold text-green-500">{summary ? fmt(summary.caseyIn) : "—"}</p>
@@ -586,10 +608,11 @@ export function DashboardPage() {
             variant="outline"
             size="sm"
             className="text-xs text-muted-foreground hover:text-foreground"
-            disabled={!categoryFilter && !ownerFilter && !colFilters.date && !colFilters.description && !colFilters.note && !colFilters.amount}
+            disabled={!categoryFilter && !ownerFilter && !sourceFilter && !colFilters.date && !colFilters.description && !colFilters.note && !colFilters.amount}
             onClick={() => {
               setCategoryFilter("");
               setOwnerFilter("");
+              setSourceFilter("");
               setColFilters({ date: "", description: "", note: "", amount: "" });
             }}
           >
@@ -601,13 +624,14 @@ export function DashboardPage() {
           <table className="w-full text-sm table-fixed">
             <thead>
               <tr className="text-muted-foreground uppercase text-xs border-b border-border/60">
-                <th className="text-left py-2 pr-4 w-[10%]">Date</th>
-                <th className="text-left py-2 pr-4 w-[22%]">Description</th>
-                <th className="text-left py-2 pr-4 w-[20%]">Note</th>
-                <th className="text-left py-2 pr-4 w-[18%]">Category</th>
-                <th className="text-left py-2 pr-4 w-[10%]">Owner</th>
-                <th className="text-left py-2 w-[12%]">Amount</th>
-                <th className="w-[8%]" />
+                <th className="text-left py-2 pr-4 w-[9%]">Date</th>
+                <th className="text-left py-2 pr-4 w-[19%]">Description</th>
+                <th className="text-left py-2 pr-4 w-[16%]">Note</th>
+                <th className="text-left py-2 pr-4 w-[15%]">Category</th>
+                <th className="text-left py-2 pr-4 w-[9%]">Owner</th>
+                <th className="text-left py-2 pr-4 w-[9%]">Source</th>
+                <th className="text-left py-2 w-[11%]">Amount</th>
+                <th className="w-[12%]" />
               </tr>
               <tr className="border-b border-border">
                 <td className="pr-2 pb-1.5 pt-1">
@@ -643,6 +667,16 @@ export function DashboardPage() {
                 <td className="pr-2 pb-1.5 pt-1">
                   <OwnerFilter value={ownerFilter} onChange={setOwnerFilter} />
                 </td>
+                <td className="pr-2 pb-1.5 pt-1">
+                  <PillDropdownFilter<BankSource>
+                    value={sourceFilter}
+                    options={["Monzo", "Amex", "Barclays", "Santander", "Manual"]}
+                    allLabel="All"
+                    getLabel={(s) => s}
+                    getStyle={(s) => SOURCE_STYLES[s]}
+                    onChange={setSourceFilter}
+                  />
+                </td>
                 <td className="pb-1.5 pt-1 pr-2">
                   <input
                     type="text"
@@ -671,6 +705,11 @@ export function DashboardPage() {
                   </td>
                   <td className="py-3 pr-4">
                     <OwnerCell tx={t} onSave={(owner) => updateMutation.mutate({ id: t.id, owner })} />
+                  </td>
+                  <td className="py-3 pr-4">
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium border ${SOURCE_STYLES[bankSource(t.externalId)]}`}>
+                      {bankSource(t.externalId)}
+                    </span>
                   </td>
                   <td className={`py-3 font-semibold whitespace-nowrap ${t.type === "Income" ? "text-green-500" : "text-red-500"}`}>
                     {t.type === "Income" ? "+" : "-"}{fmt(Math.abs(parseFloat(t.amount)))}
