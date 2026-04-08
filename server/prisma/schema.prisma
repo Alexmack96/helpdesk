@@ -90,7 +90,7 @@ model MonzoTransaction {
 }
 
 model AmexTransaction {
-  id              Int      @id @default(autoincrement())
+  transactionId   String   @id
   transactionDate String
   processDate     String
   description     String
@@ -99,6 +99,7 @@ model AmexTransaction {
   foreignCurrency String?
   foreignAmount   String?
   statementDate   String
+  owner           String   @default("Alex")
   importedAt      DateTime @default(now())
 
   @@map("amex_transaction")
@@ -111,6 +112,7 @@ model BarclaysTransaction {
   amount        String
   isCredit      Boolean  @default(false)
   statementDate String
+  owner         String   @default("Alex")
   importedAt    DateTime @default(now())
 
   @@map("barclays_transaction")
@@ -124,6 +126,7 @@ model SantanderTransaction {
   moneyOut      String?
   balance       String
   statementDate String
+  owner         String   @default("Alex")
   importedAt    DateTime @default(now())
 
   @@map("santander_transaction")

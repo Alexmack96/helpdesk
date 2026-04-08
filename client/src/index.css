@@ -90,6 +90,26 @@
   --chart-5: oklch(0.645 0.246 16.439);
 }
 
+/* ─── AG-Grid overrides ──────────────────────────────────────────────────── */
+
+/* Allow absolute-positioned cell dropdowns (category/owner) to overflow rows */
+.ag-row,
+.ag-cell {
+  overflow: visible !important;
+}
+
+/* Uppercase tracking headers to match existing table style */
+.ag-header-cell-text {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 11px;
+}
+
+/* Floating filter inputs — match input style */
+.ag-floating-filter-input input {
+  background: transparent;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

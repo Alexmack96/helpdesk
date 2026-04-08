@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import { Router } from "express";
 import multer from "multer";
 import { parse } from "csv-parse/sync";
@@ -166,7 +167,7 @@ importRouter.post("/import/monzo", upload.single("file"), async (req, res) => {
 // Amount block (after "Amount  £") contains foreign amounts first, then N GBP amounts.
 // We take the last N numbers as GBP amounts for N descriptions on that page.
 
-const AMEX_PAGE_HEADER_RE = /^MR ALEXANDER JAMES MACKINTOSH.*\d{2}\/\d{2}\/\d{2}$/;
+const AMEX_PAGE_HEADER_RE = /^(MR|MRS|MS|MISS)\s+[A-Z].*\d{2}\/\d{2}\/\d{2}$/;
 const AMEX_TX_LINE_RE = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\d{1,2})(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\d{1,2})(.+)/;
 const AMEX_PURE_AMOUNT_RE = /^[\d,]+\.\d{2}$/;
 const AMEX_AMOUNT_HEADER = "Amount  £";
@@ -272,8 +273,19 @@ function parseAmexPdf(text: string): AmexRow[] {
 
 // ─── POST /api/admin/import/amex ─────────────────────────────────────────────
 
+const VALID_OWNERS = new Set(["Alex", "Casey", "Joint"]);
+
+function amexTransactionId(row: AmexRow): string {
+  const sign = row.isCredit ? "CR" : "DR";
+  return createHash("sha256")
+    .update(`${row.transactionDate}|${row.processDate}|${row.description}|${row.amount}|${sign}`)
+    .digest("hex")
+    .slice(0, 16);
+}
+
 importRouter.post("/import/amex", upload.single("file"), async (req, res) => {
   if (!req.file) { res.status(400).json({ error: "No file uploaded" }); return; }
+  const owner = VALID_OWNERS.has(req.body.owner) ? req.body.owner : "Alex";
 
   let text: string;
   try { text = (await pdfParse(req.file.buffer)).text; }
@@ -286,8 +298,32 @@ importRouter.post("/import/amex", upload.single("file"), async (req, res) => {
     return;
   }
 
-  if (rows.length > 0) await db.amexTransaction.createMany({ data: rows });
-  res.json({ imported: rows.length });
+  const existing = await db.amexTransaction.findMany({ select: { transactionId: true } });
+  const existingIds = new Set(existing.map((r) => r.transactionId));
+
+  const duplicates: string[] = [];
+  const toInsert: (AmexRow & { transactionId: string })[] = [];
+  const batchCounts = new Map<string, number>();
+
+  for (const row of rows) {
+    const baseId = amexTransactionId(row);
+    const count = batchCounts.get(baseId) ?? 0;
+    batchCounts.set(baseId, count + 1);
+    const transactionId = count === 0 ? baseId : `${baseId}-${count}`;
+
+    if (count > 0) {
+      console.log(`[amex] within-statement duplicate #${count}: ${row.transactionDate} "${row.description}" £${row.amount} → ${transactionId}`);
+    }
+
+    if (existingIds.has(transactionId)) {
+      duplicates.push(transactionId);
+    } else {
+      toInsert.push({ ...row, transactionId });
+    }
+  }
+
+  if (toInsert.length > 0) await db.amexTransaction.createMany({ data: toInsert.map((r) => ({ ...r, owner })) });
+  res.json({ imported: toInsert.length, duplicates });
 });
 
 // ─── Barclays PDF parser ──────────────────────────────────────────────────────
@@ -398,6 +434,7 @@ function parseBarclaysPdf(text: string): BarclaysRow[] {
 
 importRouter.post("/import/barclays", upload.single("file"), async (req, res) => {
   if (!req.file) { res.status(400).json({ error: "No file uploaded" }); return; }
+  const owner = VALID_OWNERS.has(req.body.owner) ? req.body.owner : "Alex";
 
   let text: string;
   try { text = (await pdfParse(req.file.buffer)).text; }
@@ -410,7 +447,7 @@ importRouter.post("/import/barclays", upload.single("file"), async (req, res) =>
     return;
   }
 
-  if (rows.length > 0) await db.barclaysTransaction.createMany({ data: rows });
+  if (rows.length > 0) await db.barclaysTransaction.createMany({ data: rows.map((r) => ({ ...r, owner })) });
   res.json({ imported: rows.length });
 });
 
@@ -573,6 +610,7 @@ function parseSantanderPdf(text: string): SantanderRow[] {
 
 importRouter.post("/import/santander", upload.single("file"), async (req, res) => {
   if (!req.file) { res.status(400).json({ error: "No file uploaded" }); return; }
+  const owner = VALID_OWNERS.has(req.body.owner) ? req.body.owner : "Alex";
 
   let text: string;
   try { text = (await pdfParse(req.file.buffer)).text; }
@@ -585,7 +623,7 @@ importRouter.post("/import/santander", upload.single("file"), async (req, res) =
     return;
   }
 
-  if (rows.length > 0) await db.santanderTransaction.createMany({ data: rows });
+  if (rows.length > 0) await db.santanderTransaction.createMany({ data: rows.map((r) => ({ ...r, owner })) });
   res.json({ imported: rows.length });
 });
 
@@ -639,7 +677,6 @@ importRouter.post("/process", async (_req, res) => {
   const unprocessedAmex = stagedAmex.filter((r) => !processedSet.has(`amex:${r.id}`));
 
   for (const row of unprocessedAmex) {
-    if (row.isCredit) continue;
     const amountNum = parseFloat(row.amount.replace(/,/g, ""));
     if (isNaN(amountNum)) continue;
     const categoryName = resolveCategoryByMerchant(row.description);
@@ -648,11 +685,11 @@ importRouter.post("/process", async (_req, res) => {
       data: {
         description: row.description,
         amount:      amountNum,
-        type:        "Expense",
+        type:        row.isCredit ? "Income" : "Expense",
         date:        new Date(row.transactionDate),
         categoryId:  category.id,
-        externalId:  `amex:${row.id}`,
-        owner:       "Alex",
+        externalId:  `amex:${row.transactionId}`,
+        owner:       row.owner as "Alex" | "Casey" | "Joint",
       },
     });
     processed++;
@@ -676,7 +713,7 @@ importRouter.post("/process", async (_req, res) => {
         date:        new Date(row.date),
         categoryId:  category.id,
         externalId:  `barclays:${row.id}`,
-        owner:       "Alex",
+        owner:       row.owner as "Alex" | "Casey" | "Joint",
       },
     });
     processed++;
@@ -701,7 +738,7 @@ importRouter.post("/process", async (_req, res) => {
         date:        new Date(row.date),
         categoryId:  category.id,
         externalId:  `santander:${row.id}`,
-        owner:       "Alex",
+        owner:       row.owner as "Alex" | "Casey" | "Joint",
       },
     });
     processed++;

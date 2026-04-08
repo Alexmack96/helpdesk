@@ -21,6 +21,8 @@ function BankUploadCard({
   file,
   fileRef,
   accept = ".csv",
+  owner,
+  onOwnerChange,
 }: {
   title: string;
   description: string;
@@ -33,6 +35,8 @@ function BankUploadCard({
   file: File | null;
   fileRef: React.RefObject<HTMLInputElement | null>;
   accept?: string;
+  owner?: string;
+  onOwnerChange?: (owner: string) => void;
 }) {
   const [showDuplicates, setShowDuplicates] = useState(false);
   const inputId = `file-${title.toLowerCase()}`;
@@ -47,6 +51,17 @@ function BankUploadCard({
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground">{description}</p>
         <div className="flex items-center gap-3">
+          {onOwnerChange && (
+            <select
+              value={owner}
+              onChange={(e) => onOwnerChange(e.target.value)}
+              className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+            >
+              <option value="Alex">Alex</option>
+              <option value="Casey">Casey</option>
+              <option value="Joint">Joint</option>
+            </select>
+          )}
           <label
             htmlFor={inputId}
             className="cursor-pointer inline-flex items-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
@@ -125,6 +140,9 @@ export function ImportPage() {
   const [amexFile, setAmexFile] = useState<File | null>(null);
   const [barclaysFile, setBarclaysFile] = useState<File | null>(null);
   const [santanderFile, setSantanderFile] = useState<File | null>(null);
+  const [amexOwner, setAmexOwner] = useState("Alex");
+  const [barclaysOwner, setBarclaysOwner] = useState("Alex");
+  const [santanderOwner, setSantanderOwner] = useState("Alex");
 
   const { data: staged, refetch: refetchStaged } = useQuery<StagedInfo>({
     queryKey: ["staged"],
@@ -144,10 +162,11 @@ export function ImportPage() {
     },
   });
 
-  const amexMutation = useMutation<ImportResult, Error, File>({
-    mutationFn: (f) => {
+  const amexMutation = useMutation<ImportResult, Error, { file: File; owner: string }>({
+    mutationFn: ({ file, owner }) => {
       const form = new FormData();
-      form.append("file", f);
+      form.append("file", file);
+      form.append("owner", owner);
       return api.post("/api/admin/import/amex", form).then((r) => r.data);
     },
     onSuccess: () => {
@@ -157,10 +176,11 @@ export function ImportPage() {
     },
   });
 
-  const barclaysMutation = useMutation<ImportResult, Error, File>({
-    mutationFn: (f) => {
+  const barclaysMutation = useMutation<ImportResult, Error, { file: File; owner: string }>({
+    mutationFn: ({ file, owner }) => {
       const form = new FormData();
-      form.append("file", f);
+      form.append("file", file);
+      form.append("owner", owner);
       return api.post("/api/admin/import/barclays", form).then((r) => r.data);
     },
     onSuccess: () => {
@@ -170,10 +190,11 @@ export function ImportPage() {
     },
   });
 
-  const santanderMutation = useMutation<ImportResult, Error, File>({
-    mutationFn: (f) => {
+  const santanderMutation = useMutation<ImportResult, Error, { file: File; owner: string }>({
+    mutationFn: ({ file, owner }) => {
       const form = new FormData();
-      form.append("file", f);
+      form.append("file", file);
+      form.append("owner", owner);
       return api.post("/api/admin/import/santander", form).then((r) => r.data);
     },
     onSuccess: () => {
@@ -281,11 +302,13 @@ export function ImportPage() {
         file={amexFile}
         fileRef={amexFileRef}
         onFileChange={(f) => { setAmexFile(f); amexMutation.reset(); }}
-        onUpload={() => amexFile && amexMutation.mutate(amexFile)}
+        onUpload={() => amexFile && amexMutation.mutate({ file: amexFile, owner: amexOwner })}
         result={amexMutation.data}
         isPending={amexMutation.isPending}
         isError={amexMutation.isError}
         error={amexMutation.error}
+        owner={amexOwner}
+        onOwnerChange={setAmexOwner}
       />
 
       <BankUploadCard
@@ -295,11 +318,13 @@ export function ImportPage() {
         file={barclaysFile}
         fileRef={barclaysFileRef}
         onFileChange={(f) => { setBarclaysFile(f); barclaysMutation.reset(); }}
-        onUpload={() => barclaysFile && barclaysMutation.mutate(barclaysFile)}
+        onUpload={() => barclaysFile && barclaysMutation.mutate({ file: barclaysFile, owner: barclaysOwner })}
         result={barclaysMutation.data}
         isPending={barclaysMutation.isPending}
         isError={barclaysMutation.isError}
         error={barclaysMutation.error}
+        owner={barclaysOwner}
+        onOwnerChange={setBarclaysOwner}
       />
 
       <BankUploadCard
@@ -309,11 +334,13 @@ export function ImportPage() {
         file={santanderFile}
         fileRef={santanderFileRef}
         onFileChange={(f) => { setSantanderFile(f); santanderMutation.reset(); }}
-        onUpload={() => santanderFile && santanderMutation.mutate(santanderFile)}
+        onUpload={() => santanderFile && santanderMutation.mutate({ file: santanderFile, owner: santanderOwner })}
         result={santanderMutation.data}
         isPending={santanderMutation.isPending}
         isError={santanderMutation.isError}
         error={santanderMutation.error}
+        owner={santanderOwner}
+        onOwnerChange={setSantanderOwner}
       />
     </div>
   );

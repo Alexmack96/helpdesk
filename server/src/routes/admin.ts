@@ -14,12 +14,6 @@ const SYSTEM_CATEGORIES: Record<string, { color: string; isFixed: boolean; isDir
   "Transport":      { color: "#3b82f6", isFixed: true  },
   "Uncategorised":  { color: "#d1d5db", isFixed: false },
   "Vacation":       { color: "#eab308", isFixed: false },
-  // Utility categories
-  "Rent":           { color: "#6366f1", isFixed: true, isDirectDebit: true  },
-  "Water":          { color: "#0ea5e9", isFixed: true, isDirectDebit: true  },
-  "Wifi":           { color: "#8b5cf6", isFixed: true, isDirectDebit: false },
-  "Electricity":    { color: "#f59e0b", isFixed: true, isDirectDebit: true  },
-  "Council Tax":    { color: "#10b981", isFixed: true, isDirectDebit: true  },
 };
 
 export async function initSystemCategories() {

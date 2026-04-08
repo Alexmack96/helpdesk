@@ -171,7 +171,7 @@ exports.Prisma.MonzoTransactionScalarFieldEnum = {
 };
 
 exports.Prisma.AmexTransactionScalarFieldEnum = {
-  id: 'id',
+  transactionId: 'transactionId',
   transactionDate: 'transactionDate',
   processDate: 'processDate',
   description: 'description',
@@ -180,6 +180,7 @@ exports.Prisma.AmexTransactionScalarFieldEnum = {
   foreignCurrency: 'foreignCurrency',
   foreignAmount: 'foreignAmount',
   statementDate: 'statementDate',
+  owner: 'owner',
   importedAt: 'importedAt'
 };
 
@@ -190,6 +191,7 @@ exports.Prisma.BarclaysTransactionScalarFieldEnum = {
   amount: 'amount',
   isCredit: 'isCredit',
   statementDate: 'statementDate',
+  owner: 'owner',
   importedAt: 'importedAt'
 };
 
@@ -201,6 +203,7 @@ exports.Prisma.SantanderTransactionScalarFieldEnum = {
   moneyOut: 'moneyOut',
   balance: 'balance',
   statementDate: 'statementDate',
+  owner: 'owner',
   importedAt: 'importedAt'
 };
 

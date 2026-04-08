@@ -13,7 +13,9 @@
       "Bash(git push:*)",
       "Bash(DATABASE_URL=\"file:./test.db\" bunx prisma migrate deploy)",
       "Bash(kill %1)",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "Bash(grep -v \"//\")",
+      "Bash(node -e \"const {execSync} = require\\('child_process'\\); console.log\\(execSync\\('npx ctx7@latest docs websites/ag-grid_react-data-grid \\\\\"number filter date filter agNumberColumnFilter agDateColumnFilter theme header background\\\\\"', {encoding:'utf8', env:{...process.env}}\\)\\)\")"
     ]
   }
 }

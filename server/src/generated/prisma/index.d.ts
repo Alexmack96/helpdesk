@@ -6343,22 +6343,12 @@ export namespace Prisma {
 
   export type AggregateAmexTransaction = {
     _count: AmexTransactionCountAggregateOutputType | null
-    _avg: AmexTransactionAvgAggregateOutputType | null
-    _sum: AmexTransactionSumAggregateOutputType | null
     _min: AmexTransactionMinAggregateOutputType | null
     _max: AmexTransactionMaxAggregateOutputType | null
   }
 
-  export type AmexTransactionAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type AmexTransactionSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type AmexTransactionMinAggregateOutputType = {
-    id: number | null
+    transactionId: string | null
     transactionDate: string | null
     processDate: string | null
     description: string | null
@@ -6367,11 +6357,12 @@ export namespace Prisma {
     foreignCurrency: string | null
     foreignAmount: string | null
     statementDate: string | null
+    owner: string | null
     importedAt: Date | null
   }
 
   export type AmexTransactionMaxAggregateOutputType = {
-    id: number | null
+    transactionId: string | null
     transactionDate: string | null
     processDate: string | null
     description: string | null
@@ -6380,11 +6371,12 @@ export namespace Prisma {
     foreignCurrency: string | null
     foreignAmount: string | null
     statementDate: string | null
+    owner: string | null
     importedAt: Date | null
   }
 
   export type AmexTransactionCountAggregateOutputType = {
-    id: number
+    transactionId: number
     transactionDate: number
     processDate: number
     description: number
@@ -6393,21 +6385,14 @@ export namespace Prisma {
     foreignCurrency: number
     foreignAmount: number
     statementDate: number
+    owner: number
     importedAt: number
     _all: number
   }
 
 
-  export type AmexTransactionAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type AmexTransactionSumAggregateInputType = {
-    id?: true
-  }
-
   export type AmexTransactionMinAggregateInputType = {
-    id?: true
+    transactionId?: true
     transactionDate?: true
     processDate?: true
     description?: true
@@ -6416,11 +6401,12 @@ export namespace Prisma {
     foreignCurrency?: true
     foreignAmount?: true
     statementDate?: true
+    owner?: true
     importedAt?: true
   }
 
   export type AmexTransactionMaxAggregateInputType = {
-    id?: true
+    transactionId?: true
     transactionDate?: true
     processDate?: true
     description?: true
@@ -6429,11 +6415,12 @@ export namespace Prisma {
     foreignCurrency?: true
     foreignAmount?: true
     statementDate?: true
+    owner?: true
     importedAt?: true
   }
 
   export type AmexTransactionCountAggregateInputType = {
-    id?: true
+    transactionId?: true
     transactionDate?: true
     processDate?: true
     description?: true
@@ -6442,6 +6429,7 @@ export namespace Prisma {
     foreignCurrency?: true
     foreignAmount?: true
     statementDate?: true
+    owner?: true
     importedAt?: true
     _all?: true
   }
@@ -6484,18 +6472,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: AmexTransactionAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: AmexTransactionSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: AmexTransactionMinAggregateInputType
@@ -6526,14 +6502,12 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: AmexTransactionCountAggregateInputType | true
-    _avg?: AmexTransactionAvgAggregateInputType
-    _sum?: AmexTransactionSumAggregateInputType
     _min?: AmexTransactionMinAggregateInputType
     _max?: AmexTransactionMaxAggregateInputType
   }
 
   export type AmexTransactionGroupByOutputType = {
-    id: number
+    transactionId: string
     transactionDate: string
     processDate: string
     description: string
@@ -6542,10 +6516,9 @@ export namespace Prisma {
     foreignCurrency: string | null
     foreignAmount: string | null
     statementDate: string
+    owner: string
     importedAt: Date
     _count: AmexTransactionCountAggregateOutputType | null
-    _avg: AmexTransactionAvgAggregateOutputType | null
-    _sum: AmexTransactionSumAggregateOutputType | null
     _min: AmexTransactionMinAggregateOutputType | null
     _max: AmexTransactionMaxAggregateOutputType | null
   }
@@ -6565,7 +6538,7 @@ export namespace Prisma {
 
 
   export type AmexTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
+    transactionId?: boolean
     transactionDate?: boolean
     processDate?: boolean
     description?: boolean
@@ -6574,11 +6547,12 @@ export namespace Prisma {
     foreignCurrency?: boolean
     foreignAmount?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }, ExtArgs["result"]["amexTransaction"]>
 
   export type AmexTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
+    transactionId?: boolean
     transactionDate?: boolean
     processDate?: boolean
     description?: boolean
@@ -6587,11 +6561,12 @@ export namespace Prisma {
     foreignCurrency?: boolean
     foreignAmount?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }, ExtArgs["result"]["amexTransaction"]>
 
   export type AmexTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
+    transactionId?: boolean
     transactionDate?: boolean
     processDate?: boolean
     description?: boolean
@@ -6600,11 +6575,12 @@ export namespace Prisma {
     foreignCurrency?: boolean
     foreignAmount?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }, ExtArgs["result"]["amexTransaction"]>
 
   export type AmexTransactionSelectScalar = {
-    id?: boolean
+    transactionId?: boolean
     transactionDate?: boolean
     processDate?: boolean
     description?: boolean
@@ -6613,16 +6589,17 @@ export namespace Prisma {
     foreignCurrency?: boolean
     foreignAmount?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }
 
-  export type AmexTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "transactionDate" | "processDate" | "description" | "amount" | "isCredit" | "foreignCurrency" | "foreignAmount" | "statementDate" | "importedAt", ExtArgs["result"]["amexTransaction"]>
+  export type AmexTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"transactionId" | "transactionDate" | "processDate" | "description" | "amount" | "isCredit" | "foreignCurrency" | "foreignAmount" | "statementDate" | "owner" | "importedAt", ExtArgs["result"]["amexTransaction"]>
 
   export type $AmexTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AmexTransaction"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      transactionId: string
       transactionDate: string
       processDate: string
       description: string
@@ -6631,6 +6608,7 @@ export namespace Prisma {
       foreignCurrency: string | null
       foreignAmount: string | null
       statementDate: string
+      owner: string
       importedAt: Date
     }, ExtArgs["result"]["amexTransaction"]>
     composites: {}
@@ -6715,8 +6693,8 @@ export namespace Prisma {
      * // Get first 10 AmexTransactions
      * const amexTransactions = await prisma.amexTransaction.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const amexTransactionWithIdOnly = await prisma.amexTransaction.findMany({ select: { id: true } })
+     * // Only select the `transactionId`
+     * const amexTransactionWithTransactionIdOnly = await prisma.amexTransaction.findMany({ select: { transactionId: true } })
      * 
      */
     findMany<T extends AmexTransactionFindManyArgs>(args?: SelectSubset<T, AmexTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AmexTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -6760,9 +6738,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many AmexTransactions and only return the `id`
-     * const amexTransactionWithIdOnly = await prisma.amexTransaction.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many AmexTransactions and only return the `transactionId`
+     * const amexTransactionWithTransactionIdOnly = await prisma.amexTransaction.createManyAndReturn({
+     *   select: { transactionId: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -6851,9 +6829,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more AmexTransactions and only return the `id`
-     * const amexTransactionWithIdOnly = await prisma.amexTransaction.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more AmexTransactions and only return the `transactionId`
+     * const amexTransactionWithTransactionIdOnly = await prisma.amexTransaction.updateManyAndReturn({
+     *   select: { transactionId: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7055,7 +7033,7 @@ export namespace Prisma {
    * Fields of the AmexTransaction model
    */
   interface AmexTransactionFieldRefs {
-    readonly id: FieldRef<"AmexTransaction", 'Int'>
+    readonly transactionId: FieldRef<"AmexTransaction", 'String'>
     readonly transactionDate: FieldRef<"AmexTransaction", 'String'>
     readonly processDate: FieldRef<"AmexTransaction", 'String'>
     readonly description: FieldRef<"AmexTransaction", 'String'>
@@ -7064,6 +7042,7 @@ export namespace Prisma {
     readonly foreignCurrency: FieldRef<"AmexTransaction", 'String'>
     readonly foreignAmount: FieldRef<"AmexTransaction", 'String'>
     readonly statementDate: FieldRef<"AmexTransaction", 'String'>
+    readonly owner: FieldRef<"AmexTransaction", 'String'>
     readonly importedAt: FieldRef<"AmexTransaction", 'DateTime'>
   }
     
@@ -7461,6 +7440,7 @@ export namespace Prisma {
     amount: string | null
     isCredit: boolean | null
     statementDate: string | null
+    owner: string | null
     importedAt: Date | null
   }
 
@@ -7471,6 +7451,7 @@ export namespace Prisma {
     amount: string | null
     isCredit: boolean | null
     statementDate: string | null
+    owner: string | null
     importedAt: Date | null
   }
 
@@ -7481,6 +7462,7 @@ export namespace Prisma {
     amount: number
     isCredit: number
     statementDate: number
+    owner: number
     importedAt: number
     _all: number
   }
@@ -7501,6 +7483,7 @@ export namespace Prisma {
     amount?: true
     isCredit?: true
     statementDate?: true
+    owner?: true
     importedAt?: true
   }
 
@@ -7511,6 +7494,7 @@ export namespace Prisma {
     amount?: true
     isCredit?: true
     statementDate?: true
+    owner?: true
     importedAt?: true
   }
 
@@ -7521,6 +7505,7 @@ export namespace Prisma {
     amount?: true
     isCredit?: true
     statementDate?: true
+    owner?: true
     importedAt?: true
     _all?: true
   }
@@ -7618,6 +7603,7 @@ export namespace Prisma {
     amount: string
     isCredit: boolean
     statementDate: string
+    owner: string
     importedAt: Date
     _count: BarclaysTransactionCountAggregateOutputType | null
     _avg: BarclaysTransactionAvgAggregateOutputType | null
@@ -7647,6 +7633,7 @@ export namespace Prisma {
     amount?: boolean
     isCredit?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }, ExtArgs["result"]["barclaysTransaction"]>
 
@@ -7657,6 +7644,7 @@ export namespace Prisma {
     amount?: boolean
     isCredit?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }, ExtArgs["result"]["barclaysTransaction"]>
 
@@ -7667,6 +7655,7 @@ export namespace Prisma {
     amount?: boolean
     isCredit?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }, ExtArgs["result"]["barclaysTransaction"]>
 
@@ -7677,10 +7666,11 @@ export namespace Prisma {
     amount?: boolean
     isCredit?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }
 
-  export type BarclaysTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "amount" | "isCredit" | "statementDate" | "importedAt", ExtArgs["result"]["barclaysTransaction"]>
+  export type BarclaysTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "amount" | "isCredit" | "statementDate" | "owner" | "importedAt", ExtArgs["result"]["barclaysTransaction"]>
 
   export type $BarclaysTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "BarclaysTransaction"
@@ -7692,6 +7682,7 @@ export namespace Prisma {
       amount: string
       isCredit: boolean
       statementDate: string
+      owner: string
       importedAt: Date
     }, ExtArgs["result"]["barclaysTransaction"]>
     composites: {}
@@ -8122,6 +8113,7 @@ export namespace Prisma {
     readonly amount: FieldRef<"BarclaysTransaction", 'String'>
     readonly isCredit: FieldRef<"BarclaysTransaction", 'Boolean'>
     readonly statementDate: FieldRef<"BarclaysTransaction", 'String'>
+    readonly owner: FieldRef<"BarclaysTransaction", 'String'>
     readonly importedAt: FieldRef<"BarclaysTransaction", 'DateTime'>
   }
     
@@ -8520,6 +8512,7 @@ export namespace Prisma {
     moneyOut: string | null
     balance: string | null
     statementDate: string | null
+    owner: string | null
     importedAt: Date | null
   }
 
@@ -8531,6 +8524,7 @@ export namespace Prisma {
     moneyOut: string | null
     balance: string | null
     statementDate: string | null
+    owner: string | null
     importedAt: Date | null
   }
 
@@ -8542,6 +8536,7 @@ export namespace Prisma {
     moneyOut: number
     balance: number
     statementDate: number
+    owner: number
     importedAt: number
     _all: number
   }
@@ -8563,6 +8558,7 @@ export namespace Prisma {
     moneyOut?: true
     balance?: true
     statementDate?: true
+    owner?: true
     importedAt?: true
   }
 
@@ -8574,6 +8570,7 @@ export namespace Prisma {
     moneyOut?: true
     balance?: true
     statementDate?: true
+    owner?: true
     importedAt?: true
   }
 
@@ -8585,6 +8582,7 @@ export namespace Prisma {
     moneyOut?: true
     balance?: true
     statementDate?: true
+    owner?: true
     importedAt?: true
     _all?: true
   }
@@ -8683,6 +8681,7 @@ export namespace Prisma {
     moneyOut: string | null
     balance: string
     statementDate: string
+    owner: string
     importedAt: Date
     _count: SantanderTransactionCountAggregateOutputType | null
     _avg: SantanderTransactionAvgAggregateOutputType | null
@@ -8713,6 +8712,7 @@ export namespace Prisma {
     moneyOut?: boolean
     balance?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }, ExtArgs["result"]["santanderTransaction"]>
 
@@ -8724,6 +8724,7 @@ export namespace Prisma {
     moneyOut?: boolean
     balance?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }, ExtArgs["result"]["santanderTransaction"]>
 
@@ -8735,6 +8736,7 @@ export namespace Prisma {
     moneyOut?: boolean
     balance?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }, ExtArgs["result"]["santanderTransaction"]>
 
@@ -8746,10 +8748,11 @@ export namespace Prisma {
     moneyOut?: boolean
     balance?: boolean
     statementDate?: boolean
+    owner?: boolean
     importedAt?: boolean
   }
 
-  export type SantanderTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "moneyIn" | "moneyOut" | "balance" | "statementDate" | "importedAt", ExtArgs["result"]["santanderTransaction"]>
+  export type SantanderTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "moneyIn" | "moneyOut" | "balance" | "statementDate" | "owner" | "importedAt", ExtArgs["result"]["santanderTransaction"]>
 
   export type $SantanderTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SantanderTransaction"
@@ -8762,6 +8765,7 @@ export namespace Prisma {
       moneyOut: string | null
       balance: string
       statementDate: string
+      owner: string
       importedAt: Date
     }, ExtArgs["result"]["santanderTransaction"]>
     composites: {}
@@ -9193,6 +9197,7 @@ export namespace Prisma {
     readonly moneyOut: FieldRef<"SantanderTransaction", 'String'>
     readonly balance: FieldRef<"SantanderTransaction", 'String'>
     readonly statementDate: FieldRef<"SantanderTransaction", 'String'>
+    readonly owner: FieldRef<"SantanderTransaction", 'String'>
     readonly importedAt: FieldRef<"SantanderTransaction", 'DateTime'>
   }
     
@@ -12916,7 +12921,7 @@ export namespace Prisma {
 
 
   export const AmexTransactionScalarFieldEnum: {
-    id: 'id',
+    transactionId: 'transactionId',
     transactionDate: 'transactionDate',
     processDate: 'processDate',
     description: 'description',
@@ -12925,6 +12930,7 @@ export namespace Prisma {
     foreignCurrency: 'foreignCurrency',
     foreignAmount: 'foreignAmount',
     statementDate: 'statementDate',
+    owner: 'owner',
     importedAt: 'importedAt'
   };
 
@@ -12938,6 +12944,7 @@ export namespace Prisma {
     amount: 'amount',
     isCredit: 'isCredit',
     statementDate: 'statementDate',
+    owner: 'owner',
     importedAt: 'importedAt'
   };
 
@@ -12952,6 +12959,7 @@ export namespace Prisma {
     moneyOut: 'moneyOut',
     balance: 'balance',
     statementDate: 'statementDate',
+    owner: 'owner',
     importedAt: 'importedAt'
   };
 
@@ -13421,7 +13429,7 @@ export namespace Prisma {
     AND?: AmexTransactionWhereInput | AmexTransactionWhereInput[]
     OR?: AmexTransactionWhereInput[]
     NOT?: AmexTransactionWhereInput | AmexTransactionWhereInput[]
-    id?: IntFilter<"AmexTransaction"> | number
+    transactionId?: StringFilter<"AmexTransaction"> | string
     transactionDate?: StringFilter<"AmexTransaction"> | string
     processDate?: StringFilter<"AmexTransaction"> | string
     description?: StringFilter<"AmexTransaction"> | string
@@ -13430,11 +13438,12 @@ export namespace Prisma {
     foreignCurrency?: StringNullableFilter<"AmexTransaction"> | string | null
     foreignAmount?: StringNullableFilter<"AmexTransaction"> | string | null
     statementDate?: StringFilter<"AmexTransaction"> | string
+    owner?: StringFilter<"AmexTransaction"> | string
     importedAt?: DateTimeFilter<"AmexTransaction"> | Date | string
   }
 
   export type AmexTransactionOrderByWithRelationInput = {
-    id?: SortOrder
+    transactionId?: SortOrder
     transactionDate?: SortOrder
     processDate?: SortOrder
     description?: SortOrder
@@ -13443,11 +13452,12 @@ export namespace Prisma {
     foreignCurrency?: SortOrderInput | SortOrder
     foreignAmount?: SortOrderInput | SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
   }
 
   export type AmexTransactionWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    transactionId?: string
     AND?: AmexTransactionWhereInput | AmexTransactionWhereInput[]
     OR?: AmexTransactionWhereInput[]
     NOT?: AmexTransactionWhereInput | AmexTransactionWhereInput[]
@@ -13459,11 +13469,12 @@ export namespace Prisma {
     foreignCurrency?: StringNullableFilter<"AmexTransaction"> | string | null
     foreignAmount?: StringNullableFilter<"AmexTransaction"> | string | null
     statementDate?: StringFilter<"AmexTransaction"> | string
+    owner?: StringFilter<"AmexTransaction"> | string
     importedAt?: DateTimeFilter<"AmexTransaction"> | Date | string
-  }, "id">
+  }, "transactionId">
 
   export type AmexTransactionOrderByWithAggregationInput = {
-    id?: SortOrder
+    transactionId?: SortOrder
     transactionDate?: SortOrder
     processDate?: SortOrder
     description?: SortOrder
@@ -13472,19 +13483,18 @@ export namespace Prisma {
     foreignCurrency?: SortOrderInput | SortOrder
     foreignAmount?: SortOrderInput | SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
     _count?: AmexTransactionCountOrderByAggregateInput
-    _avg?: AmexTransactionAvgOrderByAggregateInput
     _max?: AmexTransactionMaxOrderByAggregateInput
     _min?: AmexTransactionMinOrderByAggregateInput
-    _sum?: AmexTransactionSumOrderByAggregateInput
   }
 
   export type AmexTransactionScalarWhereWithAggregatesInput = {
     AND?: AmexTransactionScalarWhereWithAggregatesInput | AmexTransactionScalarWhereWithAggregatesInput[]
     OR?: AmexTransactionScalarWhereWithAggregatesInput[]
     NOT?: AmexTransactionScalarWhereWithAggregatesInput | AmexTransactionScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"AmexTransaction"> | number
+    transactionId?: StringWithAggregatesFilter<"AmexTransaction"> | string
     transactionDate?: StringWithAggregatesFilter<"AmexTransaction"> | string
     processDate?: StringWithAggregatesFilter<"AmexTransaction"> | string
     description?: StringWithAggregatesFilter<"AmexTransaction"> | string
@@ -13493,6 +13503,7 @@ export namespace Prisma {
     foreignCurrency?: StringNullableWithAggregatesFilter<"AmexTransaction"> | string | null
     foreignAmount?: StringNullableWithAggregatesFilter<"AmexTransaction"> | string | null
     statementDate?: StringWithAggregatesFilter<"AmexTransaction"> | string
+    owner?: StringWithAggregatesFilter<"AmexTransaction"> | string
     importedAt?: DateTimeWithAggregatesFilter<"AmexTransaction"> | Date | string
   }
 
@@ -13506,6 +13517,7 @@ export namespace Prisma {
     amount?: StringFilter<"BarclaysTransaction"> | string
     isCredit?: BoolFilter<"BarclaysTransaction"> | boolean
     statementDate?: StringFilter<"BarclaysTransaction"> | string
+    owner?: StringFilter<"BarclaysTransaction"> | string
     importedAt?: DateTimeFilter<"BarclaysTransaction"> | Date | string
   }
 
@@ -13516,6 +13528,7 @@ export namespace Prisma {
     amount?: SortOrder
     isCredit?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
   }
 
@@ -13529,6 +13542,7 @@ export namespace Prisma {
     amount?: StringFilter<"BarclaysTransaction"> | string
     isCredit?: BoolFilter<"BarclaysTransaction"> | boolean
     statementDate?: StringFilter<"BarclaysTransaction"> | string
+    owner?: StringFilter<"BarclaysTransaction"> | string
     importedAt?: DateTimeFilter<"BarclaysTransaction"> | Date | string
   }, "id">
 
@@ -13539,6 +13553,7 @@ export namespace Prisma {
     amount?: SortOrder
     isCredit?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
     _count?: BarclaysTransactionCountOrderByAggregateInput
     _avg?: BarclaysTransactionAvgOrderByAggregateInput
@@ -13557,6 +13572,7 @@ export namespace Prisma {
     amount?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
     isCredit?: BoolWithAggregatesFilter<"BarclaysTransaction"> | boolean
     statementDate?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
+    owner?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
     importedAt?: DateTimeWithAggregatesFilter<"BarclaysTransaction"> | Date | string
   }
 
@@ -13571,6 +13587,7 @@ export namespace Prisma {
     moneyOut?: StringNullableFilter<"SantanderTransaction"> | string | null
     balance?: StringFilter<"SantanderTransaction"> | string
     statementDate?: StringFilter<"SantanderTransaction"> | string
+    owner?: StringFilter<"SantanderTransaction"> | string
     importedAt?: DateTimeFilter<"SantanderTransaction"> | Date | string
   }
 
@@ -13582,6 +13599,7 @@ export namespace Prisma {
     moneyOut?: SortOrderInput | SortOrder
     balance?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
   }
 
@@ -13596,6 +13614,7 @@ export namespace Prisma {
     moneyOut?: StringNullableFilter<"SantanderTransaction"> | string | null
     balance?: StringFilter<"SantanderTransaction"> | string
     statementDate?: StringFilter<"SantanderTransaction"> | string
+    owner?: StringFilter<"SantanderTransaction"> | string
     importedAt?: DateTimeFilter<"SantanderTransaction"> | Date | string
   }, "id">
 
@@ -13607,6 +13626,7 @@ export namespace Prisma {
     moneyOut?: SortOrderInput | SortOrder
     balance?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
     _count?: SantanderTransactionCountOrderByAggregateInput
     _avg?: SantanderTransactionAvgOrderByAggregateInput
@@ -13626,6 +13646,7 @@ export namespace Prisma {
     moneyOut?: StringNullableWithAggregatesFilter<"SantanderTransaction"> | string | null
     balance?: StringWithAggregatesFilter<"SantanderTransaction"> | string
     statementDate?: StringWithAggregatesFilter<"SantanderTransaction"> | string
+    owner?: StringWithAggregatesFilter<"SantanderTransaction"> | string
     importedAt?: DateTimeWithAggregatesFilter<"SantanderTransaction"> | Date | string
   }
 
@@ -14234,6 +14255,7 @@ export namespace Prisma {
   }
 
   export type AmexTransactionCreateInput = {
+    transactionId: string
     transactionDate: string
     processDate: string
     description: string
@@ -14242,11 +14264,12 @@ export namespace Prisma {
     foreignCurrency?: string | null
     foreignAmount?: string | null
     statementDate: string
+    owner?: string
     importedAt?: Date | string
   }
 
   export type AmexTransactionUncheckedCreateInput = {
-    id?: number
+    transactionId: string
     transactionDate: string
     processDate: string
     description: string
@@ -14255,10 +14278,12 @@ export namespace Prisma {
     foreignCurrency?: string | null
     foreignAmount?: string | null
     statementDate: string
+    owner?: string
     importedAt?: Date | string
   }
 
   export type AmexTransactionUpdateInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
     transactionDate?: StringFieldUpdateOperationsInput | string
     processDate?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -14267,11 +14292,12 @@ export namespace Prisma {
     foreignCurrency?: NullableStringFieldUpdateOperationsInput | string | null
     foreignAmount?: NullableStringFieldUpdateOperationsInput | string | null
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AmexTransactionUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    transactionId?: StringFieldUpdateOperationsInput | string
     transactionDate?: StringFieldUpdateOperationsInput | string
     processDate?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -14280,11 +14306,12 @@ export namespace Prisma {
     foreignCurrency?: NullableStringFieldUpdateOperationsInput | string | null
     foreignAmount?: NullableStringFieldUpdateOperationsInput | string | null
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AmexTransactionCreateManyInput = {
-    id?: number
+    transactionId: string
     transactionDate: string
     processDate: string
     description: string
@@ -14293,10 +14320,12 @@ export namespace Prisma {
     foreignCurrency?: string | null
     foreignAmount?: string | null
     statementDate: string
+    owner?: string
     importedAt?: Date | string
   }
 
   export type AmexTransactionUpdateManyMutationInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
     transactionDate?: StringFieldUpdateOperationsInput | string
     processDate?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -14305,11 +14334,12 @@ export namespace Prisma {
     foreignCurrency?: NullableStringFieldUpdateOperationsInput | string | null
     foreignAmount?: NullableStringFieldUpdateOperationsInput | string | null
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AmexTransactionUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    transactionId?: StringFieldUpdateOperationsInput | string
     transactionDate?: StringFieldUpdateOperationsInput | string
     processDate?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -14318,6 +14348,7 @@ export namespace Prisma {
     foreignCurrency?: NullableStringFieldUpdateOperationsInput | string | null
     foreignAmount?: NullableStringFieldUpdateOperationsInput | string | null
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14327,6 +14358,7 @@ export namespace Prisma {
     amount: string
     isCredit?: boolean
     statementDate: string
+    owner?: string
     importedAt?: Date | string
   }
 
@@ -14337,6 +14369,7 @@ export namespace Prisma {
     amount: string
     isCredit?: boolean
     statementDate: string
+    owner?: string
     importedAt?: Date | string
   }
 
@@ -14346,6 +14379,7 @@ export namespace Prisma {
     amount?: StringFieldUpdateOperationsInput | string
     isCredit?: BoolFieldUpdateOperationsInput | boolean
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14356,6 +14390,7 @@ export namespace Prisma {
     amount?: StringFieldUpdateOperationsInput | string
     isCredit?: BoolFieldUpdateOperationsInput | boolean
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14366,6 +14401,7 @@ export namespace Prisma {
     amount: string
     isCredit?: boolean
     statementDate: string
+    owner?: string
     importedAt?: Date | string
   }
 
@@ -14375,6 +14411,7 @@ export namespace Prisma {
     amount?: StringFieldUpdateOperationsInput | string
     isCredit?: BoolFieldUpdateOperationsInput | boolean
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14385,6 +14422,7 @@ export namespace Prisma {
     amount?: StringFieldUpdateOperationsInput | string
     isCredit?: BoolFieldUpdateOperationsInput | boolean
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14395,6 +14433,7 @@ export namespace Prisma {
     moneyOut?: string | null
     balance: string
     statementDate: string
+    owner?: string
     importedAt?: Date | string
   }
 
@@ -14406,6 +14445,7 @@ export namespace Prisma {
     moneyOut?: string | null
     balance: string
     statementDate: string
+    owner?: string
     importedAt?: Date | string
   }
 
@@ -14416,6 +14456,7 @@ export namespace Prisma {
     moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: StringFieldUpdateOperationsInput | string
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14427,6 +14468,7 @@ export namespace Prisma {
     moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: StringFieldUpdateOperationsInput | string
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14438,6 +14480,7 @@ export namespace Prisma {
     moneyOut?: string | null
     balance: string
     statementDate: string
+    owner?: string
     importedAt?: Date | string
   }
 
@@ -14448,6 +14491,7 @@ export namespace Prisma {
     moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: StringFieldUpdateOperationsInput | string
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14459,6 +14503,7 @@ export namespace Prisma {
     moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: StringFieldUpdateOperationsInput | string
     statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -15097,6 +15142,48 @@ export namespace Prisma {
     importedAt?: SortOrder
   }
 
+  export type AmexTransactionCountOrderByAggregateInput = {
+    transactionId?: SortOrder
+    transactionDate?: SortOrder
+    processDate?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    foreignCurrency?: SortOrder
+    foreignAmount?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type AmexTransactionMaxOrderByAggregateInput = {
+    transactionId?: SortOrder
+    transactionDate?: SortOrder
+    processDate?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    foreignCurrency?: SortOrder
+    foreignAmount?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+  }
+
+  export type AmexTransactionMinOrderByAggregateInput = {
+    transactionId?: SortOrder
+    transactionDate?: SortOrder
+    processDate?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    foreignCurrency?: SortOrder
+    foreignAmount?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -15108,50 +15195,44 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type AmexTransactionCountOrderByAggregateInput = {
+  export type BarclaysTransactionCountOrderByAggregateInput = {
     id?: SortOrder
-    transactionDate?: SortOrder
-    processDate?: SortOrder
+    date?: SortOrder
     description?: SortOrder
     amount?: SortOrder
     isCredit?: SortOrder
-    foreignCurrency?: SortOrder
-    foreignAmount?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
   }
 
-  export type AmexTransactionAvgOrderByAggregateInput = {
+  export type BarclaysTransactionAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type AmexTransactionMaxOrderByAggregateInput = {
+  export type BarclaysTransactionMaxOrderByAggregateInput = {
     id?: SortOrder
-    transactionDate?: SortOrder
-    processDate?: SortOrder
+    date?: SortOrder
     description?: SortOrder
     amount?: SortOrder
     isCredit?: SortOrder
-    foreignCurrency?: SortOrder
-    foreignAmount?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
   }
 
-  export type AmexTransactionMinOrderByAggregateInput = {
+  export type BarclaysTransactionMinOrderByAggregateInput = {
     id?: SortOrder
-    transactionDate?: SortOrder
-    processDate?: SortOrder
+    date?: SortOrder
     description?: SortOrder
     amount?: SortOrder
     isCredit?: SortOrder
-    foreignCurrency?: SortOrder
-    foreignAmount?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
   }
 
-  export type AmexTransactionSumOrderByAggregateInput = {
+  export type BarclaysTransactionSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -15171,44 +15252,6 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type BarclaysTransactionCountOrderByAggregateInput = {
-    id?: SortOrder
-    date?: SortOrder
-    description?: SortOrder
-    amount?: SortOrder
-    isCredit?: SortOrder
-    statementDate?: SortOrder
-    importedAt?: SortOrder
-  }
-
-  export type BarclaysTransactionAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type BarclaysTransactionMaxOrderByAggregateInput = {
-    id?: SortOrder
-    date?: SortOrder
-    description?: SortOrder
-    amount?: SortOrder
-    isCredit?: SortOrder
-    statementDate?: SortOrder
-    importedAt?: SortOrder
-  }
-
-  export type BarclaysTransactionMinOrderByAggregateInput = {
-    id?: SortOrder
-    date?: SortOrder
-    description?: SortOrder
-    amount?: SortOrder
-    isCredit?: SortOrder
-    statementDate?: SortOrder
-    importedAt?: SortOrder
-  }
-
-  export type BarclaysTransactionSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
   export type SantanderTransactionCountOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
@@ -15217,6 +15260,7 @@ export namespace Prisma {
     moneyOut?: SortOrder
     balance?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
   }
 
@@ -15232,6 +15276,7 @@ export namespace Prisma {
     moneyOut?: SortOrder
     balance?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
   }
 
@@ -15243,6 +15288,7 @@ export namespace Prisma {
     moneyOut?: SortOrder
     balance?: SortOrder
     statementDate?: SortOrder
+    owner?: SortOrder
     importedAt?: SortOrder
   }
 
