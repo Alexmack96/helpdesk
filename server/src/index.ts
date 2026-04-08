@@ -15,6 +15,7 @@ import { categoriesRouter } from "./routes/categories.js";
 import { transactionsRouter } from "./routes/transactions.js";
 import { dashboardRouter } from "./routes/dashboard.js";
 import { utilitiesRouter } from "./routes/utilities.js";
+import { investmentsRouter } from "./routes/investments.js";
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use("/api/categories", requireAuth, categoriesRouter);
 app.use("/api/transactions", requireAuth, transactionsRouter);
 app.use("/api/dashboard", requireAuth, dashboardRouter);
 app.use("/api/utilities", requireAuth, utilitiesRouter);
+app.use("/api/investments", requireAuth, investmentsRouter);
 
 app.use(errorHandler);
 

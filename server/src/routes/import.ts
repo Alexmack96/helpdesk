@@ -18,7 +18,7 @@ const MONZO_CATEGORY_MAP: Record<string, string> = {
   "Holidays":       "Vacation",
   "Income":         "Bank Sauce",
   "Personal care":  "Personal Care",
-  "Savings":        "Savings",
+  "Savings":        "Investments",
   "Shopping":       "Uncategorised",
   "Transfers":      "Bank Sauce",
   "Transport":      "Transport",
@@ -37,7 +37,7 @@ const MERCHANT_OVERRIDES: { pattern: RegExp; category: string }[] = [
   },
   {
     pattern: /vanguard|coinbase/i,
-    category: "Savings",
+    category: "Investments",
   },
   {
     pattern: /deliveroo|uber.?eats|wingstop/i,
@@ -630,119 +630,164 @@ importRouter.post("/import/santander", upload.single("file"), async (req, res) =
 // ─── GET /api/admin/staged ───────────────────────────────────────────────────
 
 importRouter.get("/staged", async (_req, res) => {
-  const [monzoCount, amexCount, barclaysCount, santanderCount, processedCount] = await Promise.all([
-    db.monzoTransaction.count(),
-    db.amexTransaction.count(),
-    db.barclaysTransaction.count(),
-    db.santanderTransaction.count(),
-    db.transaction.count({ where: { externalId: { not: null } } }),
+  const [monzo, amex, barclays, santander] = await Promise.all([
+    db.monzoTransaction.groupBy({ by: ["status"], _count: true }),
+    db.amexTransaction.groupBy({ by: ["status", "owner"], _count: true }),
+    db.barclaysTransaction.groupBy({ by: ["status", "owner"], _count: true }),
+    db.santanderTransaction.groupBy({ by: ["status", "owner"], _count: true }),
   ]);
-  res.json({ monzo: monzoCount, amex: amexCount, barclays: barclaysCount, santander: santanderCount, processedCount });
+
+  function toCounts(rows: { status: string; _count: number }[]) {
+    const m: Record<string, number> = {};
+    for (const r of rows) m[r.status] = (m[r.status] ?? 0) + r._count;
+    return { pending: m.pending ?? 0, processed: m.processed ?? 0, skipped: m.skipped ?? 0 };
+  }
+
+  function toOwnerCounts(rows: { status: string; owner: string; _count: number }[]) {
+    const byOwner: Record<string, Record<string, number>> = {};
+    for (const r of rows) {
+      byOwner[r.owner] ??= {};
+      byOwner[r.owner][r.status] = (byOwner[r.owner][r.status] ?? 0) + r._count;
+    }
+    return byOwner;
+  }
+
+  res.json({
+    monzo:     toCounts(monzo.map((r) => ({ status: r.status, _count: r._count }))),
+    amex:      { ...toCounts(amex.map((r) => ({ status: r.status, _count: r._count }))), byOwner: toOwnerCounts(amex.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
+    barclays:  { ...toCounts(barclays.map((r) => ({ status: r.status, _count: r._count }))), byOwner: toOwnerCounts(barclays.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
+    santander: { ...toCounts(santander.map((r) => ({ status: r.status, _count: r._count }))), byOwner: toOwnerCounts(santander.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
+  });
 });
 
 // ─── POST /api/admin/process ─────────────────────────────────────────────────
 
-importRouter.post("/process", async (_req, res) => {
-  const processedRows = await db.transaction.findMany({
-    where: { externalId: { not: null } },
-    select: { externalId: true },
-  });
-  const processedSet = new Set(processedRows.map((t) => t.externalId));
+type StagedStatus = "pending" | "processed" | "skipped";
 
+importRouter.post("/process", async (_req, res) => {
   let processed = 0;
+  let skipped = 0;
 
   // ── Monzo ──────────────────────────────────────────────────────────────────
-  const stagedMonzo = await db.monzoTransaction.findMany();
-  const unprocessedMonzo = stagedMonzo.filter((r) => !processedSet.has(`monzo:${r.transactionId}`));
+  const pendingMonzo = await db.monzoTransaction.findMany({ where: { status: "pending" } });
 
-  for (const row of unprocessedMonzo) {
+  for (const row of pendingMonzo) {
     const amountNum = parseFloat(row.amount);
-    if (isNaN(amountNum)) continue;
-    const type = amountNum >= 0 ? "Income" : "Expense";
-    const amount = Math.abs(amountNum);
-    const [day, month, year] = row.date.split("/").map(Number);
-    const [hh, mm, ss] = row.time.split(":").map(Number);
-    const date = new Date(year, month - 1, day, hh, mm, ss);
-    const categoryName = resolveCategory(row.category, row.name);
-    const category = await findCategory(categoryName);
-    const owner = resolveOwner(categoryName, row.name);
-    await db.transaction.create({
-      data: { description: row.name, amount, type, date, categoryId: category.id, externalId: `monzo:${row.transactionId}`, owner },
-    });
-    processed++;
+    let next: StagedStatus;
+    if (isNaN(amountNum)) {
+      next = "skipped";
+      skipped++;
+    } else {
+      const type = amountNum >= 0 ? "Income" : "Expense";
+      const amount = Math.abs(amountNum);
+      const [day, month, year] = row.date.split("/").map(Number);
+      const [hh, mm, ss] = row.time.split(":").map(Number);
+      const date = new Date(year, month - 1, day, hh, mm, ss);
+      const categoryName = resolveCategory(row.category, row.name);
+      const category = await findCategory(categoryName);
+      const owner = resolveOwner(categoryName, row.name);
+      await db.transaction.create({
+        data: { description: row.name, amount, type, date, categoryId: category.id, externalId: `monzo:${row.transactionId}`, owner },
+      });
+      next = "processed";
+      processed++;
+    }
+    await db.monzoTransaction.update({ where: { transactionId: row.transactionId }, data: { status: next } });
   }
 
   // ── Amex ───────────────────────────────────────────────────────────────────
-  const stagedAmex = await db.amexTransaction.findMany();
-  const unprocessedAmex = stagedAmex.filter((r) => !processedSet.has(`amex:${r.id}`));
+  const pendingAmex = await db.amexTransaction.findMany({ where: { status: "pending" } });
 
-  for (const row of unprocessedAmex) {
+  for (const row of pendingAmex) {
     const amountNum = parseFloat(row.amount.replace(/,/g, ""));
-    if (isNaN(amountNum)) continue;
-    const categoryName = resolveCategoryByMerchant(row.description);
-    const category = await findCategory(categoryName);
-    await db.transaction.create({
-      data: {
-        description: row.description,
-        amount:      amountNum,
-        type:        row.isCredit ? "Income" : "Expense",
-        date:        new Date(row.transactionDate),
-        categoryId:  category.id,
-        externalId:  `amex:${row.transactionId}`,
-        owner:       row.owner as "Alex" | "Casey" | "Joint",
-      },
-    });
-    processed++;
+    let next: StagedStatus;
+    if (isNaN(amountNum)) {
+      next = "skipped";
+      skipped++;
+    } else {
+      const categoryName = resolveCategoryByMerchant(row.description);
+      const category = await findCategory(categoryName);
+      await db.transaction.create({
+        data: {
+          description: row.description,
+          amount:      amountNum,
+          type:        row.isCredit ? "Income" : "Expense",
+          date:        new Date(row.transactionDate),
+          categoryId:  category.id,
+          externalId:  `amex:${row.transactionId}`,
+          owner:       row.owner as "Alex" | "Casey" | "Joint",
+        },
+      });
+      next = "processed";
+      processed++;
+    }
+    await db.amexTransaction.update({ where: { transactionId: row.transactionId }, data: { status: next } });
   }
 
   // ── Barclays ───────────────────────────────────────────────────────────────
-  const stagedBarclays = await db.barclaysTransaction.findMany();
-  const unprocessedBarclays = stagedBarclays.filter((r) => !processedSet.has(`barclays:${r.id}`));
+  const pendingBarclays = await db.barclaysTransaction.findMany({ where: { status: "pending" } });
 
-  for (const row of unprocessedBarclays) {
-    if (row.isCredit) continue;
-    const amountNum = parseFloat(row.amount.replace(/,/g, ""));
-    if (isNaN(amountNum)) continue;
-    const categoryName = resolveCategoryByMerchant(row.description);
-    const category = await findCategory(categoryName);
-    await db.transaction.create({
-      data: {
-        description: row.description,
-        amount:      amountNum,
-        type:        "Expense",
-        date:        new Date(row.date),
-        categoryId:  category.id,
-        externalId:  `barclays:${row.id}`,
-        owner:       row.owner as "Alex" | "Casey" | "Joint",
-      },
-    });
-    processed++;
+  for (const row of pendingBarclays) {
+    let next: StagedStatus;
+    if (row.isCredit) {
+      next = "skipped";
+      skipped++;
+    } else {
+      const amountNum = parseFloat(row.amount.replace(/,/g, ""));
+      if (isNaN(amountNum)) {
+        next = "skipped";
+        skipped++;
+      } else {
+        const categoryName = resolveCategoryByMerchant(row.description);
+        const category = await findCategory(categoryName);
+        await db.transaction.create({
+          data: {
+            description: row.description,
+            amount:      amountNum,
+            type:        "Expense",
+            date:        new Date(row.date),
+            categoryId:  category.id,
+            externalId:  `barclays:${row.id}`,
+            owner:       row.owner as "Alex" | "Casey" | "Joint",
+          },
+        });
+        next = "processed";
+        processed++;
+      }
+    }
+    await db.barclaysTransaction.update({ where: { id: row.id }, data: { status: next } });
   }
 
   // ── Santander ──────────────────────────────────────────────────────────────
-  const stagedSantander = await db.santanderTransaction.findMany();
-  const unprocessedSantander = stagedSantander.filter((r) => !processedSet.has(`santander:${r.id}`));
+  const pendingSantander = await db.santanderTransaction.findMany({ where: { status: "pending" } });
 
-  for (const row of unprocessedSantander) {
+  for (const row of pendingSantander) {
     const isIncome = row.moneyIn !== null;
     const amountStr = row.moneyIn ?? row.moneyOut ?? "";
     const amountNum = parseFloat(amountStr.replace(/,/g, ""));
-    if (isNaN(amountNum) || amountNum === 0) continue;
-    const categoryName = resolveCategoryByMerchant(row.description);
-    const category = await findCategory(categoryName);
-    await db.transaction.create({
-      data: {
-        description: row.description,
-        amount:      amountNum,
-        type:        isIncome ? "Income" : "Expense",
-        date:        new Date(row.date),
-        categoryId:  category.id,
-        externalId:  `santander:${row.id}`,
-        owner:       row.owner as "Alex" | "Casey" | "Joint",
-      },
-    });
-    processed++;
+    let next: StagedStatus;
+    if (isNaN(amountNum) || amountNum === 0) {
+      next = "skipped";
+      skipped++;
+    } else {
+      const categoryName = resolveCategoryByMerchant(row.description);
+      const category = await findCategory(categoryName);
+      await db.transaction.create({
+        data: {
+          description: row.description,
+          amount:      amountNum,
+          type:        isIncome ? "Income" : "Expense",
+          date:        new Date(row.date),
+          categoryId:  category.id,
+          externalId:  `santander:${row.id}`,
+          owner:       row.owner as "Alex" | "Casey" | "Joint",
+        },
+      });
+      next = "processed";
+      processed++;
+    }
+    await db.santanderTransaction.update({ where: { id: row.id }, data: { status: next } });
   }
 
-  res.json({ processed });
+  res.json({ processed, skipped });
 });

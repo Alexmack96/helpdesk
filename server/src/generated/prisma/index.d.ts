@@ -59,6 +59,16 @@ export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
  */
 export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
 /**
+ * Model InvestmentAccount
+ * 
+ */
+export type InvestmentAccount = $Result.DefaultSelection<Prisma.$InvestmentAccountPayload>
+/**
+ * Model InvestmentSnapshot
+ * 
+ */
+export type InvestmentSnapshot = $Result.DefaultSelection<Prisma.$InvestmentSnapshotPayload>
+/**
  * Model Verification
  * 
  */
@@ -316,6 +326,26 @@ export class PrismaClient<
     * ```
     */
   get account(): Prisma.AccountDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.investmentAccount`: Exposes CRUD operations for the **InvestmentAccount** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InvestmentAccounts
+    * const investmentAccounts = await prisma.investmentAccount.findMany()
+    * ```
+    */
+  get investmentAccount(): Prisma.InvestmentAccountDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.investmentSnapshot`: Exposes CRUD operations for the **InvestmentSnapshot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InvestmentSnapshots
+    * const investmentSnapshots = await prisma.investmentSnapshot.findMany()
+    * ```
+    */
+  get investmentSnapshot(): Prisma.InvestmentSnapshotDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.verification`: Exposes CRUD operations for the **Verification** model.
@@ -769,6 +799,8 @@ export namespace Prisma {
     SantanderTransaction: 'SantanderTransaction',
     Session: 'Session',
     Account: 'Account',
+    InvestmentAccount: 'InvestmentAccount',
+    InvestmentSnapshot: 'InvestmentSnapshot',
     Verification: 'Verification'
   };
 
@@ -785,7 +817,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "session" | "account" | "verification"
+      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "session" | "account" | "investmentAccount" | "investmentSnapshot" | "verification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1455,6 +1487,154 @@ export namespace Prisma {
           }
         }
       }
+      InvestmentAccount: {
+        payload: Prisma.$InvestmentAccountPayload<ExtArgs>
+        fields: Prisma.InvestmentAccountFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InvestmentAccountFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InvestmentAccountFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload>
+          }
+          findFirst: {
+            args: Prisma.InvestmentAccountFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InvestmentAccountFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload>
+          }
+          findMany: {
+            args: Prisma.InvestmentAccountFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload>[]
+          }
+          create: {
+            args: Prisma.InvestmentAccountCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload>
+          }
+          createMany: {
+            args: Prisma.InvestmentAccountCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InvestmentAccountCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload>[]
+          }
+          delete: {
+            args: Prisma.InvestmentAccountDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload>
+          }
+          update: {
+            args: Prisma.InvestmentAccountUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload>
+          }
+          deleteMany: {
+            args: Prisma.InvestmentAccountDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InvestmentAccountUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InvestmentAccountUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload>[]
+          }
+          upsert: {
+            args: Prisma.InvestmentAccountUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentAccountPayload>
+          }
+          aggregate: {
+            args: Prisma.InvestmentAccountAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInvestmentAccount>
+          }
+          groupBy: {
+            args: Prisma.InvestmentAccountGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InvestmentAccountGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InvestmentAccountCountArgs<ExtArgs>
+            result: $Utils.Optional<InvestmentAccountCountAggregateOutputType> | number
+          }
+        }
+      }
+      InvestmentSnapshot: {
+        payload: Prisma.$InvestmentSnapshotPayload<ExtArgs>
+        fields: Prisma.InvestmentSnapshotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InvestmentSnapshotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InvestmentSnapshotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload>
+          }
+          findFirst: {
+            args: Prisma.InvestmentSnapshotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InvestmentSnapshotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload>
+          }
+          findMany: {
+            args: Prisma.InvestmentSnapshotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload>[]
+          }
+          create: {
+            args: Prisma.InvestmentSnapshotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload>
+          }
+          createMany: {
+            args: Prisma.InvestmentSnapshotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InvestmentSnapshotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload>[]
+          }
+          delete: {
+            args: Prisma.InvestmentSnapshotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload>
+          }
+          update: {
+            args: Prisma.InvestmentSnapshotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload>
+          }
+          deleteMany: {
+            args: Prisma.InvestmentSnapshotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InvestmentSnapshotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InvestmentSnapshotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload>[]
+          }
+          upsert: {
+            args: Prisma.InvestmentSnapshotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvestmentSnapshotPayload>
+          }
+          aggregate: {
+            args: Prisma.InvestmentSnapshotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInvestmentSnapshot>
+          }
+          groupBy: {
+            args: Prisma.InvestmentSnapshotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InvestmentSnapshotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InvestmentSnapshotCountArgs<ExtArgs>
+            result: $Utils.Optional<InvestmentSnapshotCountAggregateOutputType> | number
+          }
+        }
+      }
       Verification: {
         payload: Prisma.$VerificationPayload<ExtArgs>
         fields: Prisma.VerificationFieldRefs
@@ -1646,6 +1826,8 @@ export namespace Prisma {
     santanderTransaction?: SantanderTransactionOmit
     session?: SessionOmit
     account?: AccountOmit
+    investmentAccount?: InvestmentAccountOmit
+    investmentSnapshot?: InvestmentSnapshotOmit
     verification?: VerificationOmit
   }
 
@@ -1790,6 +1972,37 @@ export namespace Prisma {
    */
   export type CategoryCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionWhereInput
+  }
+
+
+  /**
+   * Count Type InvestmentAccountCountOutputType
+   */
+
+  export type InvestmentAccountCountOutputType = {
+    snapshots: number
+  }
+
+  export type InvestmentAccountCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    snapshots?: boolean | InvestmentAccountCountOutputTypeCountSnapshotsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * InvestmentAccountCountOutputType without action
+   */
+  export type InvestmentAccountCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccountCountOutputType
+     */
+    select?: InvestmentAccountCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * InvestmentAccountCountOutputType without action
+   */
+  export type InvestmentAccountCountOutputTypeCountSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InvestmentSnapshotWhereInput
   }
 
 
@@ -5187,6 +5400,7 @@ export namespace Prisma {
     moneyOut: string | null
     moneyIn: string | null
     importedAt: Date | null
+    status: string | null
   }
 
   export type MonzoTransactionMaxAggregateOutputType = {
@@ -5209,6 +5423,7 @@ export namespace Prisma {
     moneyOut: string | null
     moneyIn: string | null
     importedAt: Date | null
+    status: string | null
   }
 
   export type MonzoTransactionCountAggregateOutputType = {
@@ -5231,6 +5446,7 @@ export namespace Prisma {
     moneyOut: number
     moneyIn: number
     importedAt: number
+    status: number
     _all: number
   }
 
@@ -5255,6 +5471,7 @@ export namespace Prisma {
     moneyOut?: true
     moneyIn?: true
     importedAt?: true
+    status?: true
   }
 
   export type MonzoTransactionMaxAggregateInputType = {
@@ -5277,6 +5494,7 @@ export namespace Prisma {
     moneyOut?: true
     moneyIn?: true
     importedAt?: true
+    status?: true
   }
 
   export type MonzoTransactionCountAggregateInputType = {
@@ -5299,6 +5517,7 @@ export namespace Prisma {
     moneyOut?: true
     moneyIn?: true
     importedAt?: true
+    status?: true
     _all?: true
   }
 
@@ -5394,6 +5613,7 @@ export namespace Prisma {
     moneyOut: string | null
     moneyIn: string | null
     importedAt: Date
+    status: string
     _count: MonzoTransactionCountAggregateOutputType | null
     _min: MonzoTransactionMinAggregateOutputType | null
     _max: MonzoTransactionMaxAggregateOutputType | null
@@ -5433,6 +5653,7 @@ export namespace Prisma {
     moneyOut?: boolean
     moneyIn?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["monzoTransaction"]>
 
   export type MonzoTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5455,6 +5676,7 @@ export namespace Prisma {
     moneyOut?: boolean
     moneyIn?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["monzoTransaction"]>
 
   export type MonzoTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5477,6 +5699,7 @@ export namespace Prisma {
     moneyOut?: boolean
     moneyIn?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["monzoTransaction"]>
 
   export type MonzoTransactionSelectScalar = {
@@ -5499,9 +5722,10 @@ export namespace Prisma {
     moneyOut?: boolean
     moneyIn?: boolean
     importedAt?: boolean
+    status?: boolean
   }
 
-  export type MonzoTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"transactionId" | "date" | "time" | "type" | "name" | "emoji" | "category" | "amount" | "currency" | "localAmount" | "localCurrency" | "notesAndTags" | "address" | "receipt" | "description" | "categorySplit" | "moneyOut" | "moneyIn" | "importedAt", ExtArgs["result"]["monzoTransaction"]>
+  export type MonzoTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"transactionId" | "date" | "time" | "type" | "name" | "emoji" | "category" | "amount" | "currency" | "localAmount" | "localCurrency" | "notesAndTags" | "address" | "receipt" | "description" | "categorySplit" | "moneyOut" | "moneyIn" | "importedAt" | "status", ExtArgs["result"]["monzoTransaction"]>
 
   export type $MonzoTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MonzoTransaction"
@@ -5526,6 +5750,7 @@ export namespace Prisma {
       moneyOut: string | null
       moneyIn: string | null
       importedAt: Date
+      status: string
     }, ExtArgs["result"]["monzoTransaction"]>
     composites: {}
   }
@@ -5968,6 +6193,7 @@ export namespace Prisma {
     readonly moneyOut: FieldRef<"MonzoTransaction", 'String'>
     readonly moneyIn: FieldRef<"MonzoTransaction", 'String'>
     readonly importedAt: FieldRef<"MonzoTransaction", 'DateTime'>
+    readonly status: FieldRef<"MonzoTransaction", 'String'>
   }
     
 
@@ -6359,6 +6585,7 @@ export namespace Prisma {
     statementDate: string | null
     owner: string | null
     importedAt: Date | null
+    status: string | null
   }
 
   export type AmexTransactionMaxAggregateOutputType = {
@@ -6373,6 +6600,7 @@ export namespace Prisma {
     statementDate: string | null
     owner: string | null
     importedAt: Date | null
+    status: string | null
   }
 
   export type AmexTransactionCountAggregateOutputType = {
@@ -6387,6 +6615,7 @@ export namespace Prisma {
     statementDate: number
     owner: number
     importedAt: number
+    status: number
     _all: number
   }
 
@@ -6403,6 +6632,7 @@ export namespace Prisma {
     statementDate?: true
     owner?: true
     importedAt?: true
+    status?: true
   }
 
   export type AmexTransactionMaxAggregateInputType = {
@@ -6417,6 +6647,7 @@ export namespace Prisma {
     statementDate?: true
     owner?: true
     importedAt?: true
+    status?: true
   }
 
   export type AmexTransactionCountAggregateInputType = {
@@ -6431,6 +6662,7 @@ export namespace Prisma {
     statementDate?: true
     owner?: true
     importedAt?: true
+    status?: true
     _all?: true
   }
 
@@ -6518,6 +6750,7 @@ export namespace Prisma {
     statementDate: string
     owner: string
     importedAt: Date
+    status: string
     _count: AmexTransactionCountAggregateOutputType | null
     _min: AmexTransactionMinAggregateOutputType | null
     _max: AmexTransactionMaxAggregateOutputType | null
@@ -6549,6 +6782,7 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["amexTransaction"]>
 
   export type AmexTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6563,6 +6797,7 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["amexTransaction"]>
 
   export type AmexTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6577,6 +6812,7 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["amexTransaction"]>
 
   export type AmexTransactionSelectScalar = {
@@ -6591,9 +6827,10 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }
 
-  export type AmexTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"transactionId" | "transactionDate" | "processDate" | "description" | "amount" | "isCredit" | "foreignCurrency" | "foreignAmount" | "statementDate" | "owner" | "importedAt", ExtArgs["result"]["amexTransaction"]>
+  export type AmexTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"transactionId" | "transactionDate" | "processDate" | "description" | "amount" | "isCredit" | "foreignCurrency" | "foreignAmount" | "statementDate" | "owner" | "importedAt" | "status", ExtArgs["result"]["amexTransaction"]>
 
   export type $AmexTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AmexTransaction"
@@ -6610,6 +6847,7 @@ export namespace Prisma {
       statementDate: string
       owner: string
       importedAt: Date
+      status: string
     }, ExtArgs["result"]["amexTransaction"]>
     composites: {}
   }
@@ -7044,6 +7282,7 @@ export namespace Prisma {
     readonly statementDate: FieldRef<"AmexTransaction", 'String'>
     readonly owner: FieldRef<"AmexTransaction", 'String'>
     readonly importedAt: FieldRef<"AmexTransaction", 'DateTime'>
+    readonly status: FieldRef<"AmexTransaction", 'String'>
   }
     
 
@@ -7442,6 +7681,7 @@ export namespace Prisma {
     statementDate: string | null
     owner: string | null
     importedAt: Date | null
+    status: string | null
   }
 
   export type BarclaysTransactionMaxAggregateOutputType = {
@@ -7453,6 +7693,7 @@ export namespace Prisma {
     statementDate: string | null
     owner: string | null
     importedAt: Date | null
+    status: string | null
   }
 
   export type BarclaysTransactionCountAggregateOutputType = {
@@ -7464,6 +7705,7 @@ export namespace Prisma {
     statementDate: number
     owner: number
     importedAt: number
+    status: number
     _all: number
   }
 
@@ -7485,6 +7727,7 @@ export namespace Prisma {
     statementDate?: true
     owner?: true
     importedAt?: true
+    status?: true
   }
 
   export type BarclaysTransactionMaxAggregateInputType = {
@@ -7496,6 +7739,7 @@ export namespace Prisma {
     statementDate?: true
     owner?: true
     importedAt?: true
+    status?: true
   }
 
   export type BarclaysTransactionCountAggregateInputType = {
@@ -7507,6 +7751,7 @@ export namespace Prisma {
     statementDate?: true
     owner?: true
     importedAt?: true
+    status?: true
     _all?: true
   }
 
@@ -7605,6 +7850,7 @@ export namespace Prisma {
     statementDate: string
     owner: string
     importedAt: Date
+    status: string
     _count: BarclaysTransactionCountAggregateOutputType | null
     _avg: BarclaysTransactionAvgAggregateOutputType | null
     _sum: BarclaysTransactionSumAggregateOutputType | null
@@ -7635,6 +7881,7 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["barclaysTransaction"]>
 
   export type BarclaysTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7646,6 +7893,7 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["barclaysTransaction"]>
 
   export type BarclaysTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7657,6 +7905,7 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["barclaysTransaction"]>
 
   export type BarclaysTransactionSelectScalar = {
@@ -7668,9 +7917,10 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }
 
-  export type BarclaysTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "amount" | "isCredit" | "statementDate" | "owner" | "importedAt", ExtArgs["result"]["barclaysTransaction"]>
+  export type BarclaysTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "amount" | "isCredit" | "statementDate" | "owner" | "importedAt" | "status", ExtArgs["result"]["barclaysTransaction"]>
 
   export type $BarclaysTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "BarclaysTransaction"
@@ -7684,6 +7934,7 @@ export namespace Prisma {
       statementDate: string
       owner: string
       importedAt: Date
+      status: string
     }, ExtArgs["result"]["barclaysTransaction"]>
     composites: {}
   }
@@ -8115,6 +8366,7 @@ export namespace Prisma {
     readonly statementDate: FieldRef<"BarclaysTransaction", 'String'>
     readonly owner: FieldRef<"BarclaysTransaction", 'String'>
     readonly importedAt: FieldRef<"BarclaysTransaction", 'DateTime'>
+    readonly status: FieldRef<"BarclaysTransaction", 'String'>
   }
     
 
@@ -8514,6 +8766,7 @@ export namespace Prisma {
     statementDate: string | null
     owner: string | null
     importedAt: Date | null
+    status: string | null
   }
 
   export type SantanderTransactionMaxAggregateOutputType = {
@@ -8526,6 +8779,7 @@ export namespace Prisma {
     statementDate: string | null
     owner: string | null
     importedAt: Date | null
+    status: string | null
   }
 
   export type SantanderTransactionCountAggregateOutputType = {
@@ -8538,6 +8792,7 @@ export namespace Prisma {
     statementDate: number
     owner: number
     importedAt: number
+    status: number
     _all: number
   }
 
@@ -8560,6 +8815,7 @@ export namespace Prisma {
     statementDate?: true
     owner?: true
     importedAt?: true
+    status?: true
   }
 
   export type SantanderTransactionMaxAggregateInputType = {
@@ -8572,6 +8828,7 @@ export namespace Prisma {
     statementDate?: true
     owner?: true
     importedAt?: true
+    status?: true
   }
 
   export type SantanderTransactionCountAggregateInputType = {
@@ -8584,6 +8841,7 @@ export namespace Prisma {
     statementDate?: true
     owner?: true
     importedAt?: true
+    status?: true
     _all?: true
   }
 
@@ -8683,6 +8941,7 @@ export namespace Prisma {
     statementDate: string
     owner: string
     importedAt: Date
+    status: string
     _count: SantanderTransactionCountAggregateOutputType | null
     _avg: SantanderTransactionAvgAggregateOutputType | null
     _sum: SantanderTransactionSumAggregateOutputType | null
@@ -8714,6 +8973,7 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["santanderTransaction"]>
 
   export type SantanderTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8726,6 +8986,7 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["santanderTransaction"]>
 
   export type SantanderTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8738,6 +8999,7 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }, ExtArgs["result"]["santanderTransaction"]>
 
   export type SantanderTransactionSelectScalar = {
@@ -8750,9 +9012,10 @@ export namespace Prisma {
     statementDate?: boolean
     owner?: boolean
     importedAt?: boolean
+    status?: boolean
   }
 
-  export type SantanderTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "moneyIn" | "moneyOut" | "balance" | "statementDate" | "owner" | "importedAt", ExtArgs["result"]["santanderTransaction"]>
+  export type SantanderTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "description" | "moneyIn" | "moneyOut" | "balance" | "statementDate" | "owner" | "importedAt" | "status", ExtArgs["result"]["santanderTransaction"]>
 
   export type $SantanderTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SantanderTransaction"
@@ -8767,6 +9030,7 @@ export namespace Prisma {
       statementDate: string
       owner: string
       importedAt: Date
+      status: string
     }, ExtArgs["result"]["santanderTransaction"]>
     composites: {}
   }
@@ -9199,6 +9463,7 @@ export namespace Prisma {
     readonly statementDate: FieldRef<"SantanderTransaction", 'String'>
     readonly owner: FieldRef<"SantanderTransaction", 'String'>
     readonly importedAt: FieldRef<"SantanderTransaction", 'DateTime'>
+    readonly status: FieldRef<"SantanderTransaction", 'String'>
   }
     
 
@@ -11834,6 +12099,2251 @@ export namespace Prisma {
 
 
   /**
+   * Model InvestmentAccount
+   */
+
+  export type AggregateInvestmentAccount = {
+    _count: InvestmentAccountCountAggregateOutputType | null
+    _avg: InvestmentAccountAvgAggregateOutputType | null
+    _sum: InvestmentAccountSumAggregateOutputType | null
+    _min: InvestmentAccountMinAggregateOutputType | null
+    _max: InvestmentAccountMaxAggregateOutputType | null
+  }
+
+  export type InvestmentAccountAvgAggregateOutputType = {
+    rate: number | null
+    sortOrder: number | null
+  }
+
+  export type InvestmentAccountSumAggregateOutputType = {
+    rate: number | null
+    sortOrder: number | null
+  }
+
+  export type InvestmentAccountMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    category: string | null
+    rate: number | null
+    sortOrder: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InvestmentAccountMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    category: string | null
+    rate: number | null
+    sortOrder: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InvestmentAccountCountAggregateOutputType = {
+    id: number
+    name: number
+    category: number
+    rate: number
+    sortOrder: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type InvestmentAccountAvgAggregateInputType = {
+    rate?: true
+    sortOrder?: true
+  }
+
+  export type InvestmentAccountSumAggregateInputType = {
+    rate?: true
+    sortOrder?: true
+  }
+
+  export type InvestmentAccountMinAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    rate?: true
+    sortOrder?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InvestmentAccountMaxAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    rate?: true
+    sortOrder?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InvestmentAccountCountAggregateInputType = {
+    id?: true
+    name?: true
+    category?: true
+    rate?: true
+    sortOrder?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type InvestmentAccountAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InvestmentAccount to aggregate.
+     */
+    where?: InvestmentAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvestmentAccounts to fetch.
+     */
+    orderBy?: InvestmentAccountOrderByWithRelationInput | InvestmentAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InvestmentAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvestmentAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvestmentAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InvestmentAccounts
+    **/
+    _count?: true | InvestmentAccountCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InvestmentAccountAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InvestmentAccountSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InvestmentAccountMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InvestmentAccountMaxAggregateInputType
+  }
+
+  export type GetInvestmentAccountAggregateType<T extends InvestmentAccountAggregateArgs> = {
+        [P in keyof T & keyof AggregateInvestmentAccount]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInvestmentAccount[P]>
+      : GetScalarType<T[P], AggregateInvestmentAccount[P]>
+  }
+
+
+
+
+  export type InvestmentAccountGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InvestmentAccountWhereInput
+    orderBy?: InvestmentAccountOrderByWithAggregationInput | InvestmentAccountOrderByWithAggregationInput[]
+    by: InvestmentAccountScalarFieldEnum[] | InvestmentAccountScalarFieldEnum
+    having?: InvestmentAccountScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InvestmentAccountCountAggregateInputType | true
+    _avg?: InvestmentAccountAvgAggregateInputType
+    _sum?: InvestmentAccountSumAggregateInputType
+    _min?: InvestmentAccountMinAggregateInputType
+    _max?: InvestmentAccountMaxAggregateInputType
+  }
+
+  export type InvestmentAccountGroupByOutputType = {
+    id: string
+    name: string
+    category: string
+    rate: number | null
+    sortOrder: number
+    createdAt: Date
+    updatedAt: Date
+    _count: InvestmentAccountCountAggregateOutputType | null
+    _avg: InvestmentAccountAvgAggregateOutputType | null
+    _sum: InvestmentAccountSumAggregateOutputType | null
+    _min: InvestmentAccountMinAggregateOutputType | null
+    _max: InvestmentAccountMaxAggregateOutputType | null
+  }
+
+  type GetInvestmentAccountGroupByPayload<T extends InvestmentAccountGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InvestmentAccountGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InvestmentAccountGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InvestmentAccountGroupByOutputType[P]>
+            : GetScalarType<T[P], InvestmentAccountGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InvestmentAccountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    rate?: boolean
+    sortOrder?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    snapshots?: boolean | InvestmentAccount$snapshotsArgs<ExtArgs>
+    _count?: boolean | InvestmentAccountCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["investmentAccount"]>
+
+  export type InvestmentAccountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    rate?: boolean
+    sortOrder?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["investmentAccount"]>
+
+  export type InvestmentAccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    rate?: boolean
+    sortOrder?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["investmentAccount"]>
+
+  export type InvestmentAccountSelectScalar = {
+    id?: boolean
+    name?: boolean
+    category?: boolean
+    rate?: boolean
+    sortOrder?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type InvestmentAccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "category" | "rate" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["investmentAccount"]>
+  export type InvestmentAccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    snapshots?: boolean | InvestmentAccount$snapshotsArgs<ExtArgs>
+    _count?: boolean | InvestmentAccountCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type InvestmentAccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type InvestmentAccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $InvestmentAccountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InvestmentAccount"
+    objects: {
+      snapshots: Prisma.$InvestmentSnapshotPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      category: string
+      rate: number | null
+      sortOrder: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["investmentAccount"]>
+    composites: {}
+  }
+
+  type InvestmentAccountGetPayload<S extends boolean | null | undefined | InvestmentAccountDefaultArgs> = $Result.GetResult<Prisma.$InvestmentAccountPayload, S>
+
+  type InvestmentAccountCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InvestmentAccountFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InvestmentAccountCountAggregateInputType | true
+    }
+
+  export interface InvestmentAccountDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InvestmentAccount'], meta: { name: 'InvestmentAccount' } }
+    /**
+     * Find zero or one InvestmentAccount that matches the filter.
+     * @param {InvestmentAccountFindUniqueArgs} args - Arguments to find a InvestmentAccount
+     * @example
+     * // Get one InvestmentAccount
+     * const investmentAccount = await prisma.investmentAccount.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InvestmentAccountFindUniqueArgs>(args: SelectSubset<T, InvestmentAccountFindUniqueArgs<ExtArgs>>): Prisma__InvestmentAccountClient<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InvestmentAccount that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InvestmentAccountFindUniqueOrThrowArgs} args - Arguments to find a InvestmentAccount
+     * @example
+     * // Get one InvestmentAccount
+     * const investmentAccount = await prisma.investmentAccount.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InvestmentAccountFindUniqueOrThrowArgs>(args: SelectSubset<T, InvestmentAccountFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InvestmentAccountClient<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InvestmentAccount that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentAccountFindFirstArgs} args - Arguments to find a InvestmentAccount
+     * @example
+     * // Get one InvestmentAccount
+     * const investmentAccount = await prisma.investmentAccount.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InvestmentAccountFindFirstArgs>(args?: SelectSubset<T, InvestmentAccountFindFirstArgs<ExtArgs>>): Prisma__InvestmentAccountClient<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InvestmentAccount that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentAccountFindFirstOrThrowArgs} args - Arguments to find a InvestmentAccount
+     * @example
+     * // Get one InvestmentAccount
+     * const investmentAccount = await prisma.investmentAccount.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InvestmentAccountFindFirstOrThrowArgs>(args?: SelectSubset<T, InvestmentAccountFindFirstOrThrowArgs<ExtArgs>>): Prisma__InvestmentAccountClient<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InvestmentAccounts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentAccountFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InvestmentAccounts
+     * const investmentAccounts = await prisma.investmentAccount.findMany()
+     * 
+     * // Get first 10 InvestmentAccounts
+     * const investmentAccounts = await prisma.investmentAccount.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const investmentAccountWithIdOnly = await prisma.investmentAccount.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InvestmentAccountFindManyArgs>(args?: SelectSubset<T, InvestmentAccountFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InvestmentAccount.
+     * @param {InvestmentAccountCreateArgs} args - Arguments to create a InvestmentAccount.
+     * @example
+     * // Create one InvestmentAccount
+     * const InvestmentAccount = await prisma.investmentAccount.create({
+     *   data: {
+     *     // ... data to create a InvestmentAccount
+     *   }
+     * })
+     * 
+     */
+    create<T extends InvestmentAccountCreateArgs>(args: SelectSubset<T, InvestmentAccountCreateArgs<ExtArgs>>): Prisma__InvestmentAccountClient<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InvestmentAccounts.
+     * @param {InvestmentAccountCreateManyArgs} args - Arguments to create many InvestmentAccounts.
+     * @example
+     * // Create many InvestmentAccounts
+     * const investmentAccount = await prisma.investmentAccount.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InvestmentAccountCreateManyArgs>(args?: SelectSubset<T, InvestmentAccountCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InvestmentAccounts and returns the data saved in the database.
+     * @param {InvestmentAccountCreateManyAndReturnArgs} args - Arguments to create many InvestmentAccounts.
+     * @example
+     * // Create many InvestmentAccounts
+     * const investmentAccount = await prisma.investmentAccount.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InvestmentAccounts and only return the `id`
+     * const investmentAccountWithIdOnly = await prisma.investmentAccount.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InvestmentAccountCreateManyAndReturnArgs>(args?: SelectSubset<T, InvestmentAccountCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InvestmentAccount.
+     * @param {InvestmentAccountDeleteArgs} args - Arguments to delete one InvestmentAccount.
+     * @example
+     * // Delete one InvestmentAccount
+     * const InvestmentAccount = await prisma.investmentAccount.delete({
+     *   where: {
+     *     // ... filter to delete one InvestmentAccount
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InvestmentAccountDeleteArgs>(args: SelectSubset<T, InvestmentAccountDeleteArgs<ExtArgs>>): Prisma__InvestmentAccountClient<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InvestmentAccount.
+     * @param {InvestmentAccountUpdateArgs} args - Arguments to update one InvestmentAccount.
+     * @example
+     * // Update one InvestmentAccount
+     * const investmentAccount = await prisma.investmentAccount.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InvestmentAccountUpdateArgs>(args: SelectSubset<T, InvestmentAccountUpdateArgs<ExtArgs>>): Prisma__InvestmentAccountClient<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InvestmentAccounts.
+     * @param {InvestmentAccountDeleteManyArgs} args - Arguments to filter InvestmentAccounts to delete.
+     * @example
+     * // Delete a few InvestmentAccounts
+     * const { count } = await prisma.investmentAccount.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InvestmentAccountDeleteManyArgs>(args?: SelectSubset<T, InvestmentAccountDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InvestmentAccounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentAccountUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InvestmentAccounts
+     * const investmentAccount = await prisma.investmentAccount.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InvestmentAccountUpdateManyArgs>(args: SelectSubset<T, InvestmentAccountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InvestmentAccounts and returns the data updated in the database.
+     * @param {InvestmentAccountUpdateManyAndReturnArgs} args - Arguments to update many InvestmentAccounts.
+     * @example
+     * // Update many InvestmentAccounts
+     * const investmentAccount = await prisma.investmentAccount.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InvestmentAccounts and only return the `id`
+     * const investmentAccountWithIdOnly = await prisma.investmentAccount.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InvestmentAccountUpdateManyAndReturnArgs>(args: SelectSubset<T, InvestmentAccountUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InvestmentAccount.
+     * @param {InvestmentAccountUpsertArgs} args - Arguments to update or create a InvestmentAccount.
+     * @example
+     * // Update or create a InvestmentAccount
+     * const investmentAccount = await prisma.investmentAccount.upsert({
+     *   create: {
+     *     // ... data to create a InvestmentAccount
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InvestmentAccount we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InvestmentAccountUpsertArgs>(args: SelectSubset<T, InvestmentAccountUpsertArgs<ExtArgs>>): Prisma__InvestmentAccountClient<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InvestmentAccounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentAccountCountArgs} args - Arguments to filter InvestmentAccounts to count.
+     * @example
+     * // Count the number of InvestmentAccounts
+     * const count = await prisma.investmentAccount.count({
+     *   where: {
+     *     // ... the filter for the InvestmentAccounts we want to count
+     *   }
+     * })
+    **/
+    count<T extends InvestmentAccountCountArgs>(
+      args?: Subset<T, InvestmentAccountCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InvestmentAccountCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InvestmentAccount.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentAccountAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InvestmentAccountAggregateArgs>(args: Subset<T, InvestmentAccountAggregateArgs>): Prisma.PrismaPromise<GetInvestmentAccountAggregateType<T>>
+
+    /**
+     * Group by InvestmentAccount.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentAccountGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InvestmentAccountGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InvestmentAccountGroupByArgs['orderBy'] }
+        : { orderBy?: InvestmentAccountGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InvestmentAccountGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInvestmentAccountGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InvestmentAccount model
+   */
+  readonly fields: InvestmentAccountFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InvestmentAccount.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InvestmentAccountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    snapshots<T extends InvestmentAccount$snapshotsArgs<ExtArgs> = {}>(args?: Subset<T, InvestmentAccount$snapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InvestmentAccount model
+   */
+  interface InvestmentAccountFieldRefs {
+    readonly id: FieldRef<"InvestmentAccount", 'String'>
+    readonly name: FieldRef<"InvestmentAccount", 'String'>
+    readonly category: FieldRef<"InvestmentAccount", 'String'>
+    readonly rate: FieldRef<"InvestmentAccount", 'Float'>
+    readonly sortOrder: FieldRef<"InvestmentAccount", 'Int'>
+    readonly createdAt: FieldRef<"InvestmentAccount", 'DateTime'>
+    readonly updatedAt: FieldRef<"InvestmentAccount", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InvestmentAccount findUnique
+   */
+  export type InvestmentAccountFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentAccount to fetch.
+     */
+    where: InvestmentAccountWhereUniqueInput
+  }
+
+  /**
+   * InvestmentAccount findUniqueOrThrow
+   */
+  export type InvestmentAccountFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentAccount to fetch.
+     */
+    where: InvestmentAccountWhereUniqueInput
+  }
+
+  /**
+   * InvestmentAccount findFirst
+   */
+  export type InvestmentAccountFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentAccount to fetch.
+     */
+    where?: InvestmentAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvestmentAccounts to fetch.
+     */
+    orderBy?: InvestmentAccountOrderByWithRelationInput | InvestmentAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InvestmentAccounts.
+     */
+    cursor?: InvestmentAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvestmentAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvestmentAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvestmentAccounts.
+     */
+    distinct?: InvestmentAccountScalarFieldEnum | InvestmentAccountScalarFieldEnum[]
+  }
+
+  /**
+   * InvestmentAccount findFirstOrThrow
+   */
+  export type InvestmentAccountFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentAccount to fetch.
+     */
+    where?: InvestmentAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvestmentAccounts to fetch.
+     */
+    orderBy?: InvestmentAccountOrderByWithRelationInput | InvestmentAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InvestmentAccounts.
+     */
+    cursor?: InvestmentAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvestmentAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvestmentAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvestmentAccounts.
+     */
+    distinct?: InvestmentAccountScalarFieldEnum | InvestmentAccountScalarFieldEnum[]
+  }
+
+  /**
+   * InvestmentAccount findMany
+   */
+  export type InvestmentAccountFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentAccounts to fetch.
+     */
+    where?: InvestmentAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvestmentAccounts to fetch.
+     */
+    orderBy?: InvestmentAccountOrderByWithRelationInput | InvestmentAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InvestmentAccounts.
+     */
+    cursor?: InvestmentAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvestmentAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvestmentAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvestmentAccounts.
+     */
+    distinct?: InvestmentAccountScalarFieldEnum | InvestmentAccountScalarFieldEnum[]
+  }
+
+  /**
+   * InvestmentAccount create
+   */
+  export type InvestmentAccountCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InvestmentAccount.
+     */
+    data: XOR<InvestmentAccountCreateInput, InvestmentAccountUncheckedCreateInput>
+  }
+
+  /**
+   * InvestmentAccount createMany
+   */
+  export type InvestmentAccountCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InvestmentAccounts.
+     */
+    data: InvestmentAccountCreateManyInput | InvestmentAccountCreateManyInput[]
+  }
+
+  /**
+   * InvestmentAccount createManyAndReturn
+   */
+  export type InvestmentAccountCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * The data used to create many InvestmentAccounts.
+     */
+    data: InvestmentAccountCreateManyInput | InvestmentAccountCreateManyInput[]
+  }
+
+  /**
+   * InvestmentAccount update
+   */
+  export type InvestmentAccountUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InvestmentAccount.
+     */
+    data: XOR<InvestmentAccountUpdateInput, InvestmentAccountUncheckedUpdateInput>
+    /**
+     * Choose, which InvestmentAccount to update.
+     */
+    where: InvestmentAccountWhereUniqueInput
+  }
+
+  /**
+   * InvestmentAccount updateMany
+   */
+  export type InvestmentAccountUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InvestmentAccounts.
+     */
+    data: XOR<InvestmentAccountUpdateManyMutationInput, InvestmentAccountUncheckedUpdateManyInput>
+    /**
+     * Filter which InvestmentAccounts to update
+     */
+    where?: InvestmentAccountWhereInput
+    /**
+     * Limit how many InvestmentAccounts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InvestmentAccount updateManyAndReturn
+   */
+  export type InvestmentAccountUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * The data used to update InvestmentAccounts.
+     */
+    data: XOR<InvestmentAccountUpdateManyMutationInput, InvestmentAccountUncheckedUpdateManyInput>
+    /**
+     * Filter which InvestmentAccounts to update
+     */
+    where?: InvestmentAccountWhereInput
+    /**
+     * Limit how many InvestmentAccounts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InvestmentAccount upsert
+   */
+  export type InvestmentAccountUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InvestmentAccount to update in case it exists.
+     */
+    where: InvestmentAccountWhereUniqueInput
+    /**
+     * In case the InvestmentAccount found by the `where` argument doesn't exist, create a new InvestmentAccount with this data.
+     */
+    create: XOR<InvestmentAccountCreateInput, InvestmentAccountUncheckedCreateInput>
+    /**
+     * In case the InvestmentAccount was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InvestmentAccountUpdateInput, InvestmentAccountUncheckedUpdateInput>
+  }
+
+  /**
+   * InvestmentAccount delete
+   */
+  export type InvestmentAccountDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+    /**
+     * Filter which InvestmentAccount to delete.
+     */
+    where: InvestmentAccountWhereUniqueInput
+  }
+
+  /**
+   * InvestmentAccount deleteMany
+   */
+  export type InvestmentAccountDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InvestmentAccounts to delete
+     */
+    where?: InvestmentAccountWhereInput
+    /**
+     * Limit how many InvestmentAccounts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InvestmentAccount.snapshots
+   */
+  export type InvestmentAccount$snapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    where?: InvestmentSnapshotWhereInput
+    orderBy?: InvestmentSnapshotOrderByWithRelationInput | InvestmentSnapshotOrderByWithRelationInput[]
+    cursor?: InvestmentSnapshotWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InvestmentSnapshotScalarFieldEnum | InvestmentSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * InvestmentAccount without action
+   */
+  export type InvestmentAccountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentAccount
+     */
+    select?: InvestmentAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentAccount
+     */
+    omit?: InvestmentAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentAccountInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model InvestmentSnapshot
+   */
+
+  export type AggregateInvestmentSnapshot = {
+    _count: InvestmentSnapshotCountAggregateOutputType | null
+    _avg: InvestmentSnapshotAvgAggregateOutputType | null
+    _sum: InvestmentSnapshotSumAggregateOutputType | null
+    _min: InvestmentSnapshotMinAggregateOutputType | null
+    _max: InvestmentSnapshotMaxAggregateOutputType | null
+  }
+
+  export type InvestmentSnapshotAvgAggregateOutputType = {
+    value: number | null
+  }
+
+  export type InvestmentSnapshotSumAggregateOutputType = {
+    value: number | null
+  }
+
+  export type InvestmentSnapshotMinAggregateOutputType = {
+    id: string | null
+    accountId: string | null
+    date: Date | null
+    value: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InvestmentSnapshotMaxAggregateOutputType = {
+    id: string | null
+    accountId: string | null
+    date: Date | null
+    value: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InvestmentSnapshotCountAggregateOutputType = {
+    id: number
+    accountId: number
+    date: number
+    value: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type InvestmentSnapshotAvgAggregateInputType = {
+    value?: true
+  }
+
+  export type InvestmentSnapshotSumAggregateInputType = {
+    value?: true
+  }
+
+  export type InvestmentSnapshotMinAggregateInputType = {
+    id?: true
+    accountId?: true
+    date?: true
+    value?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InvestmentSnapshotMaxAggregateInputType = {
+    id?: true
+    accountId?: true
+    date?: true
+    value?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InvestmentSnapshotCountAggregateInputType = {
+    id?: true
+    accountId?: true
+    date?: true
+    value?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type InvestmentSnapshotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InvestmentSnapshot to aggregate.
+     */
+    where?: InvestmentSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvestmentSnapshots to fetch.
+     */
+    orderBy?: InvestmentSnapshotOrderByWithRelationInput | InvestmentSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InvestmentSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvestmentSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvestmentSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InvestmentSnapshots
+    **/
+    _count?: true | InvestmentSnapshotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InvestmentSnapshotAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InvestmentSnapshotSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InvestmentSnapshotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InvestmentSnapshotMaxAggregateInputType
+  }
+
+  export type GetInvestmentSnapshotAggregateType<T extends InvestmentSnapshotAggregateArgs> = {
+        [P in keyof T & keyof AggregateInvestmentSnapshot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInvestmentSnapshot[P]>
+      : GetScalarType<T[P], AggregateInvestmentSnapshot[P]>
+  }
+
+
+
+
+  export type InvestmentSnapshotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InvestmentSnapshotWhereInput
+    orderBy?: InvestmentSnapshotOrderByWithAggregationInput | InvestmentSnapshotOrderByWithAggregationInput[]
+    by: InvestmentSnapshotScalarFieldEnum[] | InvestmentSnapshotScalarFieldEnum
+    having?: InvestmentSnapshotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InvestmentSnapshotCountAggregateInputType | true
+    _avg?: InvestmentSnapshotAvgAggregateInputType
+    _sum?: InvestmentSnapshotSumAggregateInputType
+    _min?: InvestmentSnapshotMinAggregateInputType
+    _max?: InvestmentSnapshotMaxAggregateInputType
+  }
+
+  export type InvestmentSnapshotGroupByOutputType = {
+    id: string
+    accountId: string
+    date: Date
+    value: number
+    createdAt: Date
+    updatedAt: Date
+    _count: InvestmentSnapshotCountAggregateOutputType | null
+    _avg: InvestmentSnapshotAvgAggregateOutputType | null
+    _sum: InvestmentSnapshotSumAggregateOutputType | null
+    _min: InvestmentSnapshotMinAggregateOutputType | null
+    _max: InvestmentSnapshotMaxAggregateOutputType | null
+  }
+
+  type GetInvestmentSnapshotGroupByPayload<T extends InvestmentSnapshotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InvestmentSnapshotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InvestmentSnapshotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InvestmentSnapshotGroupByOutputType[P]>
+            : GetScalarType<T[P], InvestmentSnapshotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InvestmentSnapshotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    date?: boolean
+    value?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    account?: boolean | InvestmentAccountDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["investmentSnapshot"]>
+
+  export type InvestmentSnapshotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    date?: boolean
+    value?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    account?: boolean | InvestmentAccountDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["investmentSnapshot"]>
+
+  export type InvestmentSnapshotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    date?: boolean
+    value?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    account?: boolean | InvestmentAccountDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["investmentSnapshot"]>
+
+  export type InvestmentSnapshotSelectScalar = {
+    id?: boolean
+    accountId?: boolean
+    date?: boolean
+    value?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type InvestmentSnapshotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "date" | "value" | "createdAt" | "updatedAt", ExtArgs["result"]["investmentSnapshot"]>
+  export type InvestmentSnapshotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | InvestmentAccountDefaultArgs<ExtArgs>
+  }
+  export type InvestmentSnapshotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | InvestmentAccountDefaultArgs<ExtArgs>
+  }
+  export type InvestmentSnapshotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | InvestmentAccountDefaultArgs<ExtArgs>
+  }
+
+  export type $InvestmentSnapshotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InvestmentSnapshot"
+    objects: {
+      account: Prisma.$InvestmentAccountPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      accountId: string
+      date: Date
+      value: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["investmentSnapshot"]>
+    composites: {}
+  }
+
+  type InvestmentSnapshotGetPayload<S extends boolean | null | undefined | InvestmentSnapshotDefaultArgs> = $Result.GetResult<Prisma.$InvestmentSnapshotPayload, S>
+
+  type InvestmentSnapshotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InvestmentSnapshotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InvestmentSnapshotCountAggregateInputType | true
+    }
+
+  export interface InvestmentSnapshotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InvestmentSnapshot'], meta: { name: 'InvestmentSnapshot' } }
+    /**
+     * Find zero or one InvestmentSnapshot that matches the filter.
+     * @param {InvestmentSnapshotFindUniqueArgs} args - Arguments to find a InvestmentSnapshot
+     * @example
+     * // Get one InvestmentSnapshot
+     * const investmentSnapshot = await prisma.investmentSnapshot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InvestmentSnapshotFindUniqueArgs>(args: SelectSubset<T, InvestmentSnapshotFindUniqueArgs<ExtArgs>>): Prisma__InvestmentSnapshotClient<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InvestmentSnapshot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InvestmentSnapshotFindUniqueOrThrowArgs} args - Arguments to find a InvestmentSnapshot
+     * @example
+     * // Get one InvestmentSnapshot
+     * const investmentSnapshot = await prisma.investmentSnapshot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InvestmentSnapshotFindUniqueOrThrowArgs>(args: SelectSubset<T, InvestmentSnapshotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InvestmentSnapshotClient<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InvestmentSnapshot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentSnapshotFindFirstArgs} args - Arguments to find a InvestmentSnapshot
+     * @example
+     * // Get one InvestmentSnapshot
+     * const investmentSnapshot = await prisma.investmentSnapshot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InvestmentSnapshotFindFirstArgs>(args?: SelectSubset<T, InvestmentSnapshotFindFirstArgs<ExtArgs>>): Prisma__InvestmentSnapshotClient<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InvestmentSnapshot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentSnapshotFindFirstOrThrowArgs} args - Arguments to find a InvestmentSnapshot
+     * @example
+     * // Get one InvestmentSnapshot
+     * const investmentSnapshot = await prisma.investmentSnapshot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InvestmentSnapshotFindFirstOrThrowArgs>(args?: SelectSubset<T, InvestmentSnapshotFindFirstOrThrowArgs<ExtArgs>>): Prisma__InvestmentSnapshotClient<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InvestmentSnapshots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentSnapshotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InvestmentSnapshots
+     * const investmentSnapshots = await prisma.investmentSnapshot.findMany()
+     * 
+     * // Get first 10 InvestmentSnapshots
+     * const investmentSnapshots = await prisma.investmentSnapshot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const investmentSnapshotWithIdOnly = await prisma.investmentSnapshot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InvestmentSnapshotFindManyArgs>(args?: SelectSubset<T, InvestmentSnapshotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InvestmentSnapshot.
+     * @param {InvestmentSnapshotCreateArgs} args - Arguments to create a InvestmentSnapshot.
+     * @example
+     * // Create one InvestmentSnapshot
+     * const InvestmentSnapshot = await prisma.investmentSnapshot.create({
+     *   data: {
+     *     // ... data to create a InvestmentSnapshot
+     *   }
+     * })
+     * 
+     */
+    create<T extends InvestmentSnapshotCreateArgs>(args: SelectSubset<T, InvestmentSnapshotCreateArgs<ExtArgs>>): Prisma__InvestmentSnapshotClient<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InvestmentSnapshots.
+     * @param {InvestmentSnapshotCreateManyArgs} args - Arguments to create many InvestmentSnapshots.
+     * @example
+     * // Create many InvestmentSnapshots
+     * const investmentSnapshot = await prisma.investmentSnapshot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InvestmentSnapshotCreateManyArgs>(args?: SelectSubset<T, InvestmentSnapshotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InvestmentSnapshots and returns the data saved in the database.
+     * @param {InvestmentSnapshotCreateManyAndReturnArgs} args - Arguments to create many InvestmentSnapshots.
+     * @example
+     * // Create many InvestmentSnapshots
+     * const investmentSnapshot = await prisma.investmentSnapshot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InvestmentSnapshots and only return the `id`
+     * const investmentSnapshotWithIdOnly = await prisma.investmentSnapshot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InvestmentSnapshotCreateManyAndReturnArgs>(args?: SelectSubset<T, InvestmentSnapshotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InvestmentSnapshot.
+     * @param {InvestmentSnapshotDeleteArgs} args - Arguments to delete one InvestmentSnapshot.
+     * @example
+     * // Delete one InvestmentSnapshot
+     * const InvestmentSnapshot = await prisma.investmentSnapshot.delete({
+     *   where: {
+     *     // ... filter to delete one InvestmentSnapshot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InvestmentSnapshotDeleteArgs>(args: SelectSubset<T, InvestmentSnapshotDeleteArgs<ExtArgs>>): Prisma__InvestmentSnapshotClient<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InvestmentSnapshot.
+     * @param {InvestmentSnapshotUpdateArgs} args - Arguments to update one InvestmentSnapshot.
+     * @example
+     * // Update one InvestmentSnapshot
+     * const investmentSnapshot = await prisma.investmentSnapshot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InvestmentSnapshotUpdateArgs>(args: SelectSubset<T, InvestmentSnapshotUpdateArgs<ExtArgs>>): Prisma__InvestmentSnapshotClient<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InvestmentSnapshots.
+     * @param {InvestmentSnapshotDeleteManyArgs} args - Arguments to filter InvestmentSnapshots to delete.
+     * @example
+     * // Delete a few InvestmentSnapshots
+     * const { count } = await prisma.investmentSnapshot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InvestmentSnapshotDeleteManyArgs>(args?: SelectSubset<T, InvestmentSnapshotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InvestmentSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentSnapshotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InvestmentSnapshots
+     * const investmentSnapshot = await prisma.investmentSnapshot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InvestmentSnapshotUpdateManyArgs>(args: SelectSubset<T, InvestmentSnapshotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InvestmentSnapshots and returns the data updated in the database.
+     * @param {InvestmentSnapshotUpdateManyAndReturnArgs} args - Arguments to update many InvestmentSnapshots.
+     * @example
+     * // Update many InvestmentSnapshots
+     * const investmentSnapshot = await prisma.investmentSnapshot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InvestmentSnapshots and only return the `id`
+     * const investmentSnapshotWithIdOnly = await prisma.investmentSnapshot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InvestmentSnapshotUpdateManyAndReturnArgs>(args: SelectSubset<T, InvestmentSnapshotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InvestmentSnapshot.
+     * @param {InvestmentSnapshotUpsertArgs} args - Arguments to update or create a InvestmentSnapshot.
+     * @example
+     * // Update or create a InvestmentSnapshot
+     * const investmentSnapshot = await prisma.investmentSnapshot.upsert({
+     *   create: {
+     *     // ... data to create a InvestmentSnapshot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InvestmentSnapshot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InvestmentSnapshotUpsertArgs>(args: SelectSubset<T, InvestmentSnapshotUpsertArgs<ExtArgs>>): Prisma__InvestmentSnapshotClient<$Result.GetResult<Prisma.$InvestmentSnapshotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InvestmentSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentSnapshotCountArgs} args - Arguments to filter InvestmentSnapshots to count.
+     * @example
+     * // Count the number of InvestmentSnapshots
+     * const count = await prisma.investmentSnapshot.count({
+     *   where: {
+     *     // ... the filter for the InvestmentSnapshots we want to count
+     *   }
+     * })
+    **/
+    count<T extends InvestmentSnapshotCountArgs>(
+      args?: Subset<T, InvestmentSnapshotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InvestmentSnapshotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InvestmentSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentSnapshotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InvestmentSnapshotAggregateArgs>(args: Subset<T, InvestmentSnapshotAggregateArgs>): Prisma.PrismaPromise<GetInvestmentSnapshotAggregateType<T>>
+
+    /**
+     * Group by InvestmentSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvestmentSnapshotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InvestmentSnapshotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InvestmentSnapshotGroupByArgs['orderBy'] }
+        : { orderBy?: InvestmentSnapshotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InvestmentSnapshotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInvestmentSnapshotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InvestmentSnapshot model
+   */
+  readonly fields: InvestmentSnapshotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InvestmentSnapshot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InvestmentSnapshotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    account<T extends InvestmentAccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, InvestmentAccountDefaultArgs<ExtArgs>>): Prisma__InvestmentAccountClient<$Result.GetResult<Prisma.$InvestmentAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InvestmentSnapshot model
+   */
+  interface InvestmentSnapshotFieldRefs {
+    readonly id: FieldRef<"InvestmentSnapshot", 'String'>
+    readonly accountId: FieldRef<"InvestmentSnapshot", 'String'>
+    readonly date: FieldRef<"InvestmentSnapshot", 'DateTime'>
+    readonly value: FieldRef<"InvestmentSnapshot", 'Float'>
+    readonly createdAt: FieldRef<"InvestmentSnapshot", 'DateTime'>
+    readonly updatedAt: FieldRef<"InvestmentSnapshot", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InvestmentSnapshot findUnique
+   */
+  export type InvestmentSnapshotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentSnapshot to fetch.
+     */
+    where: InvestmentSnapshotWhereUniqueInput
+  }
+
+  /**
+   * InvestmentSnapshot findUniqueOrThrow
+   */
+  export type InvestmentSnapshotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentSnapshot to fetch.
+     */
+    where: InvestmentSnapshotWhereUniqueInput
+  }
+
+  /**
+   * InvestmentSnapshot findFirst
+   */
+  export type InvestmentSnapshotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentSnapshot to fetch.
+     */
+    where?: InvestmentSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvestmentSnapshots to fetch.
+     */
+    orderBy?: InvestmentSnapshotOrderByWithRelationInput | InvestmentSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InvestmentSnapshots.
+     */
+    cursor?: InvestmentSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvestmentSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvestmentSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvestmentSnapshots.
+     */
+    distinct?: InvestmentSnapshotScalarFieldEnum | InvestmentSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * InvestmentSnapshot findFirstOrThrow
+   */
+  export type InvestmentSnapshotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentSnapshot to fetch.
+     */
+    where?: InvestmentSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvestmentSnapshots to fetch.
+     */
+    orderBy?: InvestmentSnapshotOrderByWithRelationInput | InvestmentSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InvestmentSnapshots.
+     */
+    cursor?: InvestmentSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvestmentSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvestmentSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvestmentSnapshots.
+     */
+    distinct?: InvestmentSnapshotScalarFieldEnum | InvestmentSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * InvestmentSnapshot findMany
+   */
+  export type InvestmentSnapshotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which InvestmentSnapshots to fetch.
+     */
+    where?: InvestmentSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvestmentSnapshots to fetch.
+     */
+    orderBy?: InvestmentSnapshotOrderByWithRelationInput | InvestmentSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InvestmentSnapshots.
+     */
+    cursor?: InvestmentSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvestmentSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvestmentSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvestmentSnapshots.
+     */
+    distinct?: InvestmentSnapshotScalarFieldEnum | InvestmentSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * InvestmentSnapshot create
+   */
+  export type InvestmentSnapshotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InvestmentSnapshot.
+     */
+    data: XOR<InvestmentSnapshotCreateInput, InvestmentSnapshotUncheckedCreateInput>
+  }
+
+  /**
+   * InvestmentSnapshot createMany
+   */
+  export type InvestmentSnapshotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InvestmentSnapshots.
+     */
+    data: InvestmentSnapshotCreateManyInput | InvestmentSnapshotCreateManyInput[]
+  }
+
+  /**
+   * InvestmentSnapshot createManyAndReturn
+   */
+  export type InvestmentSnapshotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to create many InvestmentSnapshots.
+     */
+    data: InvestmentSnapshotCreateManyInput | InvestmentSnapshotCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InvestmentSnapshot update
+   */
+  export type InvestmentSnapshotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InvestmentSnapshot.
+     */
+    data: XOR<InvestmentSnapshotUpdateInput, InvestmentSnapshotUncheckedUpdateInput>
+    /**
+     * Choose, which InvestmentSnapshot to update.
+     */
+    where: InvestmentSnapshotWhereUniqueInput
+  }
+
+  /**
+   * InvestmentSnapshot updateMany
+   */
+  export type InvestmentSnapshotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InvestmentSnapshots.
+     */
+    data: XOR<InvestmentSnapshotUpdateManyMutationInput, InvestmentSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which InvestmentSnapshots to update
+     */
+    where?: InvestmentSnapshotWhereInput
+    /**
+     * Limit how many InvestmentSnapshots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InvestmentSnapshot updateManyAndReturn
+   */
+  export type InvestmentSnapshotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to update InvestmentSnapshots.
+     */
+    data: XOR<InvestmentSnapshotUpdateManyMutationInput, InvestmentSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which InvestmentSnapshots to update
+     */
+    where?: InvestmentSnapshotWhereInput
+    /**
+     * Limit how many InvestmentSnapshots to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InvestmentSnapshot upsert
+   */
+  export type InvestmentSnapshotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InvestmentSnapshot to update in case it exists.
+     */
+    where: InvestmentSnapshotWhereUniqueInput
+    /**
+     * In case the InvestmentSnapshot found by the `where` argument doesn't exist, create a new InvestmentSnapshot with this data.
+     */
+    create: XOR<InvestmentSnapshotCreateInput, InvestmentSnapshotUncheckedCreateInput>
+    /**
+     * In case the InvestmentSnapshot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InvestmentSnapshotUpdateInput, InvestmentSnapshotUncheckedUpdateInput>
+  }
+
+  /**
+   * InvestmentSnapshot delete
+   */
+  export type InvestmentSnapshotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter which InvestmentSnapshot to delete.
+     */
+    where: InvestmentSnapshotWhereUniqueInput
+  }
+
+  /**
+   * InvestmentSnapshot deleteMany
+   */
+  export type InvestmentSnapshotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InvestmentSnapshots to delete
+     */
+    where?: InvestmentSnapshotWhereInput
+    /**
+     * Limit how many InvestmentSnapshots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InvestmentSnapshot without action
+   */
+  export type InvestmentSnapshotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvestmentSnapshot
+     */
+    select?: InvestmentSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvestmentSnapshot
+     */
+    omit?: InvestmentSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvestmentSnapshotInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Verification
    */
 
@@ -12914,7 +15424,8 @@ export namespace Prisma {
     categorySplit: 'categorySplit',
     moneyOut: 'moneyOut',
     moneyIn: 'moneyIn',
-    importedAt: 'importedAt'
+    importedAt: 'importedAt',
+    status: 'status'
   };
 
   export type MonzoTransactionScalarFieldEnum = (typeof MonzoTransactionScalarFieldEnum)[keyof typeof MonzoTransactionScalarFieldEnum]
@@ -12931,7 +15442,8 @@ export namespace Prisma {
     foreignAmount: 'foreignAmount',
     statementDate: 'statementDate',
     owner: 'owner',
-    importedAt: 'importedAt'
+    importedAt: 'importedAt',
+    status: 'status'
   };
 
   export type AmexTransactionScalarFieldEnum = (typeof AmexTransactionScalarFieldEnum)[keyof typeof AmexTransactionScalarFieldEnum]
@@ -12945,7 +15457,8 @@ export namespace Prisma {
     isCredit: 'isCredit',
     statementDate: 'statementDate',
     owner: 'owner',
-    importedAt: 'importedAt'
+    importedAt: 'importedAt',
+    status: 'status'
   };
 
   export type BarclaysTransactionScalarFieldEnum = (typeof BarclaysTransactionScalarFieldEnum)[keyof typeof BarclaysTransactionScalarFieldEnum]
@@ -12960,7 +15473,8 @@ export namespace Prisma {
     balance: 'balance',
     statementDate: 'statementDate',
     owner: 'owner',
-    importedAt: 'importedAt'
+    importedAt: 'importedAt',
+    status: 'status'
   };
 
   export type SantanderTransactionScalarFieldEnum = (typeof SantanderTransactionScalarFieldEnum)[keyof typeof SantanderTransactionScalarFieldEnum]
@@ -12997,6 +15511,31 @@ export namespace Prisma {
   };
 
   export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+  export const InvestmentAccountScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    category: 'category',
+    rate: 'rate',
+    sortOrder: 'sortOrder',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type InvestmentAccountScalarFieldEnum = (typeof InvestmentAccountScalarFieldEnum)[keyof typeof InvestmentAccountScalarFieldEnum]
+
+
+  export const InvestmentSnapshotScalarFieldEnum: {
+    id: 'id',
+    accountId: 'accountId',
+    date: 'date',
+    value: 'value',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type InvestmentSnapshotScalarFieldEnum = (typeof InvestmentSnapshotScalarFieldEnum)[keyof typeof InvestmentSnapshotScalarFieldEnum]
 
 
   export const VerificationScalarFieldEnum: {
@@ -13326,6 +15865,7 @@ export namespace Prisma {
     moneyOut?: StringNullableFilter<"MonzoTransaction"> | string | null
     moneyIn?: StringNullableFilter<"MonzoTransaction"> | string | null
     importedAt?: DateTimeFilter<"MonzoTransaction"> | Date | string
+    status?: StringFilter<"MonzoTransaction"> | string
   }
 
   export type MonzoTransactionOrderByWithRelationInput = {
@@ -13348,6 +15888,7 @@ export namespace Prisma {
     moneyOut?: SortOrderInput | SortOrder
     moneyIn?: SortOrderInput | SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type MonzoTransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -13373,6 +15914,7 @@ export namespace Prisma {
     moneyOut?: StringNullableFilter<"MonzoTransaction"> | string | null
     moneyIn?: StringNullableFilter<"MonzoTransaction"> | string | null
     importedAt?: DateTimeFilter<"MonzoTransaction"> | Date | string
+    status?: StringFilter<"MonzoTransaction"> | string
   }, "transactionId">
 
   export type MonzoTransactionOrderByWithAggregationInput = {
@@ -13395,6 +15937,7 @@ export namespace Prisma {
     moneyOut?: SortOrderInput | SortOrder
     moneyIn?: SortOrderInput | SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
     _count?: MonzoTransactionCountOrderByAggregateInput
     _max?: MonzoTransactionMaxOrderByAggregateInput
     _min?: MonzoTransactionMinOrderByAggregateInput
@@ -13423,6 +15966,7 @@ export namespace Prisma {
     moneyOut?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
     moneyIn?: StringNullableWithAggregatesFilter<"MonzoTransaction"> | string | null
     importedAt?: DateTimeWithAggregatesFilter<"MonzoTransaction"> | Date | string
+    status?: StringWithAggregatesFilter<"MonzoTransaction"> | string
   }
 
   export type AmexTransactionWhereInput = {
@@ -13440,6 +15984,7 @@ export namespace Prisma {
     statementDate?: StringFilter<"AmexTransaction"> | string
     owner?: StringFilter<"AmexTransaction"> | string
     importedAt?: DateTimeFilter<"AmexTransaction"> | Date | string
+    status?: StringFilter<"AmexTransaction"> | string
   }
 
   export type AmexTransactionOrderByWithRelationInput = {
@@ -13454,6 +15999,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type AmexTransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -13471,6 +16017,7 @@ export namespace Prisma {
     statementDate?: StringFilter<"AmexTransaction"> | string
     owner?: StringFilter<"AmexTransaction"> | string
     importedAt?: DateTimeFilter<"AmexTransaction"> | Date | string
+    status?: StringFilter<"AmexTransaction"> | string
   }, "transactionId">
 
   export type AmexTransactionOrderByWithAggregationInput = {
@@ -13485,6 +16032,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
     _count?: AmexTransactionCountOrderByAggregateInput
     _max?: AmexTransactionMaxOrderByAggregateInput
     _min?: AmexTransactionMinOrderByAggregateInput
@@ -13505,6 +16053,7 @@ export namespace Prisma {
     statementDate?: StringWithAggregatesFilter<"AmexTransaction"> | string
     owner?: StringWithAggregatesFilter<"AmexTransaction"> | string
     importedAt?: DateTimeWithAggregatesFilter<"AmexTransaction"> | Date | string
+    status?: StringWithAggregatesFilter<"AmexTransaction"> | string
   }
 
   export type BarclaysTransactionWhereInput = {
@@ -13519,6 +16068,7 @@ export namespace Prisma {
     statementDate?: StringFilter<"BarclaysTransaction"> | string
     owner?: StringFilter<"BarclaysTransaction"> | string
     importedAt?: DateTimeFilter<"BarclaysTransaction"> | Date | string
+    status?: StringFilter<"BarclaysTransaction"> | string
   }
 
   export type BarclaysTransactionOrderByWithRelationInput = {
@@ -13530,6 +16080,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type BarclaysTransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -13544,6 +16095,7 @@ export namespace Prisma {
     statementDate?: StringFilter<"BarclaysTransaction"> | string
     owner?: StringFilter<"BarclaysTransaction"> | string
     importedAt?: DateTimeFilter<"BarclaysTransaction"> | Date | string
+    status?: StringFilter<"BarclaysTransaction"> | string
   }, "id">
 
   export type BarclaysTransactionOrderByWithAggregationInput = {
@@ -13555,6 +16107,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
     _count?: BarclaysTransactionCountOrderByAggregateInput
     _avg?: BarclaysTransactionAvgOrderByAggregateInput
     _max?: BarclaysTransactionMaxOrderByAggregateInput
@@ -13574,6 +16127,7 @@ export namespace Prisma {
     statementDate?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
     owner?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
     importedAt?: DateTimeWithAggregatesFilter<"BarclaysTransaction"> | Date | string
+    status?: StringWithAggregatesFilter<"BarclaysTransaction"> | string
   }
 
   export type SantanderTransactionWhereInput = {
@@ -13589,6 +16143,7 @@ export namespace Prisma {
     statementDate?: StringFilter<"SantanderTransaction"> | string
     owner?: StringFilter<"SantanderTransaction"> | string
     importedAt?: DateTimeFilter<"SantanderTransaction"> | Date | string
+    status?: StringFilter<"SantanderTransaction"> | string
   }
 
   export type SantanderTransactionOrderByWithRelationInput = {
@@ -13601,6 +16156,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type SantanderTransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -13616,6 +16172,7 @@ export namespace Prisma {
     statementDate?: StringFilter<"SantanderTransaction"> | string
     owner?: StringFilter<"SantanderTransaction"> | string
     importedAt?: DateTimeFilter<"SantanderTransaction"> | Date | string
+    status?: StringFilter<"SantanderTransaction"> | string
   }, "id">
 
   export type SantanderTransactionOrderByWithAggregationInput = {
@@ -13628,6 +16185,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
     _count?: SantanderTransactionCountOrderByAggregateInput
     _avg?: SantanderTransactionAvgOrderByAggregateInput
     _max?: SantanderTransactionMaxOrderByAggregateInput
@@ -13648,6 +16206,7 @@ export namespace Prisma {
     statementDate?: StringWithAggregatesFilter<"SantanderTransaction"> | string
     owner?: StringWithAggregatesFilter<"SantanderTransaction"> | string
     importedAt?: DateTimeWithAggregatesFilter<"SantanderTransaction"> | Date | string
+    status?: StringWithAggregatesFilter<"SantanderTransaction"> | string
   }
 
   export type SessionWhereInput = {
@@ -13813,6 +16372,136 @@ export namespace Prisma {
     password?: StringNullableWithAggregatesFilter<"Account"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
+  }
+
+  export type InvestmentAccountWhereInput = {
+    AND?: InvestmentAccountWhereInput | InvestmentAccountWhereInput[]
+    OR?: InvestmentAccountWhereInput[]
+    NOT?: InvestmentAccountWhereInput | InvestmentAccountWhereInput[]
+    id?: StringFilter<"InvestmentAccount"> | string
+    name?: StringFilter<"InvestmentAccount"> | string
+    category?: StringFilter<"InvestmentAccount"> | string
+    rate?: FloatNullableFilter<"InvestmentAccount"> | number | null
+    sortOrder?: IntFilter<"InvestmentAccount"> | number
+    createdAt?: DateTimeFilter<"InvestmentAccount"> | Date | string
+    updatedAt?: DateTimeFilter<"InvestmentAccount"> | Date | string
+    snapshots?: InvestmentSnapshotListRelationFilter
+  }
+
+  export type InvestmentAccountOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    rate?: SortOrderInput | SortOrder
+    sortOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    snapshots?: InvestmentSnapshotOrderByRelationAggregateInput
+  }
+
+  export type InvestmentAccountWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: InvestmentAccountWhereInput | InvestmentAccountWhereInput[]
+    OR?: InvestmentAccountWhereInput[]
+    NOT?: InvestmentAccountWhereInput | InvestmentAccountWhereInput[]
+    category?: StringFilter<"InvestmentAccount"> | string
+    rate?: FloatNullableFilter<"InvestmentAccount"> | number | null
+    sortOrder?: IntFilter<"InvestmentAccount"> | number
+    createdAt?: DateTimeFilter<"InvestmentAccount"> | Date | string
+    updatedAt?: DateTimeFilter<"InvestmentAccount"> | Date | string
+    snapshots?: InvestmentSnapshotListRelationFilter
+  }, "id" | "name">
+
+  export type InvestmentAccountOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    rate?: SortOrderInput | SortOrder
+    sortOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: InvestmentAccountCountOrderByAggregateInput
+    _avg?: InvestmentAccountAvgOrderByAggregateInput
+    _max?: InvestmentAccountMaxOrderByAggregateInput
+    _min?: InvestmentAccountMinOrderByAggregateInput
+    _sum?: InvestmentAccountSumOrderByAggregateInput
+  }
+
+  export type InvestmentAccountScalarWhereWithAggregatesInput = {
+    AND?: InvestmentAccountScalarWhereWithAggregatesInput | InvestmentAccountScalarWhereWithAggregatesInput[]
+    OR?: InvestmentAccountScalarWhereWithAggregatesInput[]
+    NOT?: InvestmentAccountScalarWhereWithAggregatesInput | InvestmentAccountScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InvestmentAccount"> | string
+    name?: StringWithAggregatesFilter<"InvestmentAccount"> | string
+    category?: StringWithAggregatesFilter<"InvestmentAccount"> | string
+    rate?: FloatNullableWithAggregatesFilter<"InvestmentAccount"> | number | null
+    sortOrder?: IntWithAggregatesFilter<"InvestmentAccount"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"InvestmentAccount"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"InvestmentAccount"> | Date | string
+  }
+
+  export type InvestmentSnapshotWhereInput = {
+    AND?: InvestmentSnapshotWhereInput | InvestmentSnapshotWhereInput[]
+    OR?: InvestmentSnapshotWhereInput[]
+    NOT?: InvestmentSnapshotWhereInput | InvestmentSnapshotWhereInput[]
+    id?: StringFilter<"InvestmentSnapshot"> | string
+    accountId?: StringFilter<"InvestmentSnapshot"> | string
+    date?: DateTimeFilter<"InvestmentSnapshot"> | Date | string
+    value?: FloatFilter<"InvestmentSnapshot"> | number
+    createdAt?: DateTimeFilter<"InvestmentSnapshot"> | Date | string
+    updatedAt?: DateTimeFilter<"InvestmentSnapshot"> | Date | string
+    account?: XOR<InvestmentAccountScalarRelationFilter, InvestmentAccountWhereInput>
+  }
+
+  export type InvestmentSnapshotOrderByWithRelationInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    date?: SortOrder
+    value?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    account?: InvestmentAccountOrderByWithRelationInput
+  }
+
+  export type InvestmentSnapshotWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    accountId_date?: InvestmentSnapshotAccountIdDateCompoundUniqueInput
+    AND?: InvestmentSnapshotWhereInput | InvestmentSnapshotWhereInput[]
+    OR?: InvestmentSnapshotWhereInput[]
+    NOT?: InvestmentSnapshotWhereInput | InvestmentSnapshotWhereInput[]
+    accountId?: StringFilter<"InvestmentSnapshot"> | string
+    date?: DateTimeFilter<"InvestmentSnapshot"> | Date | string
+    value?: FloatFilter<"InvestmentSnapshot"> | number
+    createdAt?: DateTimeFilter<"InvestmentSnapshot"> | Date | string
+    updatedAt?: DateTimeFilter<"InvestmentSnapshot"> | Date | string
+    account?: XOR<InvestmentAccountScalarRelationFilter, InvestmentAccountWhereInput>
+  }, "id" | "accountId_date">
+
+  export type InvestmentSnapshotOrderByWithAggregationInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    date?: SortOrder
+    value?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: InvestmentSnapshotCountOrderByAggregateInput
+    _avg?: InvestmentSnapshotAvgOrderByAggregateInput
+    _max?: InvestmentSnapshotMaxOrderByAggregateInput
+    _min?: InvestmentSnapshotMinOrderByAggregateInput
+    _sum?: InvestmentSnapshotSumOrderByAggregateInput
+  }
+
+  export type InvestmentSnapshotScalarWhereWithAggregatesInput = {
+    AND?: InvestmentSnapshotScalarWhereWithAggregatesInput | InvestmentSnapshotScalarWhereWithAggregatesInput[]
+    OR?: InvestmentSnapshotScalarWhereWithAggregatesInput[]
+    NOT?: InvestmentSnapshotScalarWhereWithAggregatesInput | InvestmentSnapshotScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InvestmentSnapshot"> | string
+    accountId?: StringWithAggregatesFilter<"InvestmentSnapshot"> | string
+    date?: DateTimeWithAggregatesFilter<"InvestmentSnapshot"> | Date | string
+    value?: FloatWithAggregatesFilter<"InvestmentSnapshot"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"InvestmentSnapshot"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"InvestmentSnapshot"> | Date | string
   }
 
   export type VerificationWhereInput = {
@@ -14120,6 +16809,7 @@ export namespace Prisma {
     moneyOut?: string | null
     moneyIn?: string | null
     importedAt?: Date | string
+    status?: string
   }
 
   export type MonzoTransactionUncheckedCreateInput = {
@@ -14142,6 +16832,7 @@ export namespace Prisma {
     moneyOut?: string | null
     moneyIn?: string | null
     importedAt?: Date | string
+    status?: string
   }
 
   export type MonzoTransactionUpdateInput = {
@@ -14164,6 +16855,7 @@ export namespace Prisma {
     moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
     moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type MonzoTransactionUncheckedUpdateInput = {
@@ -14186,6 +16878,7 @@ export namespace Prisma {
     moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
     moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type MonzoTransactionCreateManyInput = {
@@ -14208,6 +16901,7 @@ export namespace Prisma {
     moneyOut?: string | null
     moneyIn?: string | null
     importedAt?: Date | string
+    status?: string
   }
 
   export type MonzoTransactionUpdateManyMutationInput = {
@@ -14230,6 +16924,7 @@ export namespace Prisma {
     moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
     moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type MonzoTransactionUncheckedUpdateManyInput = {
@@ -14252,6 +16947,7 @@ export namespace Prisma {
     moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
     moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type AmexTransactionCreateInput = {
@@ -14266,6 +16962,7 @@ export namespace Prisma {
     statementDate: string
     owner?: string
     importedAt?: Date | string
+    status?: string
   }
 
   export type AmexTransactionUncheckedCreateInput = {
@@ -14280,6 +16977,7 @@ export namespace Prisma {
     statementDate: string
     owner?: string
     importedAt?: Date | string
+    status?: string
   }
 
   export type AmexTransactionUpdateInput = {
@@ -14294,6 +16992,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type AmexTransactionUncheckedUpdateInput = {
@@ -14308,6 +17007,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type AmexTransactionCreateManyInput = {
@@ -14322,6 +17022,7 @@ export namespace Prisma {
     statementDate: string
     owner?: string
     importedAt?: Date | string
+    status?: string
   }
 
   export type AmexTransactionUpdateManyMutationInput = {
@@ -14336,6 +17037,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type AmexTransactionUncheckedUpdateManyInput = {
@@ -14350,6 +17052,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type BarclaysTransactionCreateInput = {
@@ -14360,6 +17063,7 @@ export namespace Prisma {
     statementDate: string
     owner?: string
     importedAt?: Date | string
+    status?: string
   }
 
   export type BarclaysTransactionUncheckedCreateInput = {
@@ -14371,6 +17075,7 @@ export namespace Prisma {
     statementDate: string
     owner?: string
     importedAt?: Date | string
+    status?: string
   }
 
   export type BarclaysTransactionUpdateInput = {
@@ -14381,6 +17086,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type BarclaysTransactionUncheckedUpdateInput = {
@@ -14392,6 +17098,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type BarclaysTransactionCreateManyInput = {
@@ -14403,6 +17110,7 @@ export namespace Prisma {
     statementDate: string
     owner?: string
     importedAt?: Date | string
+    status?: string
   }
 
   export type BarclaysTransactionUpdateManyMutationInput = {
@@ -14413,6 +17121,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type BarclaysTransactionUncheckedUpdateManyInput = {
@@ -14424,6 +17133,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type SantanderTransactionCreateInput = {
@@ -14435,6 +17145,7 @@ export namespace Prisma {
     statementDate: string
     owner?: string
     importedAt?: Date | string
+    status?: string
   }
 
   export type SantanderTransactionUncheckedCreateInput = {
@@ -14447,6 +17158,7 @@ export namespace Prisma {
     statementDate: string
     owner?: string
     importedAt?: Date | string
+    status?: string
   }
 
   export type SantanderTransactionUpdateInput = {
@@ -14458,6 +17170,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type SantanderTransactionUncheckedUpdateInput = {
@@ -14470,6 +17183,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type SantanderTransactionCreateManyInput = {
@@ -14482,6 +17196,7 @@ export namespace Prisma {
     statementDate: string
     owner?: string
     importedAt?: Date | string
+    status?: string
   }
 
   export type SantanderTransactionUpdateManyMutationInput = {
@@ -14493,6 +17208,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type SantanderTransactionUncheckedUpdateManyInput = {
@@ -14505,6 +17221,7 @@ export namespace Prisma {
     statementDate?: StringFieldUpdateOperationsInput | string
     owner?: StringFieldUpdateOperationsInput | string
     importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type SessionCreateInput = {
@@ -14690,6 +17407,142 @@ export namespace Prisma {
     refreshTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvestmentAccountCreateInput = {
+    id?: string
+    name: string
+    category: string
+    rate?: number | null
+    sortOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    snapshots?: InvestmentSnapshotCreateNestedManyWithoutAccountInput
+  }
+
+  export type InvestmentAccountUncheckedCreateInput = {
+    id?: string
+    name: string
+    category: string
+    rate?: number | null
+    sortOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    snapshots?: InvestmentSnapshotUncheckedCreateNestedManyWithoutAccountInput
+  }
+
+  export type InvestmentAccountUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    rate?: NullableFloatFieldUpdateOperationsInput | number | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    snapshots?: InvestmentSnapshotUpdateManyWithoutAccountNestedInput
+  }
+
+  export type InvestmentAccountUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    rate?: NullableFloatFieldUpdateOperationsInput | number | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    snapshots?: InvestmentSnapshotUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
+  export type InvestmentAccountCreateManyInput = {
+    id?: string
+    name: string
+    category: string
+    rate?: number | null
+    sortOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InvestmentAccountUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    rate?: NullableFloatFieldUpdateOperationsInput | number | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvestmentAccountUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    rate?: NullableFloatFieldUpdateOperationsInput | number | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvestmentSnapshotCreateInput = {
+    id?: string
+    date: Date | string
+    value: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    account: InvestmentAccountCreateNestedOneWithoutSnapshotsInput
+  }
+
+  export type InvestmentSnapshotUncheckedCreateInput = {
+    id?: string
+    accountId: string
+    date: Date | string
+    value: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InvestmentSnapshotUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    account?: InvestmentAccountUpdateOneRequiredWithoutSnapshotsNestedInput
+  }
+
+  export type InvestmentSnapshotUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvestmentSnapshotCreateManyInput = {
+    id?: string
+    accountId: string
+    date: Date | string
+    value: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InvestmentSnapshotUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvestmentSnapshotUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15096,6 +17949,7 @@ export namespace Prisma {
     moneyOut?: SortOrder
     moneyIn?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type MonzoTransactionMaxOrderByAggregateInput = {
@@ -15118,6 +17972,7 @@ export namespace Prisma {
     moneyOut?: SortOrder
     moneyIn?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type MonzoTransactionMinOrderByAggregateInput = {
@@ -15140,6 +17995,7 @@ export namespace Prisma {
     moneyOut?: SortOrder
     moneyIn?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type AmexTransactionCountOrderByAggregateInput = {
@@ -15154,6 +18010,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type AmexTransactionMaxOrderByAggregateInput = {
@@ -15168,6 +18025,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type AmexTransactionMinOrderByAggregateInput = {
@@ -15182,6 +18040,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -15204,6 +18063,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type BarclaysTransactionAvgOrderByAggregateInput = {
@@ -15219,6 +18079,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type BarclaysTransactionMinOrderByAggregateInput = {
@@ -15230,6 +18091,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type BarclaysTransactionSumOrderByAggregateInput = {
@@ -15262,6 +18124,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type SantanderTransactionAvgOrderByAggregateInput = {
@@ -15278,6 +18141,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type SantanderTransactionMinOrderByAggregateInput = {
@@ -15290,6 +18154,7 @@ export namespace Prisma {
     statementDate?: SortOrder
     owner?: SortOrder
     importedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type SantanderTransactionSumOrderByAggregateInput = {
@@ -15405,6 +18270,155 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type InvestmentSnapshotListRelationFilter = {
+    every?: InvestmentSnapshotWhereInput
+    some?: InvestmentSnapshotWhereInput
+    none?: InvestmentSnapshotWhereInput
+  }
+
+  export type InvestmentSnapshotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InvestmentAccountCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    rate?: SortOrder
+    sortOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InvestmentAccountAvgOrderByAggregateInput = {
+    rate?: SortOrder
+    sortOrder?: SortOrder
+  }
+
+  export type InvestmentAccountMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    rate?: SortOrder
+    sortOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InvestmentAccountMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    rate?: SortOrder
+    sortOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InvestmentAccountSumOrderByAggregateInput = {
+    rate?: SortOrder
+    sortOrder?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type InvestmentAccountScalarRelationFilter = {
+    is?: InvestmentAccountWhereInput
+    isNot?: InvestmentAccountWhereInput
+  }
+
+  export type InvestmentSnapshotAccountIdDateCompoundUniqueInput = {
+    accountId: string
+    date: Date | string
+  }
+
+  export type InvestmentSnapshotCountOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    date?: SortOrder
+    value?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InvestmentSnapshotAvgOrderByAggregateInput = {
+    value?: SortOrder
+  }
+
+  export type InvestmentSnapshotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    date?: SortOrder
+    value?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InvestmentSnapshotMinOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    date?: SortOrder
+    value?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InvestmentSnapshotSumOrderByAggregateInput = {
+    value?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type VerificationCountOrderByAggregateInput = {
@@ -15648,6 +18662,78 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAccountsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
+  }
+
+  export type InvestmentSnapshotCreateNestedManyWithoutAccountInput = {
+    create?: XOR<InvestmentSnapshotCreateWithoutAccountInput, InvestmentSnapshotUncheckedCreateWithoutAccountInput> | InvestmentSnapshotCreateWithoutAccountInput[] | InvestmentSnapshotUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: InvestmentSnapshotCreateOrConnectWithoutAccountInput | InvestmentSnapshotCreateOrConnectWithoutAccountInput[]
+    createMany?: InvestmentSnapshotCreateManyAccountInputEnvelope
+    connect?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+  }
+
+  export type InvestmentSnapshotUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<InvestmentSnapshotCreateWithoutAccountInput, InvestmentSnapshotUncheckedCreateWithoutAccountInput> | InvestmentSnapshotCreateWithoutAccountInput[] | InvestmentSnapshotUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: InvestmentSnapshotCreateOrConnectWithoutAccountInput | InvestmentSnapshotCreateOrConnectWithoutAccountInput[]
+    createMany?: InvestmentSnapshotCreateManyAccountInputEnvelope
+    connect?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type InvestmentSnapshotUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<InvestmentSnapshotCreateWithoutAccountInput, InvestmentSnapshotUncheckedCreateWithoutAccountInput> | InvestmentSnapshotCreateWithoutAccountInput[] | InvestmentSnapshotUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: InvestmentSnapshotCreateOrConnectWithoutAccountInput | InvestmentSnapshotCreateOrConnectWithoutAccountInput[]
+    upsert?: InvestmentSnapshotUpsertWithWhereUniqueWithoutAccountInput | InvestmentSnapshotUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: InvestmentSnapshotCreateManyAccountInputEnvelope
+    set?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+    disconnect?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+    delete?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+    connect?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+    update?: InvestmentSnapshotUpdateWithWhereUniqueWithoutAccountInput | InvestmentSnapshotUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: InvestmentSnapshotUpdateManyWithWhereWithoutAccountInput | InvestmentSnapshotUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: InvestmentSnapshotScalarWhereInput | InvestmentSnapshotScalarWhereInput[]
+  }
+
+  export type InvestmentSnapshotUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<InvestmentSnapshotCreateWithoutAccountInput, InvestmentSnapshotUncheckedCreateWithoutAccountInput> | InvestmentSnapshotCreateWithoutAccountInput[] | InvestmentSnapshotUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: InvestmentSnapshotCreateOrConnectWithoutAccountInput | InvestmentSnapshotCreateOrConnectWithoutAccountInput[]
+    upsert?: InvestmentSnapshotUpsertWithWhereUniqueWithoutAccountInput | InvestmentSnapshotUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: InvestmentSnapshotCreateManyAccountInputEnvelope
+    set?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+    disconnect?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+    delete?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+    connect?: InvestmentSnapshotWhereUniqueInput | InvestmentSnapshotWhereUniqueInput[]
+    update?: InvestmentSnapshotUpdateWithWhereUniqueWithoutAccountInput | InvestmentSnapshotUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: InvestmentSnapshotUpdateManyWithWhereWithoutAccountInput | InvestmentSnapshotUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: InvestmentSnapshotScalarWhereInput | InvestmentSnapshotScalarWhereInput[]
+  }
+
+  export type InvestmentAccountCreateNestedOneWithoutSnapshotsInput = {
+    create?: XOR<InvestmentAccountCreateWithoutSnapshotsInput, InvestmentAccountUncheckedCreateWithoutSnapshotsInput>
+    connectOrCreate?: InvestmentAccountCreateOrConnectWithoutSnapshotsInput
+    connect?: InvestmentAccountWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type InvestmentAccountUpdateOneRequiredWithoutSnapshotsNestedInput = {
+    create?: XOR<InvestmentAccountCreateWithoutSnapshotsInput, InvestmentAccountUncheckedCreateWithoutSnapshotsInput>
+    connectOrCreate?: InvestmentAccountCreateOrConnectWithoutSnapshotsInput
+    upsert?: InvestmentAccountUpsertWithoutSnapshotsInput
+    connect?: InvestmentAccountWhereUniqueInput
+    update?: XOR<XOR<InvestmentAccountUpdateToOneWithWhereWithoutSnapshotsInput, InvestmentAccountUpdateWithoutSnapshotsInput>, InvestmentAccountUncheckedUpdateWithoutSnapshotsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -15900,6 +18986,49 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -16268,6 +19397,115 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type InvestmentSnapshotCreateWithoutAccountInput = {
+    id?: string
+    date: Date | string
+    value: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InvestmentSnapshotUncheckedCreateWithoutAccountInput = {
+    id?: string
+    date: Date | string
+    value: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InvestmentSnapshotCreateOrConnectWithoutAccountInput = {
+    where: InvestmentSnapshotWhereUniqueInput
+    create: XOR<InvestmentSnapshotCreateWithoutAccountInput, InvestmentSnapshotUncheckedCreateWithoutAccountInput>
+  }
+
+  export type InvestmentSnapshotCreateManyAccountInputEnvelope = {
+    data: InvestmentSnapshotCreateManyAccountInput | InvestmentSnapshotCreateManyAccountInput[]
+  }
+
+  export type InvestmentSnapshotUpsertWithWhereUniqueWithoutAccountInput = {
+    where: InvestmentSnapshotWhereUniqueInput
+    update: XOR<InvestmentSnapshotUpdateWithoutAccountInput, InvestmentSnapshotUncheckedUpdateWithoutAccountInput>
+    create: XOR<InvestmentSnapshotCreateWithoutAccountInput, InvestmentSnapshotUncheckedCreateWithoutAccountInput>
+  }
+
+  export type InvestmentSnapshotUpdateWithWhereUniqueWithoutAccountInput = {
+    where: InvestmentSnapshotWhereUniqueInput
+    data: XOR<InvestmentSnapshotUpdateWithoutAccountInput, InvestmentSnapshotUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type InvestmentSnapshotUpdateManyWithWhereWithoutAccountInput = {
+    where: InvestmentSnapshotScalarWhereInput
+    data: XOR<InvestmentSnapshotUpdateManyMutationInput, InvestmentSnapshotUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type InvestmentSnapshotScalarWhereInput = {
+    AND?: InvestmentSnapshotScalarWhereInput | InvestmentSnapshotScalarWhereInput[]
+    OR?: InvestmentSnapshotScalarWhereInput[]
+    NOT?: InvestmentSnapshotScalarWhereInput | InvestmentSnapshotScalarWhereInput[]
+    id?: StringFilter<"InvestmentSnapshot"> | string
+    accountId?: StringFilter<"InvestmentSnapshot"> | string
+    date?: DateTimeFilter<"InvestmentSnapshot"> | Date | string
+    value?: FloatFilter<"InvestmentSnapshot"> | number
+    createdAt?: DateTimeFilter<"InvestmentSnapshot"> | Date | string
+    updatedAt?: DateTimeFilter<"InvestmentSnapshot"> | Date | string
+  }
+
+  export type InvestmentAccountCreateWithoutSnapshotsInput = {
+    id?: string
+    name: string
+    category: string
+    rate?: number | null
+    sortOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InvestmentAccountUncheckedCreateWithoutSnapshotsInput = {
+    id?: string
+    name: string
+    category: string
+    rate?: number | null
+    sortOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InvestmentAccountCreateOrConnectWithoutSnapshotsInput = {
+    where: InvestmentAccountWhereUniqueInput
+    create: XOR<InvestmentAccountCreateWithoutSnapshotsInput, InvestmentAccountUncheckedCreateWithoutSnapshotsInput>
+  }
+
+  export type InvestmentAccountUpsertWithoutSnapshotsInput = {
+    update: XOR<InvestmentAccountUpdateWithoutSnapshotsInput, InvestmentAccountUncheckedUpdateWithoutSnapshotsInput>
+    create: XOR<InvestmentAccountCreateWithoutSnapshotsInput, InvestmentAccountUncheckedCreateWithoutSnapshotsInput>
+    where?: InvestmentAccountWhereInput
+  }
+
+  export type InvestmentAccountUpdateToOneWithWhereWithoutSnapshotsInput = {
+    where?: InvestmentAccountWhereInput
+    data: XOR<InvestmentAccountUpdateWithoutSnapshotsInput, InvestmentAccountUncheckedUpdateWithoutSnapshotsInput>
+  }
+
+  export type InvestmentAccountUpdateWithoutSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    rate?: NullableFloatFieldUpdateOperationsInput | number | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvestmentAccountUncheckedUpdateWithoutSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    rate?: NullableFloatFieldUpdateOperationsInput | number | null
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SessionCreateManyUserInput = {
     id: string
     expiresAt: Date | string
@@ -16414,6 +19652,38 @@ export namespace Prisma {
     externalId?: NullableStringFieldUpdateOperationsInput | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     owner?: EnumOwnerFieldUpdateOperationsInput | $Enums.Owner
+  }
+
+  export type InvestmentSnapshotCreateManyAccountInput = {
+    id?: string
+    date: Date | string
+    value: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InvestmentSnapshotUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvestmentSnapshotUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvestmentSnapshotUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

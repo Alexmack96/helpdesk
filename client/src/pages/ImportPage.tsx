@@ -6,8 +6,10 @@ import { Button } from "../components/ui/button.js";
 import api from "../lib/api.js";
 
 type ImportResult = { imported: number; duplicates?: string[] };
-type ProcessResult = { processed: number };
-type StagedInfo = { monzo: number; amex: number; barclays: number; santander: number; processedCount: number };
+type ProcessResult = { processed: number; skipped: number };
+type BankCounts = { pending: number; processed: number; skipped: number };
+type BankCountsWithOwner = BankCounts & { byOwner: Record<string, Record<string, number>> };
+type StagedInfo = { monzo: BankCounts; amex: BankCountsWithOwner; barclays: BankCountsWithOwner; santander: BankCountsWithOwner };
 
 function BankUploadCard({
   title,
@@ -213,8 +215,12 @@ export function ImportPage() {
     },
   });
 
-  const totalStaged = (staged?.monzo ?? 0) + (staged?.amex ?? 0) + (staged?.barclays ?? 0) + (staged?.santander ?? 0);
-  const unprocessed = totalStaged - (staged?.processedCount ?? 0);
+  const sum = (key: keyof BankCounts) =>
+    (staged?.monzo[key] ?? 0) + (staged?.amex[key] ?? 0) + (staged?.barclays[key] ?? 0) + (staged?.santander[key] ?? 0);
+  const totalPending   = sum("pending");
+  const totalProcessed = sum("processed");
+  const totalSkipped   = sum("skipped");
+  const totalStaged    = totalPending + totalProcessed + totalSkipped;
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -237,34 +243,41 @@ export function ImportPage() {
             <p className="text-sm text-muted-foreground">No staged transactions yet.</p>
           ) : (
             <div className="space-y-3">
+              {/* Per-bank breakdown */}
               <div className="flex flex-wrap gap-6 text-sm">
-                <div>
-                  <span className="font-medium text-foreground">Monzo</span>
-                  <span className="text-muted-foreground ml-1">{staged?.monzo.toLocaleString()} rows</span>
-                </div>
-                <div>
-                  <span className="font-medium text-foreground">Amex</span>
-                  <span className="text-muted-foreground ml-1">{staged?.amex.toLocaleString()} rows</span>
-                </div>
-                <div>
-                  <span className="font-medium text-foreground">Barclays</span>
-                  <span className="text-muted-foreground ml-1">{staged?.barclays.toLocaleString()} rows</span>
-                </div>
-                <div>
-                  <span className="font-medium text-foreground">Santander</span>
-                  <span className="text-muted-foreground ml-1">{staged?.santander.toLocaleString()} rows</span>
-                </div>
+                {(["monzo", "amex", "barclays", "santander"] as const).map((bank) => {
+                  const counts = staged?.[bank];
+                  if (!counts) return null;
+                  const total = counts.pending + counts.processed + counts.skipped;
+                  if (total === 0) return null;
+                  const ownerCounts = "byOwner" in counts ? counts.byOwner : null;
+                  const owners = ownerCounts
+                    ? Object.entries(ownerCounts)
+                        .map(([o, s]) => `${o} ${((s.pending ?? 0) + (s.processed ?? 0) + (s.skipped ?? 0)).toLocaleString()}`)
+                        .join(" · ")
+                    : null;
+                  return (
+                    <div key={bank}>
+                      <span className="font-medium text-foreground capitalize">{bank}</span>
+                      <span className="text-muted-foreground ml-1">{total.toLocaleString()} rows</span>
+                      {owners && <span className="text-muted-foreground/60 ml-1 text-xs">({owners})</span>}
+                    </div>
+                  );
+                })}
               </div>
+              {/* Status summary + action */}
               <div className="flex items-center gap-4">
                 <span className="text-sm text-muted-foreground">
-                  {staged?.processedCount.toLocaleString()} processed ·{" "}
-                  <span className={unprocessed > 0 ? "text-foreground font-medium" : ""}>
-                    {unprocessed.toLocaleString()} pending
+                  {totalProcessed.toLocaleString()} processed
+                  {totalSkipped > 0 && <> · {totalSkipped.toLocaleString()} skipped</>}
+                  {" · "}
+                  <span className={totalPending > 0 ? "text-foreground font-medium" : ""}>
+                    {totalPending.toLocaleString()} pending
                   </span>
                 </span>
                 <Button
                   size="sm"
-                  disabled={unprocessed === 0 || processMutation.isPending}
+                  disabled={totalPending === 0 || processMutation.isPending}
                   onClick={() => processMutation.mutate()}
                 >
                   {processMutation.isPending ? "Processing…" : "Process staged"}
@@ -273,7 +286,10 @@ export function ImportPage() {
               {processMutation.isSuccess && (
                 <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                   <CheckCircle className="h-4 w-4" />
-                  {processMutation.data.processed.toLocaleString()} transactions added to dashboard
+                  {processMutation.data.processed.toLocaleString()} transactions added
+                  {processMutation.data.skipped > 0 && (
+                    <span className="text-muted-foreground">· {processMutation.data.skipped.toLocaleString()} skipped</span>
+                  )}
                 </div>
               )}
             </div>

@@ -84,6 +84,7 @@ model MonzoTransaction {
   moneyOut      String?
   moneyIn       String?
   importedAt    DateTime @default(now())
+  status        String   @default("pending")
 
   @@map("monzo_transaction")
 }
@@ -100,6 +101,7 @@ model AmexTransaction {
   statementDate   String
   owner           String   @default("Alex")
   importedAt      DateTime @default(now())
+  status          String   @default("pending")
 
   @@map("amex_transaction")
 }
@@ -113,6 +115,7 @@ model BarclaysTransaction {
   statementDate String
   owner         String   @default("Alex")
   importedAt    DateTime @default(now())
+  status        String   @default("pending")
 
   @@map("barclays_transaction")
 }
@@ -127,6 +130,7 @@ model SantanderTransaction {
   statementDate String
   owner         String   @default("Alex")
   importedAt    DateTime @default(now())
+  status        String   @default("pending")
 
   @@map("santander_transaction")
 }
@@ -165,6 +169,34 @@ model Account {
 
   @@index([userId])
   @@map("account")
+}
+
+model InvestmentAccount {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  category  String // pension | crypto | equity | cash | commodity | debt
+  rate      Float?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  snapshots InvestmentSnapshot[]
+
+  @@map("investment_account")
+}
+
+model InvestmentSnapshot {
+  id        String   @id @default(cuid())
+  accountId String
+  date      DateTime
+  value     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  account InvestmentAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@unique([accountId, date])
+  @@map("investment_snapshot")
 }
 
 model Verification {

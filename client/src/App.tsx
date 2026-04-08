@@ -10,6 +10,7 @@ import { UsersPage } from "./pages/UsersPage.js";
 import { ImportPage } from "./pages/ImportPage.js";
 import { UtilitiesPage } from "./pages/UtilitiesPage.js";
 import { SavingsPage } from "./pages/SavingsPage.js";
+import { InvestmentsPage } from "./pages/InvestmentsPage.js";
 
 export function App() {
   return (
@@ -23,6 +24,7 @@ export function App() {
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/utilities" element={<UtilitiesPage />} />
             <Route path="/savings" element={<SavingsPage />} />
+            <Route path="/investments" element={<InvestmentsPage />} />
             <Route element={<AdminRoute />}>
               <Route path="/users" element={<UsersPage />} />
               <Route path="/import" element={<ImportPage />} />

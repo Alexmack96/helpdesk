@@ -3,24 +3,6 @@ import { useSession } from "../lib/authClient.js";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext.js";
 import { Button } from "./ui/button.js";
-import { useQuery } from "@tanstack/react-query";
-import api from "../lib/api.js";
-
-function HealthStatus() {
-  const { data, isError, isPending } = useQuery({
-    queryKey: ["health"],
-    queryFn: () => api.get("/api/health").then((r) => r.data),
-    refetchInterval: 30_000,
-  });
-
-  const status = isPending ? "loading" : isError ? "error" : data?.status === "ok" ? "ok" : "error";
-  const label =
-    status === "loading" ? "Checking API..." : status === "ok" ? "API: OK" : "API: Unreachable";
-  const colour =
-    status === "ok" ? "text-primary-foreground/70" : status === "error" ? "text-red-300" : "text-primary-foreground/40";
-
-  return <span className={`text-sm font-medium ${colour}`}>{label}</span>;
-}
 
 export function Navbar({ onSignOut }: { onSignOut: () => void }) {
   const { data: session } = useSession();
@@ -47,7 +29,6 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
         <Link to="/dashboard" className="text-lg font-semibold text-primary-foreground hover:text-primary-foreground/80">Clam Finance Tracker</Link>
       </div>
       <div className="flex items-center gap-4">
-        <HealthStatus />
         <Link
           to="/analytics"
           className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
@@ -65,6 +46,12 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
           className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
         >
           Savings
+        </Link>
+        <Link
+          to="/investments"
+          className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
+        >
+          Investments
         </Link>
 {session?.user.role === "Admin" && (
           <>

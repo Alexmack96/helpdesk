@@ -250,9 +250,9 @@ function OwnerCell({ tx, onSave }: { tx: Transaction; onSave: (owner: Owner) => 
   );
 }
 
-// ─── Custom category filter ───────────────────────────────────────────────────
+// ─── Custom filters ───────────────────────────────────────────────────────────
 
-interface CategoryFilterModel { value: string }
+interface FilterModel { value: string }
 
 interface CategoryFilterExtraProps { categories: Category[] }
 
@@ -260,7 +260,7 @@ function CategoryFilter({
   model,
   onModelChange,
   categories,
-}: CustomFilterProps<Transaction, any, CategoryFilterModel> & CategoryFilterExtraProps) {
+}: CustomFilterProps<Transaction, any, FilterModel> & CategoryFilterExtraProps) {
   useGridFilter({
     doesFilterPass: (params) => {
       if (!model) return true;
@@ -289,6 +289,76 @@ function CategoryFilter({
             style={{ color: c.color, borderColor: c.color }}
           >
             {c.name}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+const OWNERS: Owner[] = ["Alex", "Casey", "Joint"];
+
+function OwnerFilter({ model, onModelChange }: CustomFilterProps<Transaction, any, FilterModel>) {
+  useGridFilter({
+    doesFilterPass: (params) => {
+      if (!model) return true;
+      return (params.data as Transaction)?.owner === model.value;
+    },
+  });
+
+  const selected = model?.value ?? null;
+
+  return (
+    <div className="p-2 min-w-[130px]">
+      <div
+        onClick={() => onModelChange(null)}
+        className={`px-2 py-1 cursor-pointer rounded text-xs text-muted-foreground mb-1 hover:bg-accent ${!selected ? "bg-accent" : ""}`}
+      >
+        All
+      </div>
+      {OWNERS.map((o) => (
+        <div
+          key={o}
+          onClick={() => onModelChange({ value: o })}
+          className={`px-2 py-1 cursor-pointer rounded hover:bg-accent ${selected === o ? "bg-accent" : ""}`}
+        >
+          <span className={`px-2 py-0.5 rounded-full text-xs font-medium border ${OWNER_STYLES[o]}`}>
+            {o}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+const SOURCES: BankSource[] = ["Monzo", "Amex", "Barclays", "Santander", "Manual"];
+
+function SourceFilter({ model, onModelChange }: CustomFilterProps<Transaction, any, FilterModel>) {
+  useGridFilter({
+    doesFilterPass: (params) => {
+      if (!model) return true;
+      return bankSource((params.data as Transaction)?.externalId) === model.value;
+    },
+  });
+
+  const selected = model?.value ?? null;
+
+  return (
+    <div className="p-2 min-w-[140px]">
+      <div
+        onClick={() => onModelChange(null)}
+        className={`px-2 py-1 cursor-pointer rounded text-xs text-muted-foreground mb-1 hover:bg-accent ${!selected ? "bg-accent" : ""}`}
+      >
+        All
+      </div>
+      {SOURCES.map((s) => (
+        <div
+          key={s}
+          onClick={() => onModelChange({ value: s })}
+          className={`px-2 py-1 cursor-pointer rounded hover:bg-accent ${selected === s ? "bg-accent" : ""}`}
+        >
+          <span className={`px-2 py-0.5 rounded-full text-xs font-medium border ${SOURCE_STYLES[s]}`}>
+            {s}
           </span>
         </div>
       ))}
@@ -436,13 +506,13 @@ export function DashboardPage() {
     {
       field: "description",
       headerName: "DESCRIPTION",
-      flex: 2,
+      flex: 3,
       filter: "agTextColumnFilter",
       floatingFilter: true,
     },
     {
       headerName: "NOTE",
-      flex: 1.5,
+      flex: 2,
       cellRenderer: NoteRenderer,
       valueGetter: (p) => p.data?.note ?? "",
       filter: "agTextColumnFilter",
@@ -465,8 +535,8 @@ export function DashboardPage() {
       headerName: "OWNER",
       width: 110,
       cellRenderer: OwnerRenderer,
-      filter: "agTextColumnFilter",
-      floatingFilter: true,
+      filter: OwnerFilter,
+      floatingFilter: false,
       cellStyle: { overflow: "visible" },
     },
     {
@@ -474,8 +544,8 @@ export function DashboardPage() {
       width: 120,
       cellRenderer: SourceRenderer,
       valueGetter: (p) => p.data ? bankSource(p.data.externalId) : "",
-      filter: "agTextColumnFilter",
-      floatingFilter: true,
+      filter: SourceFilter,
+      floatingFilter: false,
     },
     {
       headerName: "AMOUNT",
@@ -509,7 +579,7 @@ export function DashboardPage() {
   }), [updateMutation, categories]);
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-foreground">Clam Finance Tracker</h1>
         <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">

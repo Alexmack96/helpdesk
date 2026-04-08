@@ -167,7 +167,8 @@ exports.Prisma.MonzoTransactionScalarFieldEnum = {
   categorySplit: 'categorySplit',
   moneyOut: 'moneyOut',
   moneyIn: 'moneyIn',
-  importedAt: 'importedAt'
+  importedAt: 'importedAt',
+  status: 'status'
 };
 
 exports.Prisma.AmexTransactionScalarFieldEnum = {
@@ -181,7 +182,8 @@ exports.Prisma.AmexTransactionScalarFieldEnum = {
   foreignAmount: 'foreignAmount',
   statementDate: 'statementDate',
   owner: 'owner',
-  importedAt: 'importedAt'
+  importedAt: 'importedAt',
+  status: 'status'
 };
 
 exports.Prisma.BarclaysTransactionScalarFieldEnum = {
@@ -192,7 +194,8 @@ exports.Prisma.BarclaysTransactionScalarFieldEnum = {
   isCredit: 'isCredit',
   statementDate: 'statementDate',
   owner: 'owner',
-  importedAt: 'importedAt'
+  importedAt: 'importedAt',
+  status: 'status'
 };
 
 exports.Prisma.SantanderTransactionScalarFieldEnum = {
@@ -204,7 +207,8 @@ exports.Prisma.SantanderTransactionScalarFieldEnum = {
   balance: 'balance',
   statementDate: 'statementDate',
   owner: 'owner',
-  importedAt: 'importedAt'
+  importedAt: 'importedAt',
+  status: 'status'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
@@ -230,6 +234,25 @@ exports.Prisma.AccountScalarFieldEnum = {
   refreshTokenExpiresAt: 'refreshTokenExpiresAt',
   scope: 'scope',
   password: 'password',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.InvestmentAccountScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  rate: 'rate',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.InvestmentSnapshotScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  date: 'date',
+  value: 'value',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -278,6 +301,8 @@ exports.Prisma.ModelName = {
   SantanderTransaction: 'SantanderTransaction',
   Session: 'Session',
   Account: 'Account',
+  InvestmentAccount: 'InvestmentAccount',
+  InvestmentSnapshot: 'InvestmentSnapshot',
   Verification: 'Verification'
 };
 
