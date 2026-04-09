@@ -45,7 +45,7 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
           to="/savings"
           className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
         >
-          Savings
+          Goals
         </Link>
         <Link
           to="/investments"
