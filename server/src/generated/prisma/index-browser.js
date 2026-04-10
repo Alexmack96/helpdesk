@@ -238,6 +238,20 @@ exports.Prisma.AccountScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TabScalarFieldEnum = {
+  id: 'id',
+  person: 'person',
+  description: 'description',
+  amount: 'amount',
+  direction: 'direction',
+  status: 'status',
+  dueDate: 'dueDate',
+  settledAt: 'settledAt',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.InvestmentAccountScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -291,6 +305,16 @@ exports.Owner = exports.$Enums.Owner = {
   Joint: 'Joint'
 };
 
+exports.TabDirection = exports.$Enums.TabDirection = {
+  IOwe: 'IOwe',
+  TheyOwe: 'TheyOwe'
+};
+
+exports.TabStatus = exports.$Enums.TabStatus = {
+  Open: 'Open',
+  Settled: 'Settled'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Category: 'Category',
@@ -301,6 +325,7 @@ exports.Prisma.ModelName = {
   SantanderTransaction: 'SantanderTransaction',
   Session: 'Session',
   Account: 'Account',
+  Tab: 'Tab',
   InvestmentAccount: 'InvestmentAccount',
   InvestmentSnapshot: 'InvestmentSnapshot',
   Verification: 'Verification'

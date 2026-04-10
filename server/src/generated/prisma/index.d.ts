@@ -59,6 +59,11 @@ export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
  */
 export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
 /**
+ * Model Tab
+ * 
+ */
+export type Tab = $Result.DefaultSelection<Prisma.$TabPayload>
+/**
  * Model InvestmentAccount
  * 
  */
@@ -102,6 +107,22 @@ export const Owner: {
 
 export type Owner = (typeof Owner)[keyof typeof Owner]
 
+
+export const TabDirection: {
+  IOwe: 'IOwe',
+  TheyOwe: 'TheyOwe'
+};
+
+export type TabDirection = (typeof TabDirection)[keyof typeof TabDirection]
+
+
+export const TabStatus: {
+  Open: 'Open',
+  Settled: 'Settled'
+};
+
+export type TabStatus = (typeof TabStatus)[keyof typeof TabStatus]
+
 }
 
 export type UserRole = $Enums.UserRole
@@ -115,6 +136,14 @@ export const TransactionType: typeof $Enums.TransactionType
 export type Owner = $Enums.Owner
 
 export const Owner: typeof $Enums.Owner
+
+export type TabDirection = $Enums.TabDirection
+
+export const TabDirection: typeof $Enums.TabDirection
+
+export type TabStatus = $Enums.TabStatus
+
+export const TabStatus: typeof $Enums.TabStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -326,6 +355,16 @@ export class PrismaClient<
     * ```
     */
   get account(): Prisma.AccountDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tab`: Exposes CRUD operations for the **Tab** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tabs
+    * const tabs = await prisma.tab.findMany()
+    * ```
+    */
+  get tab(): Prisma.TabDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.investmentAccount`: Exposes CRUD operations for the **InvestmentAccount** model.
@@ -799,6 +838,7 @@ export namespace Prisma {
     SantanderTransaction: 'SantanderTransaction',
     Session: 'Session',
     Account: 'Account',
+    Tab: 'Tab',
     InvestmentAccount: 'InvestmentAccount',
     InvestmentSnapshot: 'InvestmentSnapshot',
     Verification: 'Verification'
@@ -817,7 +857,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "session" | "account" | "investmentAccount" | "investmentSnapshot" | "verification"
+      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "session" | "account" | "tab" | "investmentAccount" | "investmentSnapshot" | "verification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1487,6 +1527,80 @@ export namespace Prisma {
           }
         }
       }
+      Tab: {
+        payload: Prisma.$TabPayload<ExtArgs>
+        fields: Prisma.TabFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TabFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TabFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload>
+          }
+          findFirst: {
+            args: Prisma.TabFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TabFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload>
+          }
+          findMany: {
+            args: Prisma.TabFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload>[]
+          }
+          create: {
+            args: Prisma.TabCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload>
+          }
+          createMany: {
+            args: Prisma.TabCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TabCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload>[]
+          }
+          delete: {
+            args: Prisma.TabDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload>
+          }
+          update: {
+            args: Prisma.TabUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload>
+          }
+          deleteMany: {
+            args: Prisma.TabDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TabUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TabUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload>[]
+          }
+          upsert: {
+            args: Prisma.TabUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TabPayload>
+          }
+          aggregate: {
+            args: Prisma.TabAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTab>
+          }
+          groupBy: {
+            args: Prisma.TabGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TabGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TabCountArgs<ExtArgs>
+            result: $Utils.Optional<TabCountAggregateOutputType> | number
+          }
+        }
+      }
       InvestmentAccount: {
         payload: Prisma.$InvestmentAccountPayload<ExtArgs>
         fields: Prisma.InvestmentAccountFieldRefs
@@ -1826,6 +1940,7 @@ export namespace Prisma {
     santanderTransaction?: SantanderTransactionOmit
     session?: SessionOmit
     account?: AccountOmit
+    tab?: TabOmit
     investmentAccount?: InvestmentAccountOmit
     investmentSnapshot?: InvestmentSnapshotOmit
     verification?: VerificationOmit
@@ -12099,6 +12214,1116 @@ export namespace Prisma {
 
 
   /**
+   * Model Tab
+   */
+
+  export type AggregateTab = {
+    _count: TabCountAggregateOutputType | null
+    _avg: TabAvgAggregateOutputType | null
+    _sum: TabSumAggregateOutputType | null
+    _min: TabMinAggregateOutputType | null
+    _max: TabMaxAggregateOutputType | null
+  }
+
+  export type TabAvgAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type TabSumAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type TabMinAggregateOutputType = {
+    id: string | null
+    person: string | null
+    description: string | null
+    amount: Decimal | null
+    direction: $Enums.TabDirection | null
+    status: $Enums.TabStatus | null
+    dueDate: Date | null
+    settledAt: Date | null
+    note: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TabMaxAggregateOutputType = {
+    id: string | null
+    person: string | null
+    description: string | null
+    amount: Decimal | null
+    direction: $Enums.TabDirection | null
+    status: $Enums.TabStatus | null
+    dueDate: Date | null
+    settledAt: Date | null
+    note: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TabCountAggregateOutputType = {
+    id: number
+    person: number
+    description: number
+    amount: number
+    direction: number
+    status: number
+    dueDate: number
+    settledAt: number
+    note: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TabAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type TabSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type TabMinAggregateInputType = {
+    id?: true
+    person?: true
+    description?: true
+    amount?: true
+    direction?: true
+    status?: true
+    dueDate?: true
+    settledAt?: true
+    note?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TabMaxAggregateInputType = {
+    id?: true
+    person?: true
+    description?: true
+    amount?: true
+    direction?: true
+    status?: true
+    dueDate?: true
+    settledAt?: true
+    note?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TabCountAggregateInputType = {
+    id?: true
+    person?: true
+    description?: true
+    amount?: true
+    direction?: true
+    status?: true
+    dueDate?: true
+    settledAt?: true
+    note?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TabAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tab to aggregate.
+     */
+    where?: TabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tabs to fetch.
+     */
+    orderBy?: TabOrderByWithRelationInput | TabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Tabs
+    **/
+    _count?: true | TabCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TabAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TabSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TabMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TabMaxAggregateInputType
+  }
+
+  export type GetTabAggregateType<T extends TabAggregateArgs> = {
+        [P in keyof T & keyof AggregateTab]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTab[P]>
+      : GetScalarType<T[P], AggregateTab[P]>
+  }
+
+
+
+
+  export type TabGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TabWhereInput
+    orderBy?: TabOrderByWithAggregationInput | TabOrderByWithAggregationInput[]
+    by: TabScalarFieldEnum[] | TabScalarFieldEnum
+    having?: TabScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TabCountAggregateInputType | true
+    _avg?: TabAvgAggregateInputType
+    _sum?: TabSumAggregateInputType
+    _min?: TabMinAggregateInputType
+    _max?: TabMaxAggregateInputType
+  }
+
+  export type TabGroupByOutputType = {
+    id: string
+    person: string
+    description: string
+    amount: Decimal
+    direction: $Enums.TabDirection
+    status: $Enums.TabStatus
+    dueDate: Date | null
+    settledAt: Date | null
+    note: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: TabCountAggregateOutputType | null
+    _avg: TabAvgAggregateOutputType | null
+    _sum: TabSumAggregateOutputType | null
+    _min: TabMinAggregateOutputType | null
+    _max: TabMaxAggregateOutputType | null
+  }
+
+  type GetTabGroupByPayload<T extends TabGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TabGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TabGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TabGroupByOutputType[P]>
+            : GetScalarType<T[P], TabGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TabSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    person?: boolean
+    description?: boolean
+    amount?: boolean
+    direction?: boolean
+    status?: boolean
+    dueDate?: boolean
+    settledAt?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["tab"]>
+
+  export type TabSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    person?: boolean
+    description?: boolean
+    amount?: boolean
+    direction?: boolean
+    status?: boolean
+    dueDate?: boolean
+    settledAt?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["tab"]>
+
+  export type TabSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    person?: boolean
+    description?: boolean
+    amount?: boolean
+    direction?: boolean
+    status?: boolean
+    dueDate?: boolean
+    settledAt?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["tab"]>
+
+  export type TabSelectScalar = {
+    id?: boolean
+    person?: boolean
+    description?: boolean
+    amount?: boolean
+    direction?: boolean
+    status?: boolean
+    dueDate?: boolean
+    settledAt?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TabOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "person" | "description" | "amount" | "direction" | "status" | "dueDate" | "settledAt" | "note" | "createdAt" | "updatedAt", ExtArgs["result"]["tab"]>
+
+  export type $TabPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Tab"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      person: string
+      description: string
+      amount: Prisma.Decimal
+      direction: $Enums.TabDirection
+      status: $Enums.TabStatus
+      dueDate: Date | null
+      settledAt: Date | null
+      note: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["tab"]>
+    composites: {}
+  }
+
+  type TabGetPayload<S extends boolean | null | undefined | TabDefaultArgs> = $Result.GetResult<Prisma.$TabPayload, S>
+
+  type TabCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TabFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TabCountAggregateInputType | true
+    }
+
+  export interface TabDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Tab'], meta: { name: 'Tab' } }
+    /**
+     * Find zero or one Tab that matches the filter.
+     * @param {TabFindUniqueArgs} args - Arguments to find a Tab
+     * @example
+     * // Get one Tab
+     * const tab = await prisma.tab.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TabFindUniqueArgs>(args: SelectSubset<T, TabFindUniqueArgs<ExtArgs>>): Prisma__TabClient<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Tab that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TabFindUniqueOrThrowArgs} args - Arguments to find a Tab
+     * @example
+     * // Get one Tab
+     * const tab = await prisma.tab.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TabFindUniqueOrThrowArgs>(args: SelectSubset<T, TabFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TabClient<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tab that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TabFindFirstArgs} args - Arguments to find a Tab
+     * @example
+     * // Get one Tab
+     * const tab = await prisma.tab.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TabFindFirstArgs>(args?: SelectSubset<T, TabFindFirstArgs<ExtArgs>>): Prisma__TabClient<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tab that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TabFindFirstOrThrowArgs} args - Arguments to find a Tab
+     * @example
+     * // Get one Tab
+     * const tab = await prisma.tab.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TabFindFirstOrThrowArgs>(args?: SelectSubset<T, TabFindFirstOrThrowArgs<ExtArgs>>): Prisma__TabClient<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Tabs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TabFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tabs
+     * const tabs = await prisma.tab.findMany()
+     * 
+     * // Get first 10 Tabs
+     * const tabs = await prisma.tab.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tabWithIdOnly = await prisma.tab.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TabFindManyArgs>(args?: SelectSubset<T, TabFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Tab.
+     * @param {TabCreateArgs} args - Arguments to create a Tab.
+     * @example
+     * // Create one Tab
+     * const Tab = await prisma.tab.create({
+     *   data: {
+     *     // ... data to create a Tab
+     *   }
+     * })
+     * 
+     */
+    create<T extends TabCreateArgs>(args: SelectSubset<T, TabCreateArgs<ExtArgs>>): Prisma__TabClient<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Tabs.
+     * @param {TabCreateManyArgs} args - Arguments to create many Tabs.
+     * @example
+     * // Create many Tabs
+     * const tab = await prisma.tab.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TabCreateManyArgs>(args?: SelectSubset<T, TabCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tabs and returns the data saved in the database.
+     * @param {TabCreateManyAndReturnArgs} args - Arguments to create many Tabs.
+     * @example
+     * // Create many Tabs
+     * const tab = await prisma.tab.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tabs and only return the `id`
+     * const tabWithIdOnly = await prisma.tab.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TabCreateManyAndReturnArgs>(args?: SelectSubset<T, TabCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Tab.
+     * @param {TabDeleteArgs} args - Arguments to delete one Tab.
+     * @example
+     * // Delete one Tab
+     * const Tab = await prisma.tab.delete({
+     *   where: {
+     *     // ... filter to delete one Tab
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TabDeleteArgs>(args: SelectSubset<T, TabDeleteArgs<ExtArgs>>): Prisma__TabClient<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Tab.
+     * @param {TabUpdateArgs} args - Arguments to update one Tab.
+     * @example
+     * // Update one Tab
+     * const tab = await prisma.tab.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TabUpdateArgs>(args: SelectSubset<T, TabUpdateArgs<ExtArgs>>): Prisma__TabClient<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Tabs.
+     * @param {TabDeleteManyArgs} args - Arguments to filter Tabs to delete.
+     * @example
+     * // Delete a few Tabs
+     * const { count } = await prisma.tab.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TabDeleteManyArgs>(args?: SelectSubset<T, TabDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TabUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tabs
+     * const tab = await prisma.tab.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TabUpdateManyArgs>(args: SelectSubset<T, TabUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tabs and returns the data updated in the database.
+     * @param {TabUpdateManyAndReturnArgs} args - Arguments to update many Tabs.
+     * @example
+     * // Update many Tabs
+     * const tab = await prisma.tab.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Tabs and only return the `id`
+     * const tabWithIdOnly = await prisma.tab.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TabUpdateManyAndReturnArgs>(args: SelectSubset<T, TabUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Tab.
+     * @param {TabUpsertArgs} args - Arguments to update or create a Tab.
+     * @example
+     * // Update or create a Tab
+     * const tab = await prisma.tab.upsert({
+     *   create: {
+     *     // ... data to create a Tab
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Tab we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TabUpsertArgs>(args: SelectSubset<T, TabUpsertArgs<ExtArgs>>): Prisma__TabClient<$Result.GetResult<Prisma.$TabPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Tabs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TabCountArgs} args - Arguments to filter Tabs to count.
+     * @example
+     * // Count the number of Tabs
+     * const count = await prisma.tab.count({
+     *   where: {
+     *     // ... the filter for the Tabs we want to count
+     *   }
+     * })
+    **/
+    count<T extends TabCountArgs>(
+      args?: Subset<T, TabCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TabCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Tab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TabAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TabAggregateArgs>(args: Subset<T, TabAggregateArgs>): Prisma.PrismaPromise<GetTabAggregateType<T>>
+
+    /**
+     * Group by Tab.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TabGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TabGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TabGroupByArgs['orderBy'] }
+        : { orderBy?: TabGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TabGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTabGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Tab model
+   */
+  readonly fields: TabFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Tab.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TabClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Tab model
+   */
+  interface TabFieldRefs {
+    readonly id: FieldRef<"Tab", 'String'>
+    readonly person: FieldRef<"Tab", 'String'>
+    readonly description: FieldRef<"Tab", 'String'>
+    readonly amount: FieldRef<"Tab", 'Decimal'>
+    readonly direction: FieldRef<"Tab", 'TabDirection'>
+    readonly status: FieldRef<"Tab", 'TabStatus'>
+    readonly dueDate: FieldRef<"Tab", 'DateTime'>
+    readonly settledAt: FieldRef<"Tab", 'DateTime'>
+    readonly note: FieldRef<"Tab", 'String'>
+    readonly createdAt: FieldRef<"Tab", 'DateTime'>
+    readonly updatedAt: FieldRef<"Tab", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Tab findUnique
+   */
+  export type TabFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * Filter, which Tab to fetch.
+     */
+    where: TabWhereUniqueInput
+  }
+
+  /**
+   * Tab findUniqueOrThrow
+   */
+  export type TabFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * Filter, which Tab to fetch.
+     */
+    where: TabWhereUniqueInput
+  }
+
+  /**
+   * Tab findFirst
+   */
+  export type TabFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * Filter, which Tab to fetch.
+     */
+    where?: TabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tabs to fetch.
+     */
+    orderBy?: TabOrderByWithRelationInput | TabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tabs.
+     */
+    cursor?: TabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tabs.
+     */
+    distinct?: TabScalarFieldEnum | TabScalarFieldEnum[]
+  }
+
+  /**
+   * Tab findFirstOrThrow
+   */
+  export type TabFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * Filter, which Tab to fetch.
+     */
+    where?: TabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tabs to fetch.
+     */
+    orderBy?: TabOrderByWithRelationInput | TabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tabs.
+     */
+    cursor?: TabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tabs.
+     */
+    distinct?: TabScalarFieldEnum | TabScalarFieldEnum[]
+  }
+
+  /**
+   * Tab findMany
+   */
+  export type TabFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * Filter, which Tabs to fetch.
+     */
+    where?: TabWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tabs to fetch.
+     */
+    orderBy?: TabOrderByWithRelationInput | TabOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Tabs.
+     */
+    cursor?: TabWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tabs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tabs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tabs.
+     */
+    distinct?: TabScalarFieldEnum | TabScalarFieldEnum[]
+  }
+
+  /**
+   * Tab create
+   */
+  export type TabCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Tab.
+     */
+    data: XOR<TabCreateInput, TabUncheckedCreateInput>
+  }
+
+  /**
+   * Tab createMany
+   */
+  export type TabCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Tabs.
+     */
+    data: TabCreateManyInput | TabCreateManyInput[]
+  }
+
+  /**
+   * Tab createManyAndReturn
+   */
+  export type TabCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * The data used to create many Tabs.
+     */
+    data: TabCreateManyInput | TabCreateManyInput[]
+  }
+
+  /**
+   * Tab update
+   */
+  export type TabUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Tab.
+     */
+    data: XOR<TabUpdateInput, TabUncheckedUpdateInput>
+    /**
+     * Choose, which Tab to update.
+     */
+    where: TabWhereUniqueInput
+  }
+
+  /**
+   * Tab updateMany
+   */
+  export type TabUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Tabs.
+     */
+    data: XOR<TabUpdateManyMutationInput, TabUncheckedUpdateManyInput>
+    /**
+     * Filter which Tabs to update
+     */
+    where?: TabWhereInput
+    /**
+     * Limit how many Tabs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tab updateManyAndReturn
+   */
+  export type TabUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * The data used to update Tabs.
+     */
+    data: XOR<TabUpdateManyMutationInput, TabUncheckedUpdateManyInput>
+    /**
+     * Filter which Tabs to update
+     */
+    where?: TabWhereInput
+    /**
+     * Limit how many Tabs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tab upsert
+   */
+  export type TabUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Tab to update in case it exists.
+     */
+    where: TabWhereUniqueInput
+    /**
+     * In case the Tab found by the `where` argument doesn't exist, create a new Tab with this data.
+     */
+    create: XOR<TabCreateInput, TabUncheckedCreateInput>
+    /**
+     * In case the Tab was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TabUpdateInput, TabUncheckedUpdateInput>
+  }
+
+  /**
+   * Tab delete
+   */
+  export type TabDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+    /**
+     * Filter which Tab to delete.
+     */
+    where: TabWhereUniqueInput
+  }
+
+  /**
+   * Tab deleteMany
+   */
+  export type TabDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tabs to delete
+     */
+    where?: TabWhereInput
+    /**
+     * Limit how many Tabs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tab without action
+   */
+  export type TabDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tab
+     */
+    select?: TabSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tab
+     */
+    omit?: TabOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model InvestmentAccount
    */
 
@@ -15513,6 +16738,23 @@ export namespace Prisma {
   export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
 
 
+  export const TabScalarFieldEnum: {
+    id: 'id',
+    person: 'person',
+    description: 'description',
+    amount: 'amount',
+    direction: 'direction',
+    status: 'status',
+    dueDate: 'dueDate',
+    settledAt: 'settledAt',
+    note: 'note',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TabScalarFieldEnum = (typeof TabScalarFieldEnum)[keyof typeof TabScalarFieldEnum]
+
+
   export const InvestmentAccountScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -15624,6 +16866,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'TabDirection'
+   */
+  export type EnumTabDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TabDirection'>
+    
+
+
+  /**
+   * Reference to a field of type 'TabStatus'
+   */
+  export type EnumTabStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TabStatus'>
     
 
 
@@ -16372,6 +17628,90 @@ export namespace Prisma {
     password?: StringNullableWithAggregatesFilter<"Account"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
+  }
+
+  export type TabWhereInput = {
+    AND?: TabWhereInput | TabWhereInput[]
+    OR?: TabWhereInput[]
+    NOT?: TabWhereInput | TabWhereInput[]
+    id?: StringFilter<"Tab"> | string
+    person?: StringFilter<"Tab"> | string
+    description?: StringFilter<"Tab"> | string
+    amount?: DecimalFilter<"Tab"> | Decimal | DecimalJsLike | number | string
+    direction?: EnumTabDirectionFilter<"Tab"> | $Enums.TabDirection
+    status?: EnumTabStatusFilter<"Tab"> | $Enums.TabStatus
+    dueDate?: DateTimeNullableFilter<"Tab"> | Date | string | null
+    settledAt?: DateTimeNullableFilter<"Tab"> | Date | string | null
+    note?: StringNullableFilter<"Tab"> | string | null
+    createdAt?: DateTimeFilter<"Tab"> | Date | string
+    updatedAt?: DateTimeFilter<"Tab"> | Date | string
+  }
+
+  export type TabOrderByWithRelationInput = {
+    id?: SortOrder
+    person?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
+    settledAt?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TabWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TabWhereInput | TabWhereInput[]
+    OR?: TabWhereInput[]
+    NOT?: TabWhereInput | TabWhereInput[]
+    person?: StringFilter<"Tab"> | string
+    description?: StringFilter<"Tab"> | string
+    amount?: DecimalFilter<"Tab"> | Decimal | DecimalJsLike | number | string
+    direction?: EnumTabDirectionFilter<"Tab"> | $Enums.TabDirection
+    status?: EnumTabStatusFilter<"Tab"> | $Enums.TabStatus
+    dueDate?: DateTimeNullableFilter<"Tab"> | Date | string | null
+    settledAt?: DateTimeNullableFilter<"Tab"> | Date | string | null
+    note?: StringNullableFilter<"Tab"> | string | null
+    createdAt?: DateTimeFilter<"Tab"> | Date | string
+    updatedAt?: DateTimeFilter<"Tab"> | Date | string
+  }, "id">
+
+  export type TabOrderByWithAggregationInput = {
+    id?: SortOrder
+    person?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
+    settledAt?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TabCountOrderByAggregateInput
+    _avg?: TabAvgOrderByAggregateInput
+    _max?: TabMaxOrderByAggregateInput
+    _min?: TabMinOrderByAggregateInput
+    _sum?: TabSumOrderByAggregateInput
+  }
+
+  export type TabScalarWhereWithAggregatesInput = {
+    AND?: TabScalarWhereWithAggregatesInput | TabScalarWhereWithAggregatesInput[]
+    OR?: TabScalarWhereWithAggregatesInput[]
+    NOT?: TabScalarWhereWithAggregatesInput | TabScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Tab"> | string
+    person?: StringWithAggregatesFilter<"Tab"> | string
+    description?: StringWithAggregatesFilter<"Tab"> | string
+    amount?: DecimalWithAggregatesFilter<"Tab"> | Decimal | DecimalJsLike | number | string
+    direction?: EnumTabDirectionWithAggregatesFilter<"Tab"> | $Enums.TabDirection
+    status?: EnumTabStatusWithAggregatesFilter<"Tab"> | $Enums.TabStatus
+    dueDate?: DateTimeNullableWithAggregatesFilter<"Tab"> | Date | string | null
+    settledAt?: DateTimeNullableWithAggregatesFilter<"Tab"> | Date | string | null
+    note?: StringNullableWithAggregatesFilter<"Tab"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Tab"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Tab"> | Date | string
   }
 
   export type InvestmentAccountWhereInput = {
@@ -17411,6 +18751,104 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TabCreateInput = {
+    id?: string
+    person: string
+    description: string
+    amount: Decimal | DecimalJsLike | number | string
+    direction: $Enums.TabDirection
+    status?: $Enums.TabStatus
+    dueDate?: Date | string | null
+    settledAt?: Date | string | null
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TabUncheckedCreateInput = {
+    id?: string
+    person: string
+    description: string
+    amount: Decimal | DecimalJsLike | number | string
+    direction: $Enums.TabDirection
+    status?: $Enums.TabStatus
+    dueDate?: Date | string | null
+    settledAt?: Date | string | null
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TabUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    person?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    direction?: EnumTabDirectionFieldUpdateOperationsInput | $Enums.TabDirection
+    status?: EnumTabStatusFieldUpdateOperationsInput | $Enums.TabStatus
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    settledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TabUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    person?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    direction?: EnumTabDirectionFieldUpdateOperationsInput | $Enums.TabDirection
+    status?: EnumTabStatusFieldUpdateOperationsInput | $Enums.TabStatus
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    settledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TabCreateManyInput = {
+    id?: string
+    person: string
+    description: string
+    amount: Decimal | DecimalJsLike | number | string
+    direction: $Enums.TabDirection
+    status?: $Enums.TabStatus
+    dueDate?: Date | string | null
+    settledAt?: Date | string | null
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TabUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    person?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    direction?: EnumTabDirectionFieldUpdateOperationsInput | $Enums.TabDirection
+    status?: EnumTabStatusFieldUpdateOperationsInput | $Enums.TabStatus
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    settledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TabUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    person?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    direction?: EnumTabDirectionFieldUpdateOperationsInput | $Enums.TabDirection
+    status?: EnumTabStatusFieldUpdateOperationsInput | $Enums.TabStatus
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    settledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type InvestmentAccountCreateInput = {
     id?: string
     name: string
@@ -18272,6 +19710,90 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type EnumTabDirectionFilter<$PrismaModel = never> = {
+    equals?: $Enums.TabDirection | EnumTabDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.TabDirection[]
+    notIn?: $Enums.TabDirection[]
+    not?: NestedEnumTabDirectionFilter<$PrismaModel> | $Enums.TabDirection
+  }
+
+  export type EnumTabStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TabStatus | EnumTabStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TabStatus[]
+    notIn?: $Enums.TabStatus[]
+    not?: NestedEnumTabStatusFilter<$PrismaModel> | $Enums.TabStatus
+  }
+
+  export type TabCountOrderByAggregateInput = {
+    id?: SortOrder
+    person?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    dueDate?: SortOrder
+    settledAt?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TabAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type TabMaxOrderByAggregateInput = {
+    id?: SortOrder
+    person?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    dueDate?: SortOrder
+    settledAt?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TabMinOrderByAggregateInput = {
+    id?: SortOrder
+    person?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    dueDate?: SortOrder
+    settledAt?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TabSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type EnumTabDirectionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TabDirection | EnumTabDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.TabDirection[]
+    notIn?: $Enums.TabDirection[]
+    not?: NestedEnumTabDirectionWithAggregatesFilter<$PrismaModel> | $Enums.TabDirection
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTabDirectionFilter<$PrismaModel>
+    _max?: NestedEnumTabDirectionFilter<$PrismaModel>
+  }
+
+  export type EnumTabStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TabStatus | EnumTabStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TabStatus[]
+    notIn?: $Enums.TabStatus[]
+    not?: NestedEnumTabStatusWithAggregatesFilter<$PrismaModel> | $Enums.TabStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTabStatusFilter<$PrismaModel>
+    _max?: NestedEnumTabStatusFilter<$PrismaModel>
+  }
+
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -18664,6 +20186,14 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
   }
 
+  export type EnumTabDirectionFieldUpdateOperationsInput = {
+    set?: $Enums.TabDirection
+  }
+
+  export type EnumTabStatusFieldUpdateOperationsInput = {
+    set?: $Enums.TabStatus
+  }
+
   export type InvestmentSnapshotCreateNestedManyWithoutAccountInput = {
     create?: XOR<InvestmentSnapshotCreateWithoutAccountInput, InvestmentSnapshotUncheckedCreateWithoutAccountInput> | InvestmentSnapshotCreateWithoutAccountInput[] | InvestmentSnapshotUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: InvestmentSnapshotCreateOrConnectWithoutAccountInput | InvestmentSnapshotCreateOrConnectWithoutAccountInput[]
@@ -18986,6 +20516,40 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTabDirectionFilter<$PrismaModel = never> = {
+    equals?: $Enums.TabDirection | EnumTabDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.TabDirection[]
+    notIn?: $Enums.TabDirection[]
+    not?: NestedEnumTabDirectionFilter<$PrismaModel> | $Enums.TabDirection
+  }
+
+  export type NestedEnumTabStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TabStatus | EnumTabStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TabStatus[]
+    notIn?: $Enums.TabStatus[]
+    not?: NestedEnumTabStatusFilter<$PrismaModel> | $Enums.TabStatus
+  }
+
+  export type NestedEnumTabDirectionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TabDirection | EnumTabDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.TabDirection[]
+    notIn?: $Enums.TabDirection[]
+    not?: NestedEnumTabDirectionWithAggregatesFilter<$PrismaModel> | $Enums.TabDirection
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTabDirectionFilter<$PrismaModel>
+    _max?: NestedEnumTabDirectionFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTabStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TabStatus | EnumTabStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TabStatus[]
+    notIn?: $Enums.TabStatus[]
+    not?: NestedEnumTabStatusWithAggregatesFilter<$PrismaModel> | $Enums.TabStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTabStatusFilter<$PrismaModel>
+    _max?: NestedEnumTabStatusFilter<$PrismaModel>
   }
 
   export type NestedFloatNullableFilter<$PrismaModel = never> = {

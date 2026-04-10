@@ -25,6 +25,16 @@ enum Owner {
   Joint
 }
 
+enum TabDirection {
+  IOwe
+  TheyOwe
+}
+
+enum TabStatus {
+  Open
+  Settled
+}
+
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -170,6 +180,22 @@ model Account {
 
   @@index([userId])
   @@map("account")
+}
+
+model Tab {
+  id          String       @id @default(cuid())
+  person      String
+  description String
+  amount      Decimal
+  direction   TabDirection
+  status      TabStatus    @default(Open)
+  dueDate     DateTime?
+  settledAt   DateTime?
+  note        String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@map("tab")
 }
 
 model InvestmentAccount {

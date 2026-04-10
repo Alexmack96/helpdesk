@@ -11,6 +11,7 @@ import { ImportPage } from "./pages/ImportPage.js";
 import { UtilitiesPage } from "./pages/UtilitiesPage.js";
 import { SavingsPage } from "./pages/SavingsPage.js";
 import { InvestmentsPage } from "./pages/InvestmentsPage.js";
+import { TabsPage } from "./pages/TabsPage.js";
 
 export function App() {
   return (
@@ -25,6 +26,7 @@ export function App() {
             <Route path="/utilities" element={<UtilitiesPage />} />
             <Route path="/savings" element={<SavingsPage />} />
             <Route path="/investments" element={<InvestmentsPage />} />
+            <Route path="/tabs" element={<TabsPage />} />
             <Route element={<AdminRoute />}>
               <Route path="/users" element={<UsersPage />} />
               <Route path="/import" element={<ImportPage />} />

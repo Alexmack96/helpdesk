@@ -53,6 +53,12 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
         >
           Investments
         </Link>
+        <Link
+          to="/tabs"
+          className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
+        >
+          Tabs
+        </Link>
 {session?.user.role === "Admin" && (
           <>
             <Link

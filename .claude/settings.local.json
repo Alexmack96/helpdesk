@@ -18,7 +18,8 @@
       "Bash(node -e \"const {execSync} = require\\('child_process'\\); console.log\\(execSync\\('npx ctx7@latest docs websites/ag-grid_react-data-grid \\\\\"number filter date filter agNumberColumnFilter agDateColumnFilter theme header background\\\\\"', {encoding:'utf8', env:{...process.env}}\\)\\)\")",
       "Bash(sqlite3 dev.db \"SELECT id, name FROM Category WHERE name LIKE '%aving%' OR name LIKE '%nvestment%';\")",
       "Bash(sqlite3 prisma/dev.db \"SELECT name, colour FROM Category ORDER BY name;\")",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(find:*)"
     ]
   }
 }
