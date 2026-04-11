@@ -6,10 +6,10 @@ import { Button } from "../components/ui/button.js";
 import api from "../lib/api.js";
 
 type ImportResult = { imported: number; duplicates?: string[] };
-type ProcessResult = { processed: number; skipped: number };
-type BankCounts = { pending: number; processed: number; skipped: number };
+type ProcessResult = { processed: number; skipped: number; errored: number };
+type BankCounts = { pending: number; processed: number; skipped: number; errored: number };
 type BankCountsWithOwner = BankCounts & { byOwner: Record<string, Record<string, number>> };
-type StagedInfo = { monzo: BankCounts; amex: BankCountsWithOwner; barclays: BankCountsWithOwner; santander: BankCountsWithOwner; hsbc: BankCountsWithOwner };
+type StagedInfo = { monzo: BankCounts; amex: BankCountsWithOwner; barclays: BankCountsWithOwner; santander: BankCountsWithOwner; hsbc: BankCountsWithOwner; sofi: BankCountsWithOwner };
 
 function BankUploadCard({
   title,
@@ -139,15 +139,18 @@ export function ImportPage() {
   const barclaysFileRef = useRef<HTMLInputElement>(null);
   const santanderFileRef = useRef<HTMLInputElement>(null);
   const hsbcFileRef = useRef<HTMLInputElement>(null);
+  const sofiFileRef = useRef<HTMLInputElement>(null);
   const [monzoFile, setMonzoFile] = useState<File | null>(null);
   const [amexFile, setAmexFile] = useState<File | null>(null);
   const [barclaysFile, setBarclaysFile] = useState<File | null>(null);
   const [santanderFile, setSantanderFile] = useState<File | null>(null);
   const [hsbcFile, setHsbcFile] = useState<File | null>(null);
+  const [sofiFile, setSofiFile] = useState<File | null>(null);
   const [amexOwner, setAmexOwner] = useState("Alex");
   const [barclaysOwner, setBarclaysOwner] = useState("Alex");
   const [santanderOwner, setSantanderOwner] = useState("Alex");
   const [hsbcOwner, setHsbcOwner] = useState("Joint");
+  const [sofiOwner, setSofiOwner] = useState("Casey");
 
   const { data: staged, refetch: refetchStaged } = useQuery<StagedInfo>({
     queryKey: ["staged"],
@@ -223,6 +226,20 @@ export function ImportPage() {
     },
   });
 
+  const sofiMutation = useMutation<ImportResult, Error, { file: File; owner: string }>({
+    mutationFn: ({ file, owner }) => {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("owner", owner);
+      return api.post("/api/admin/import/sofi", form).then((r) => r.data);
+    },
+    onSuccess: () => {
+      refetchStaged();
+      setSofiFile(null);
+      if (sofiFileRef.current) sofiFileRef.current.value = "";
+    },
+  });
+
   const processMutation = useMutation<ProcessResult, Error>({
     mutationFn: () => api.post("/api/admin/process").then((r) => r.data),
     onSuccess: () => {
@@ -233,11 +250,11 @@ export function ImportPage() {
   });
 
   const sum = (key: keyof BankCounts) =>
-    (staged?.monzo[key] ?? 0) + (staged?.amex[key] ?? 0) + (staged?.barclays[key] ?? 0) + (staged?.santander[key] ?? 0) + (staged?.hsbc[key] ?? 0);
+    (staged?.monzo[key] ?? 0) + (staged?.amex[key] ?? 0) + (staged?.barclays[key] ?? 0) + (staged?.santander[key] ?? 0) + (staged?.hsbc[key] ?? 0) + (staged?.sofi[key] ?? 0);
   const totalPending   = sum("pending");
   const totalProcessed = sum("processed");
-  const totalSkipped   = sum("skipped");
-  const totalStaged    = totalPending + totalProcessed + totalSkipped;
+  const totalErrored   = sum("errored");
+  const totalStaged    = totalPending + totalProcessed + sum("skipped") + totalErrored;
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -262,7 +279,7 @@ export function ImportPage() {
             <div className="space-y-3">
               {/* Per-bank breakdown */}
               <div className="flex flex-wrap gap-6 text-sm">
-                {(["monzo", "amex", "barclays", "santander", "hsbc"] as const).map((bank) => {
+                {(["monzo", "amex", "barclays", "santander", "hsbc", "sofi"] as const).map((bank) => {
                   const counts = staged?.[bank];
                   if (!counts) return null;
                   const total = counts.pending + counts.processed + counts.skipped;
@@ -286,7 +303,9 @@ export function ImportPage() {
               <div className="flex items-center gap-4">
                 <span className="text-sm text-muted-foreground">
                   {totalProcessed.toLocaleString()} processed
-                  {totalSkipped > 0 && <> · {totalSkipped.toLocaleString()} skipped</>}
+                  {totalErrored > 0 && (
+                    <> · <span className="text-destructive">{totalErrored.toLocaleString()} errored</span></>
+                  )}
                   {" · "}
                   <span className={totalPending > 0 ? "text-foreground font-medium" : ""}>
                     {totalPending.toLocaleString()} pending
@@ -304,8 +323,8 @@ export function ImportPage() {
                 <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                   <CheckCircle className="h-4 w-4" />
                   {processMutation.data.processed.toLocaleString()} transactions added
-                  {processMutation.data.skipped > 0 && (
-                    <span className="text-muted-foreground">· {processMutation.data.skipped.toLocaleString()} skipped</span>
+                  {processMutation.data.errored > 0 && (
+                    <span className="text-destructive">· {processMutation.data.errored.toLocaleString()} errored</span>
                   )}
                 </div>
               )}
@@ -390,6 +409,22 @@ export function ImportPage() {
         error={hsbcMutation.error}
         owner={hsbcOwner}
         onOwnerChange={setHsbcOwner}
+      />
+
+      <BankUploadCard
+        title="SoFi"
+        description="Download from SoFi app → Account → Statements → Download PDF. Imports both Checking and Savings transactions."
+        accept=".pdf"
+        file={sofiFile}
+        fileRef={sofiFileRef}
+        onFileChange={(f) => { setSofiFile(f); sofiMutation.reset(); }}
+        onUpload={() => sofiFile && sofiMutation.mutate({ file: sofiFile, owner: sofiOwner })}
+        result={sofiMutation.data}
+        isPending={sofiMutation.isPending}
+        isError={sofiMutation.isError}
+        error={sofiMutation.error}
+        owner={sofiOwner}
+        onOwnerChange={setSofiOwner}
       />
     </div>
   );

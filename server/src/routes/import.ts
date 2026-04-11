@@ -854,21 +854,192 @@ importRouter.post("/import/hsbc", upload.single("file"), async (req, res) => {
   res.json({ imported: toInsert.length, duplicates });
 });
 
+// ─── SoFi PDF parser ─────────────────────────────────────────────────────────
+//
+// SoFi statements are standard text PDFs with a simple table:
+//   DATE  TYPE  DESCRIPTION  AMOUNT  BALANCE
+// Each row is followed by "Transaction ID: XXX" on the next line, then
+// the amount + balance on the line after (e.g. "-$823.93 $374.41").
+// A single PDF may contain both Checking and Savings accounts.
+// Internal SoFi transfers (Savings→Checking etc.) are skipped during processing.
+
+const SOFI_TX_ID_RE = /^Transaction ID:\s+(.+)$/;
+// pdf-parse fuses columns with no separator, so date+type+desc run together:
+// "Jan 31, 2026Interest EarnedInterest earned"
+// Amount+balance likewise: "$0.72$375.13" or "-$823.93$374.41"
+const SOFI_DATE_COMBINED_RE = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2}),\s+(\d{4})(Interest Earned|Direct Payment|Deposit|Withdrawal)(.*)/;
+const SOFI_DATE_ONLY_RE = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2}),\s+(\d{4})$/;
+const SOFI_TYPE_RE = /^(Interest Earned|Direct Payment|Deposit|Withdrawal)$/;
+const SOFI_AMOUNT_BALANCE_RE = /^(-?\$[\d,]+\.\d{2})\$([\d,]+\.\d{2})$/;
+const SOFI_PERIOD_RE = /(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d+,\s+\d{4}\s*[-–]\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d+,\s+(\d{4})/;
+
+interface SofiRow {
+  transactionId: string;
+  date:          string;
+  type:          string;
+  description:   string;
+  amount:        string;
+  isCredit:      boolean;
+  balance:       string | null;
+  accountType:   string;
+  statementDate: string;
+}
+
+function parseSofiPdf(text: string): SofiRow[] {
+  const lines = text.split("\n").map((l) => l.trim()).filter((l) => l.length > 0);
+
+  // Extract statement end date ("Jan 2026") from "Jan 1, 2026 - Jan 31, 2026"
+  let statementDate = "";
+  for (const line of lines) {
+    const m = line.match(SOFI_PERIOD_RE);
+    if (m) { statementDate = `${m[2]} ${m[3]}`; break; }
+  }
+
+  const rows: SofiRow[] = [];
+  let currentAccountType = "Checking";
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // Track which account section we're in
+    if (/^Checking Account\s*-\s*\d+$/.test(line)) { currentAccountType = "Checking"; continue; }
+    if (/^Savings Account\s*-\s*\d+$/.test(line))  { currentAccountType = "Savings";  continue; }
+
+    const txIdMatch = line.match(SOFI_TX_ID_RE);
+    if (!txIdMatch) continue;
+
+    const transactionId = txIdMatch[1].trim();
+    let date = "";
+    let type = "";
+    let description = "";
+
+    // Scan backward up to 5 lines to find the date line
+    for (let j = i - 1; j >= Math.max(0, i - 5); j--) {
+      const prev = lines[j];
+      if (SOFI_TX_ID_RE.test(prev)) break; // hit another transaction's ID
+
+      // Case A: "Jan 31, 2026 Interest Earned Interest earned" — all on one line
+      const combinedM = prev.match(SOFI_DATE_COMBINED_RE);
+      if (combinedM) {
+        const [, month, day, year, txType, desc] = combinedM;
+        date = `${year}-${String(MONTH_IDX[month] + 1).padStart(2, "0")}-${String(+day).padStart(2, "0")}`;
+        type = txType;
+        description = desc.trim() || lines.slice(j + 1, i).join(" ").trim();
+        break;
+      }
+
+      // Case B: date on its own line
+      const dateOnlyM = prev.match(SOFI_DATE_ONLY_RE);
+      if (dateOnlyM) {
+        const [, month, day, year] = dateOnlyM;
+        date = `${year}-${String(MONTH_IDX[month] + 1).padStart(2, "0")}-${String(+day).padStart(2, "0")}`;
+        // Lines between date and Transaction ID are type + description
+        const between = lines.slice(j + 1, i);
+        const typeCheck = between[0]?.match(SOFI_TYPE_RE);
+        if (typeCheck) {
+          type = typeCheck[1];
+          description = between.slice(1).join(" ").trim();
+        } else {
+          description = between.join(" ").trim();
+        }
+        break;
+      }
+    }
+
+    if (!date) continue;
+
+    // Find amount + balance on the line(s) following the Transaction ID
+    let amount = "";
+    let balance: string | null = null;
+    let isCredit = false;
+
+    for (let k = i + 1; k < Math.min(lines.length, i + 4); k++) {
+      const abM = lines[k].match(SOFI_AMOUNT_BALANCE_RE);
+      if (abM) {
+        const rawAmt = abM[1]; // e.g. "-$823.93" or "$0.72"
+        isCredit = !rawAmt.startsWith("-");
+        amount   = rawAmt.replace(/^-?\$/, "").replace(/,/g, "");
+        balance  = abM[2].replace(/,/g, "");
+        break;
+      }
+      if (SOFI_DATE_COMBINED_RE.test(lines[k]) || SOFI_DATE_ONLY_RE.test(lines[k]) || SOFI_TX_ID_RE.test(lines[k])) break;
+    }
+
+    if (!amount) continue;
+
+    rows.push({
+      transactionId,
+      date,
+      type:        type || "Unknown",
+      description: description || type || transactionId,
+      amount,
+      isCredit,
+      balance,
+      accountType: currentAccountType,
+      statementDate,
+    });
+  }
+
+  return rows;
+}
+
+// ─── POST /api/admin/import/sofi ─────────────────────────────────────────────
+
+importRouter.post("/import/sofi", upload.single("file"), async (req, res) => {
+  if (!req.file) { res.status(400).json({ error: "No file uploaded" }); return; }
+  const owner = VALID_OWNERS.has(req.body.owner) ? req.body.owner : "Casey";
+
+  let text: string;
+  try { text = (await pdfParse(req.file.buffer)).text; }
+  catch { res.status(400).json({ error: "Failed to extract text from PDF" }); return; }
+
+  let rows: SofiRow[];
+  try { rows = parseSofiPdf(text); }
+  catch (err) {
+    res.status(400).json({ error: err instanceof Error ? err.message : "Failed to parse SoFi statement" });
+    return;
+  }
+
+  const existing = await db.sofiTransaction.findMany({ select: { transactionId: true } });
+  const existingIds = new Set(existing.map((r) => r.transactionId));
+  const batchCounts = new Map<string, number>();
+  const toInsert: (SofiRow & { owner: string })[] = [];
+  const duplicates: string[] = [];
+
+  for (const row of rows) {
+    // Transaction IDs from the statement are already unique per SoFi, but dedupe within batch too
+    const baseId = row.transactionId;
+    const count = batchCounts.get(baseId) ?? 0;
+    batchCounts.set(baseId, count + 1);
+    const transactionId = count === 0 ? baseId : `${baseId}-${count}`;
+
+    if (existingIds.has(transactionId)) {
+      duplicates.push(transactionId);
+    } else {
+      toInsert.push({ ...row, transactionId, owner });
+    }
+  }
+
+  if (toInsert.length > 0) await db.sofiTransaction.createMany({ data: toInsert });
+  res.json({ imported: toInsert.length, duplicates });
+});
+
 // ─── GET /api/admin/staged ───────────────────────────────────────────────────
 
 importRouter.get("/staged", async (_req, res) => {
-  const [monzo, amex, barclays, santander, hsbc] = await Promise.all([
+  const [monzo, amex, barclays, santander, hsbc, sofi] = await Promise.all([
     db.monzoTransaction.groupBy({ by: ["status"], _count: true }),
     db.amexTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.barclaysTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.santanderTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.hsbcTransaction.groupBy({ by: ["status", "owner"], _count: true }),
+    db.sofiTransaction.groupBy({ by: ["status", "owner"], _count: true }),
   ]);
 
   function toCounts(rows: { status: string; _count: number }[]) {
     const m: Record<string, number> = {};
     for (const r of rows) m[r.status] = (m[r.status] ?? 0) + r._count;
-    return { pending: m.pending ?? 0, processed: m.processed ?? 0, skipped: m.skipped ?? 0 };
+    return { pending: m.pending ?? 0, processed: m.processed ?? 0, skipped: m.skipped ?? 0, errored: m.errored ?? 0 };
   }
 
   function toOwnerCounts(rows: { status: string; owner: string; _count: number }[]) {
@@ -886,16 +1057,18 @@ importRouter.get("/staged", async (_req, res) => {
     barclays:  { ...toCounts(barclays.map((r) => ({ status: r.status, _count: r._count }))),  byOwner: toOwnerCounts(barclays.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
     santander: { ...toCounts(santander.map((r) => ({ status: r.status, _count: r._count }))), byOwner: toOwnerCounts(santander.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
     hsbc:      { ...toCounts(hsbc.map((r) => ({ status: r.status, _count: r._count }))),      byOwner: toOwnerCounts(hsbc.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
+    sofi:      { ...toCounts(sofi.map((r) => ({ status: r.status, _count: r._count }))),      byOwner: toOwnerCounts(sofi.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
   });
 });
 
 // ─── POST /api/admin/process ─────────────────────────────────────────────────
 
-type StagedStatus = "pending" | "processed" | "skipped";
+type StagedStatus = "pending" | "processed" | "skipped" | "errored";
 
 importRouter.post("/process", async (_req, res) => {
   let processed = 0;
   let skipped = 0;
+  let errored = 0;
 
   // ── Monzo ──────────────────────────────────────────────────────────────────
   const pendingMonzo = await db.monzoTransaction.findMany({ where: { status: "pending" } });
@@ -904,8 +1077,8 @@ importRouter.post("/process", async (_req, res) => {
     const amountNum = parseFloat(row.amount);
     let next: StagedStatus;
     if (isNaN(amountNum)) {
-      next = "skipped";
-      skipped++;
+      next = "errored";
+      errored++;
     } else {
       const type = amountNum >= 0 ? "Income" : "Expense";
       const amount = Math.abs(amountNum);
@@ -933,8 +1106,8 @@ importRouter.post("/process", async (_req, res) => {
     const amountNum = parseFloat(row.amount.replace(/,/g, ""));
     let next: StagedStatus;
     if (isNaN(amountNum)) {
-      next = "skipped";
-      skipped++;
+      next = "errored";
+      errored++;
     } else {
       const categoryName = resolveCategoryByMerchant(row.description);
       const category = await findCategory(categoryName);
@@ -968,8 +1141,8 @@ importRouter.post("/process", async (_req, res) => {
     } else {
       const amountNum = parseFloat(row.amount.replace(/,/g, ""));
       if (isNaN(amountNum)) {
-        next = "skipped";
-        skipped++;
+        next = "errored";
+        errored++;
       } else {
         const categoryName = resolveCategoryByMerchant(row.description);
         const category = await findCategory(categoryName);
@@ -1001,7 +1174,10 @@ importRouter.post("/process", async (_req, res) => {
     const amountStr = row.moneyIn ?? row.moneyOut ?? "";
     const amountNum = parseFloat(amountStr.replace(/,/g, ""));
     let next: StagedStatus;
-    if (isNaN(amountNum) || amountNum === 0) {
+    if (isNaN(amountNum)) {
+      next = "errored";
+      errored++;
+    } else if (amountNum === 0) {
       next = "skipped";
       skipped++;
     } else {
@@ -1034,7 +1210,10 @@ importRouter.post("/process", async (_req, res) => {
     const amountStr = row.moneyIn ?? row.moneyOut ?? "";
     const amountNum = parseFloat(amountStr.replace(/,/g, ""));
     let next: StagedStatus;
-    if (isNaN(amountNum) || amountNum === 0) {
+    if (isNaN(amountNum)) {
+      next = "errored";
+      errored++;
+    } else if (amountNum === 0) {
       next = "skipped";
       skipped++;
     } else {
@@ -1059,5 +1238,43 @@ importRouter.post("/process", async (_req, res) => {
     await db.hsbcTransaction.update({ where: { id: row.id }, data: { status: next } });
   }
 
-  res.json({ processed, skipped });
+  // ── SoFi ───────────────────────────────────────────────────────────────────
+  const pendingSofi = await db.sofiTransaction.findMany({ where: { status: "pending" } });
+
+  for (const row of pendingSofi) {
+    const amountNum = parseFloat(row.amount.replace(/,/g, ""));
+    let next: StagedStatus;
+    // Skip internal SoFi transfers between Checking and Savings
+    if (/^(From|To)\s+(Savings|Checking)/i.test(row.description)) {
+      next = "skipped";
+      skipped++;
+    } else if (isNaN(amountNum)) {
+      next = "errored";
+      errored++;
+    } else if (amountNum === 0) {
+      next = "skipped";
+      skipped++;
+    } else {
+      const categoryName = resolveCategoryByMerchant(row.description);
+      const category = await findCategory(categoryName);
+      const sofiExtId = `sofi:${row.transactionId}`;
+      const sofiExists = await db.transaction.findUnique({ where: { externalId: sofiExtId }, select: { id: true } });
+      if (!sofiExists) await db.transaction.create({
+        data: {
+          description: row.description,
+          amount:      amountNum,
+          type:        row.isCredit ? "Income" : "Expense",
+          date:        new Date(row.date),
+          categoryId:  category.id,
+          externalId:  sofiExtId,
+          owner:       row.owner as "Alex" | "Casey" | "Joint",
+        },
+      });
+      next = "processed";
+      processed++;
+    }
+    await db.sofiTransaction.update({ where: { id: row.id }, data: { status: next } });
+  }
+
+  res.json({ processed, skipped, errored });
 });

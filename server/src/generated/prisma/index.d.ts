@@ -54,6 +54,11 @@ export type SantanderTransaction = $Result.DefaultSelection<Prisma.$SantanderTra
  */
 export type HsbcTransaction = $Result.DefaultSelection<Prisma.$HsbcTransactionPayload>
 /**
+ * Model SofiTransaction
+ * 
+ */
+export type SofiTransaction = $Result.DefaultSelection<Prisma.$SofiTransactionPayload>
+/**
  * Model Session
  * 
  */
@@ -355,6 +360,16 @@ export class PrismaClient<
     * ```
     */
   get hsbcTransaction(): Prisma.HsbcTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sofiTransaction`: Exposes CRUD operations for the **SofiTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SofiTransactions
+    * const sofiTransactions = await prisma.sofiTransaction.findMany()
+    * ```
+    */
+  get sofiTransaction(): Prisma.SofiTransactionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.session`: Exposes CRUD operations for the **Session** model.
@@ -867,6 +882,7 @@ export namespace Prisma {
     BarclaysTransaction: 'BarclaysTransaction',
     SantanderTransaction: 'SantanderTransaction',
     HsbcTransaction: 'HsbcTransaction',
+    SofiTransaction: 'SofiTransaction',
     Session: 'Session',
     Account: 'Account',
     Note: 'Note',
@@ -889,7 +905,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "hsbcTransaction" | "session" | "account" | "note" | "tab" | "investmentAccount" | "investmentSnapshot" | "verification"
+      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "hsbcTransaction" | "sofiTransaction" | "session" | "account" | "note" | "tab" | "investmentAccount" | "investmentSnapshot" | "verification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1482,6 +1498,80 @@ export namespace Prisma {
           count: {
             args: Prisma.HsbcTransactionCountArgs<ExtArgs>
             result: $Utils.Optional<HsbcTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
+      SofiTransaction: {
+        payload: Prisma.$SofiTransactionPayload<ExtArgs>
+        fields: Prisma.SofiTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SofiTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SofiTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.SofiTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SofiTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.SofiTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.SofiTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.SofiTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SofiTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.SofiTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload>
+          }
+          update: {
+            args: Prisma.SofiTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SofiTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SofiTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SofiTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.SofiTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SofiTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.SofiTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSofiTransaction>
+          }
+          groupBy: {
+            args: Prisma.SofiTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SofiTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SofiTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<SofiTransactionCountAggregateOutputType> | number
           }
         }
       }
@@ -2119,6 +2209,7 @@ export namespace Prisma {
     barclaysTransaction?: BarclaysTransactionOmit
     santanderTransaction?: SantanderTransactionOmit
     hsbcTransaction?: HsbcTransactionOmit
+    sofiTransaction?: SofiTransactionOmit
     session?: SessionOmit
     account?: AccountOmit
     note?: NoteOmit
@@ -11254,6 +11345,1142 @@ export namespace Prisma {
 
 
   /**
+   * Model SofiTransaction
+   */
+
+  export type AggregateSofiTransaction = {
+    _count: SofiTransactionCountAggregateOutputType | null
+    _avg: SofiTransactionAvgAggregateOutputType | null
+    _sum: SofiTransactionSumAggregateOutputType | null
+    _min: SofiTransactionMinAggregateOutputType | null
+    _max: SofiTransactionMaxAggregateOutputType | null
+  }
+
+  export type SofiTransactionAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SofiTransactionSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SofiTransactionMinAggregateOutputType = {
+    id: number | null
+    transactionId: string | null
+    date: string | null
+    type: string | null
+    description: string | null
+    amount: string | null
+    isCredit: boolean | null
+    balance: string | null
+    accountType: string | null
+    statementDate: string | null
+    owner: string | null
+    importedAt: Date | null
+    status: string | null
+  }
+
+  export type SofiTransactionMaxAggregateOutputType = {
+    id: number | null
+    transactionId: string | null
+    date: string | null
+    type: string | null
+    description: string | null
+    amount: string | null
+    isCredit: boolean | null
+    balance: string | null
+    accountType: string | null
+    statementDate: string | null
+    owner: string | null
+    importedAt: Date | null
+    status: string | null
+  }
+
+  export type SofiTransactionCountAggregateOutputType = {
+    id: number
+    transactionId: number
+    date: number
+    type: number
+    description: number
+    amount: number
+    isCredit: number
+    balance: number
+    accountType: number
+    statementDate: number
+    owner: number
+    importedAt: number
+    status: number
+    _all: number
+  }
+
+
+  export type SofiTransactionAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SofiTransactionSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SofiTransactionMinAggregateInputType = {
+    id?: true
+    transactionId?: true
+    date?: true
+    type?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    balance?: true
+    accountType?: true
+    statementDate?: true
+    owner?: true
+    importedAt?: true
+    status?: true
+  }
+
+  export type SofiTransactionMaxAggregateInputType = {
+    id?: true
+    transactionId?: true
+    date?: true
+    type?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    balance?: true
+    accountType?: true
+    statementDate?: true
+    owner?: true
+    importedAt?: true
+    status?: true
+  }
+
+  export type SofiTransactionCountAggregateInputType = {
+    id?: true
+    transactionId?: true
+    date?: true
+    type?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    balance?: true
+    accountType?: true
+    statementDate?: true
+    owner?: true
+    importedAt?: true
+    status?: true
+    _all?: true
+  }
+
+  export type SofiTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SofiTransaction to aggregate.
+     */
+    where?: SofiTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SofiTransactions to fetch.
+     */
+    orderBy?: SofiTransactionOrderByWithRelationInput | SofiTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SofiTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SofiTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SofiTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SofiTransactions
+    **/
+    _count?: true | SofiTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SofiTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SofiTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SofiTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SofiTransactionMaxAggregateInputType
+  }
+
+  export type GetSofiTransactionAggregateType<T extends SofiTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSofiTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSofiTransaction[P]>
+      : GetScalarType<T[P], AggregateSofiTransaction[P]>
+  }
+
+
+
+
+  export type SofiTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SofiTransactionWhereInput
+    orderBy?: SofiTransactionOrderByWithAggregationInput | SofiTransactionOrderByWithAggregationInput[]
+    by: SofiTransactionScalarFieldEnum[] | SofiTransactionScalarFieldEnum
+    having?: SofiTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SofiTransactionCountAggregateInputType | true
+    _avg?: SofiTransactionAvgAggregateInputType
+    _sum?: SofiTransactionSumAggregateInputType
+    _min?: SofiTransactionMinAggregateInputType
+    _max?: SofiTransactionMaxAggregateInputType
+  }
+
+  export type SofiTransactionGroupByOutputType = {
+    id: number
+    transactionId: string
+    date: string
+    type: string
+    description: string
+    amount: string
+    isCredit: boolean
+    balance: string | null
+    accountType: string
+    statementDate: string
+    owner: string
+    importedAt: Date
+    status: string
+    _count: SofiTransactionCountAggregateOutputType | null
+    _avg: SofiTransactionAvgAggregateOutputType | null
+    _sum: SofiTransactionSumAggregateOutputType | null
+    _min: SofiTransactionMinAggregateOutputType | null
+    _max: SofiTransactionMaxAggregateOutputType | null
+  }
+
+  type GetSofiTransactionGroupByPayload<T extends SofiTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SofiTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SofiTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SofiTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], SofiTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SofiTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    type?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    balance?: boolean
+    accountType?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["sofiTransaction"]>
+
+  export type SofiTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    type?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    balance?: boolean
+    accountType?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["sofiTransaction"]>
+
+  export type SofiTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    type?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    balance?: boolean
+    accountType?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["sofiTransaction"]>
+
+  export type SofiTransactionSelectScalar = {
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    type?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    balance?: boolean
+    accountType?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }
+
+  export type SofiTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "transactionId" | "date" | "type" | "description" | "amount" | "isCredit" | "balance" | "accountType" | "statementDate" | "owner" | "importedAt" | "status", ExtArgs["result"]["sofiTransaction"]>
+
+  export type $SofiTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SofiTransaction"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      transactionId: string
+      date: string
+      type: string
+      description: string
+      amount: string
+      isCredit: boolean
+      balance: string | null
+      accountType: string
+      statementDate: string
+      owner: string
+      importedAt: Date
+      status: string
+    }, ExtArgs["result"]["sofiTransaction"]>
+    composites: {}
+  }
+
+  type SofiTransactionGetPayload<S extends boolean | null | undefined | SofiTransactionDefaultArgs> = $Result.GetResult<Prisma.$SofiTransactionPayload, S>
+
+  type SofiTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SofiTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SofiTransactionCountAggregateInputType | true
+    }
+
+  export interface SofiTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SofiTransaction'], meta: { name: 'SofiTransaction' } }
+    /**
+     * Find zero or one SofiTransaction that matches the filter.
+     * @param {SofiTransactionFindUniqueArgs} args - Arguments to find a SofiTransaction
+     * @example
+     * // Get one SofiTransaction
+     * const sofiTransaction = await prisma.sofiTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SofiTransactionFindUniqueArgs>(args: SelectSubset<T, SofiTransactionFindUniqueArgs<ExtArgs>>): Prisma__SofiTransactionClient<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SofiTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SofiTransactionFindUniqueOrThrowArgs} args - Arguments to find a SofiTransaction
+     * @example
+     * // Get one SofiTransaction
+     * const sofiTransaction = await prisma.sofiTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SofiTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, SofiTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SofiTransactionClient<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SofiTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SofiTransactionFindFirstArgs} args - Arguments to find a SofiTransaction
+     * @example
+     * // Get one SofiTransaction
+     * const sofiTransaction = await prisma.sofiTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SofiTransactionFindFirstArgs>(args?: SelectSubset<T, SofiTransactionFindFirstArgs<ExtArgs>>): Prisma__SofiTransactionClient<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SofiTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SofiTransactionFindFirstOrThrowArgs} args - Arguments to find a SofiTransaction
+     * @example
+     * // Get one SofiTransaction
+     * const sofiTransaction = await prisma.sofiTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SofiTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, SofiTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SofiTransactionClient<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SofiTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SofiTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SofiTransactions
+     * const sofiTransactions = await prisma.sofiTransaction.findMany()
+     * 
+     * // Get first 10 SofiTransactions
+     * const sofiTransactions = await prisma.sofiTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sofiTransactionWithIdOnly = await prisma.sofiTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SofiTransactionFindManyArgs>(args?: SelectSubset<T, SofiTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SofiTransaction.
+     * @param {SofiTransactionCreateArgs} args - Arguments to create a SofiTransaction.
+     * @example
+     * // Create one SofiTransaction
+     * const SofiTransaction = await prisma.sofiTransaction.create({
+     *   data: {
+     *     // ... data to create a SofiTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends SofiTransactionCreateArgs>(args: SelectSubset<T, SofiTransactionCreateArgs<ExtArgs>>): Prisma__SofiTransactionClient<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SofiTransactions.
+     * @param {SofiTransactionCreateManyArgs} args - Arguments to create many SofiTransactions.
+     * @example
+     * // Create many SofiTransactions
+     * const sofiTransaction = await prisma.sofiTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SofiTransactionCreateManyArgs>(args?: SelectSubset<T, SofiTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SofiTransactions and returns the data saved in the database.
+     * @param {SofiTransactionCreateManyAndReturnArgs} args - Arguments to create many SofiTransactions.
+     * @example
+     * // Create many SofiTransactions
+     * const sofiTransaction = await prisma.sofiTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SofiTransactions and only return the `id`
+     * const sofiTransactionWithIdOnly = await prisma.sofiTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SofiTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, SofiTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SofiTransaction.
+     * @param {SofiTransactionDeleteArgs} args - Arguments to delete one SofiTransaction.
+     * @example
+     * // Delete one SofiTransaction
+     * const SofiTransaction = await prisma.sofiTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one SofiTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SofiTransactionDeleteArgs>(args: SelectSubset<T, SofiTransactionDeleteArgs<ExtArgs>>): Prisma__SofiTransactionClient<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SofiTransaction.
+     * @param {SofiTransactionUpdateArgs} args - Arguments to update one SofiTransaction.
+     * @example
+     * // Update one SofiTransaction
+     * const sofiTransaction = await prisma.sofiTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SofiTransactionUpdateArgs>(args: SelectSubset<T, SofiTransactionUpdateArgs<ExtArgs>>): Prisma__SofiTransactionClient<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SofiTransactions.
+     * @param {SofiTransactionDeleteManyArgs} args - Arguments to filter SofiTransactions to delete.
+     * @example
+     * // Delete a few SofiTransactions
+     * const { count } = await prisma.sofiTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SofiTransactionDeleteManyArgs>(args?: SelectSubset<T, SofiTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SofiTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SofiTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SofiTransactions
+     * const sofiTransaction = await prisma.sofiTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SofiTransactionUpdateManyArgs>(args: SelectSubset<T, SofiTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SofiTransactions and returns the data updated in the database.
+     * @param {SofiTransactionUpdateManyAndReturnArgs} args - Arguments to update many SofiTransactions.
+     * @example
+     * // Update many SofiTransactions
+     * const sofiTransaction = await prisma.sofiTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SofiTransactions and only return the `id`
+     * const sofiTransactionWithIdOnly = await prisma.sofiTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SofiTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, SofiTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SofiTransaction.
+     * @param {SofiTransactionUpsertArgs} args - Arguments to update or create a SofiTransaction.
+     * @example
+     * // Update or create a SofiTransaction
+     * const sofiTransaction = await prisma.sofiTransaction.upsert({
+     *   create: {
+     *     // ... data to create a SofiTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SofiTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SofiTransactionUpsertArgs>(args: SelectSubset<T, SofiTransactionUpsertArgs<ExtArgs>>): Prisma__SofiTransactionClient<$Result.GetResult<Prisma.$SofiTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SofiTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SofiTransactionCountArgs} args - Arguments to filter SofiTransactions to count.
+     * @example
+     * // Count the number of SofiTransactions
+     * const count = await prisma.sofiTransaction.count({
+     *   where: {
+     *     // ... the filter for the SofiTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends SofiTransactionCountArgs>(
+      args?: Subset<T, SofiTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SofiTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SofiTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SofiTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SofiTransactionAggregateArgs>(args: Subset<T, SofiTransactionAggregateArgs>): Prisma.PrismaPromise<GetSofiTransactionAggregateType<T>>
+
+    /**
+     * Group by SofiTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SofiTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SofiTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SofiTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: SofiTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SofiTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSofiTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SofiTransaction model
+   */
+  readonly fields: SofiTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SofiTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SofiTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SofiTransaction model
+   */
+  interface SofiTransactionFieldRefs {
+    readonly id: FieldRef<"SofiTransaction", 'Int'>
+    readonly transactionId: FieldRef<"SofiTransaction", 'String'>
+    readonly date: FieldRef<"SofiTransaction", 'String'>
+    readonly type: FieldRef<"SofiTransaction", 'String'>
+    readonly description: FieldRef<"SofiTransaction", 'String'>
+    readonly amount: FieldRef<"SofiTransaction", 'String'>
+    readonly isCredit: FieldRef<"SofiTransaction", 'Boolean'>
+    readonly balance: FieldRef<"SofiTransaction", 'String'>
+    readonly accountType: FieldRef<"SofiTransaction", 'String'>
+    readonly statementDate: FieldRef<"SofiTransaction", 'String'>
+    readonly owner: FieldRef<"SofiTransaction", 'String'>
+    readonly importedAt: FieldRef<"SofiTransaction", 'DateTime'>
+    readonly status: FieldRef<"SofiTransaction", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SofiTransaction findUnique
+   */
+  export type SofiTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SofiTransaction to fetch.
+     */
+    where: SofiTransactionWhereUniqueInput
+  }
+
+  /**
+   * SofiTransaction findUniqueOrThrow
+   */
+  export type SofiTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SofiTransaction to fetch.
+     */
+    where: SofiTransactionWhereUniqueInput
+  }
+
+  /**
+   * SofiTransaction findFirst
+   */
+  export type SofiTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SofiTransaction to fetch.
+     */
+    where?: SofiTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SofiTransactions to fetch.
+     */
+    orderBy?: SofiTransactionOrderByWithRelationInput | SofiTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SofiTransactions.
+     */
+    cursor?: SofiTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SofiTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SofiTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SofiTransactions.
+     */
+    distinct?: SofiTransactionScalarFieldEnum | SofiTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * SofiTransaction findFirstOrThrow
+   */
+  export type SofiTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SofiTransaction to fetch.
+     */
+    where?: SofiTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SofiTransactions to fetch.
+     */
+    orderBy?: SofiTransactionOrderByWithRelationInput | SofiTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SofiTransactions.
+     */
+    cursor?: SofiTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SofiTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SofiTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SofiTransactions.
+     */
+    distinct?: SofiTransactionScalarFieldEnum | SofiTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * SofiTransaction findMany
+   */
+  export type SofiTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which SofiTransactions to fetch.
+     */
+    where?: SofiTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SofiTransactions to fetch.
+     */
+    orderBy?: SofiTransactionOrderByWithRelationInput | SofiTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SofiTransactions.
+     */
+    cursor?: SofiTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SofiTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SofiTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SofiTransactions.
+     */
+    distinct?: SofiTransactionScalarFieldEnum | SofiTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * SofiTransaction create
+   */
+  export type SofiTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SofiTransaction.
+     */
+    data: XOR<SofiTransactionCreateInput, SofiTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * SofiTransaction createMany
+   */
+  export type SofiTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SofiTransactions.
+     */
+    data: SofiTransactionCreateManyInput | SofiTransactionCreateManyInput[]
+  }
+
+  /**
+   * SofiTransaction createManyAndReturn
+   */
+  export type SofiTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many SofiTransactions.
+     */
+    data: SofiTransactionCreateManyInput | SofiTransactionCreateManyInput[]
+  }
+
+  /**
+   * SofiTransaction update
+   */
+  export type SofiTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SofiTransaction.
+     */
+    data: XOR<SofiTransactionUpdateInput, SofiTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which SofiTransaction to update.
+     */
+    where: SofiTransactionWhereUniqueInput
+  }
+
+  /**
+   * SofiTransaction updateMany
+   */
+  export type SofiTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SofiTransactions.
+     */
+    data: XOR<SofiTransactionUpdateManyMutationInput, SofiTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which SofiTransactions to update
+     */
+    where?: SofiTransactionWhereInput
+    /**
+     * Limit how many SofiTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SofiTransaction updateManyAndReturn
+   */
+  export type SofiTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update SofiTransactions.
+     */
+    data: XOR<SofiTransactionUpdateManyMutationInput, SofiTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which SofiTransactions to update
+     */
+    where?: SofiTransactionWhereInput
+    /**
+     * Limit how many SofiTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SofiTransaction upsert
+   */
+  export type SofiTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SofiTransaction to update in case it exists.
+     */
+    where: SofiTransactionWhereUniqueInput
+    /**
+     * In case the SofiTransaction found by the `where` argument doesn't exist, create a new SofiTransaction with this data.
+     */
+    create: XOR<SofiTransactionCreateInput, SofiTransactionUncheckedCreateInput>
+    /**
+     * In case the SofiTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SofiTransactionUpdateInput, SofiTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * SofiTransaction delete
+   */
+  export type SofiTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+    /**
+     * Filter which SofiTransaction to delete.
+     */
+    where: SofiTransactionWhereUniqueInput
+  }
+
+  /**
+   * SofiTransaction deleteMany
+   */
+  export type SofiTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SofiTransactions to delete
+     */
+    where?: SofiTransactionWhereInput
+    /**
+     * Limit how many SofiTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SofiTransaction without action
+   */
+  export type SofiTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SofiTransaction
+     */
+    select?: SofiTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SofiTransaction
+     */
+    omit?: SofiTransactionOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model Session
    */
 
@@ -19039,6 +20266,25 @@ export namespace Prisma {
   export type HsbcTransactionScalarFieldEnum = (typeof HsbcTransactionScalarFieldEnum)[keyof typeof HsbcTransactionScalarFieldEnum]
 
 
+  export const SofiTransactionScalarFieldEnum: {
+    id: 'id',
+    transactionId: 'transactionId',
+    date: 'date',
+    type: 'type',
+    description: 'description',
+    amount: 'amount',
+    isCredit: 'isCredit',
+    balance: 'balance',
+    accountType: 'accountType',
+    statementDate: 'statementDate',
+    owner: 'owner',
+    importedAt: 'importedAt',
+    status: 'status'
+  };
+
+  export type SofiTransactionScalarFieldEnum = (typeof SofiTransactionScalarFieldEnum)[keyof typeof SofiTransactionScalarFieldEnum]
+
+
   export const SessionScalarFieldEnum: {
     id: 'id',
     expiresAt: 'expiresAt',
@@ -19898,6 +21144,100 @@ export namespace Prisma {
     owner?: StringWithAggregatesFilter<"HsbcTransaction"> | string
     importedAt?: DateTimeWithAggregatesFilter<"HsbcTransaction"> | Date | string
     status?: StringWithAggregatesFilter<"HsbcTransaction"> | string
+  }
+
+  export type SofiTransactionWhereInput = {
+    AND?: SofiTransactionWhereInput | SofiTransactionWhereInput[]
+    OR?: SofiTransactionWhereInput[]
+    NOT?: SofiTransactionWhereInput | SofiTransactionWhereInput[]
+    id?: IntFilter<"SofiTransaction"> | number
+    transactionId?: StringFilter<"SofiTransaction"> | string
+    date?: StringFilter<"SofiTransaction"> | string
+    type?: StringFilter<"SofiTransaction"> | string
+    description?: StringFilter<"SofiTransaction"> | string
+    amount?: StringFilter<"SofiTransaction"> | string
+    isCredit?: BoolFilter<"SofiTransaction"> | boolean
+    balance?: StringNullableFilter<"SofiTransaction"> | string | null
+    accountType?: StringFilter<"SofiTransaction"> | string
+    statementDate?: StringFilter<"SofiTransaction"> | string
+    owner?: StringFilter<"SofiTransaction"> | string
+    importedAt?: DateTimeFilter<"SofiTransaction"> | Date | string
+    status?: StringFilter<"SofiTransaction"> | string
+  }
+
+  export type SofiTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    balance?: SortOrderInput | SortOrder
+    accountType?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type SofiTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    transactionId?: string
+    AND?: SofiTransactionWhereInput | SofiTransactionWhereInput[]
+    OR?: SofiTransactionWhereInput[]
+    NOT?: SofiTransactionWhereInput | SofiTransactionWhereInput[]
+    date?: StringFilter<"SofiTransaction"> | string
+    type?: StringFilter<"SofiTransaction"> | string
+    description?: StringFilter<"SofiTransaction"> | string
+    amount?: StringFilter<"SofiTransaction"> | string
+    isCredit?: BoolFilter<"SofiTransaction"> | boolean
+    balance?: StringNullableFilter<"SofiTransaction"> | string | null
+    accountType?: StringFilter<"SofiTransaction"> | string
+    statementDate?: StringFilter<"SofiTransaction"> | string
+    owner?: StringFilter<"SofiTransaction"> | string
+    importedAt?: DateTimeFilter<"SofiTransaction"> | Date | string
+    status?: StringFilter<"SofiTransaction"> | string
+  }, "id" | "transactionId">
+
+  export type SofiTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    balance?: SortOrderInput | SortOrder
+    accountType?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+    _count?: SofiTransactionCountOrderByAggregateInput
+    _avg?: SofiTransactionAvgOrderByAggregateInput
+    _max?: SofiTransactionMaxOrderByAggregateInput
+    _min?: SofiTransactionMinOrderByAggregateInput
+    _sum?: SofiTransactionSumOrderByAggregateInput
+  }
+
+  export type SofiTransactionScalarWhereWithAggregatesInput = {
+    AND?: SofiTransactionScalarWhereWithAggregatesInput | SofiTransactionScalarWhereWithAggregatesInput[]
+    OR?: SofiTransactionScalarWhereWithAggregatesInput[]
+    NOT?: SofiTransactionScalarWhereWithAggregatesInput | SofiTransactionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SofiTransaction"> | number
+    transactionId?: StringWithAggregatesFilter<"SofiTransaction"> | string
+    date?: StringWithAggregatesFilter<"SofiTransaction"> | string
+    type?: StringWithAggregatesFilter<"SofiTransaction"> | string
+    description?: StringWithAggregatesFilter<"SofiTransaction"> | string
+    amount?: StringWithAggregatesFilter<"SofiTransaction"> | string
+    isCredit?: BoolWithAggregatesFilter<"SofiTransaction"> | boolean
+    balance?: StringNullableWithAggregatesFilter<"SofiTransaction"> | string | null
+    accountType?: StringWithAggregatesFilter<"SofiTransaction"> | string
+    statementDate?: StringWithAggregatesFilter<"SofiTransaction"> | string
+    owner?: StringWithAggregatesFilter<"SofiTransaction"> | string
+    importedAt?: DateTimeWithAggregatesFilter<"SofiTransaction"> | Date | string
+    status?: StringWithAggregatesFilter<"SofiTransaction"> | string
   }
 
   export type SessionWhereInput = {
@@ -21158,6 +22498,115 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
   }
 
+  export type SofiTransactionCreateInput = {
+    transactionId: string
+    date: string
+    type: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    balance?: string | null
+    accountType?: string
+    statementDate: string
+    owner?: string
+    importedAt?: Date | string
+    status?: string
+  }
+
+  export type SofiTransactionUncheckedCreateInput = {
+    id?: number
+    transactionId: string
+    date: string
+    type: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    balance?: string | null
+    accountType?: string
+    statementDate: string
+    owner?: string
+    importedAt?: Date | string
+    status?: string
+  }
+
+  export type SofiTransactionUpdateInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    balance?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SofiTransactionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    balance?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SofiTransactionCreateManyInput = {
+    id?: number
+    transactionId: string
+    date: string
+    type: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    balance?: string | null
+    accountType?: string
+    statementDate: string
+    owner?: string
+    importedAt?: Date | string
+    status?: string
+  }
+
+  export type SofiTransactionUpdateManyMutationInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    balance?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SofiTransactionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    balance?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
   export type SessionCreateInput = {
     id: string
     expiresAt: Date | string
@@ -22306,6 +23755,62 @@ export namespace Prisma {
   }
 
   export type HsbcTransactionSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SofiTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    balance?: SortOrder
+    accountType?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type SofiTransactionAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SofiTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    balance?: SortOrder
+    accountType?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type SofiTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    balance?: SortOrder
+    accountType?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type SofiTransactionSumOrderByAggregateInput = {
     id?: SortOrder
   }
 

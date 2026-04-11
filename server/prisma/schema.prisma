@@ -163,6 +163,24 @@ model HsbcTransaction {
   @@map("hsbc_transaction")
 }
 
+model SofiTransaction {
+  id            Int      @id @default(autoincrement())
+  transactionId String   @unique
+  date          String
+  type          String
+  description   String
+  amount        String
+  isCredit      Boolean  @default(false)
+  balance       String?
+  accountType   String   @default("Checking")
+  statementDate String
+  owner         String   @default("Casey")
+  importedAt    DateTime @default(now())
+  status        String   @default("pending")
+
+  @@map("sofi_transaction")
+}
+
 model Session {
   id        String   @id
   expiresAt DateTime
