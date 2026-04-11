@@ -854,6 +854,125 @@ importRouter.post("/import/hsbc", upload.single("file"), async (req, res) => {
   res.json({ imported: toInsert.length, duplicates });
 });
 
+// ─── Chase PDF parser ────────────────────────────────────────────────────────
+//
+// Chase statements have clear column spacing in the raw pdf-parse output:
+//   "MM/DD  Merchant Name or Description  123.45"
+// We preserve whitespace (no trim) and use \s{2,} as the column delimiter.
+// Payments/credits appear as negative amounts (-3,021.55); purchases are positive.
+// Exchange-rate continuation lines (POUND STERLING / EXCHG RATE) don't match the
+// transaction regex and are ignored automatically.
+
+// MM/DD  <description>  <amount> — date on left, amount anchored at right.
+// Primary: requires whitespace before amount (normal purchases).
+// Fallback: payment rows fuse description directly into a negative amount with no space,
+//   e.g. "01/12  Payment Thank You-Mobile-973.68" — description must end with a letter.
+const CHASE_TX_RE          = /^\s*(\d{2}\/\d{2})\s+(.*\S)\s+(-?[\d,]+\.\d{2})\s*$/;
+const CHASE_PAYMENT_RE     = /^\s*(\d{2}\/\d{2})\s+(.*[A-Za-z])(-[\d,]+\.\d{2})\s*$/;
+// Closing date: "Opening/Closing Date 12/23/25 - 01/22/26"  or  "Statement Date: 01/22/26"
+const CHASE_CLOSING_RE = /(?:Opening\/Closing Date.*?|Statement Date:\s*)(\d{2})\/(\d{2})\/(\d{2})\s*$/;
+
+interface ChaseRow {
+  date:          string;
+  description:   string;
+  amount:        string;
+  isCredit:      boolean;
+  statementDate: string;
+}
+
+function parseChasePdf(text: string): ChaseRow[] {
+  // Deliberately NOT trimming lines — whitespace is the column separator
+  const lines = text.split("\n");
+
+  // Extract closing date for year inference and statement label
+  let stmtMonth = 0;
+  let stmtYear  = 0;
+  let statementDate = "";
+  for (const line of lines) {
+    const m = line.match(CHASE_CLOSING_RE);
+    if (m) {
+      stmtMonth = parseInt(m[1], 10);
+      stmtYear  = 2000 + parseInt(m[3], 10);
+      statementDate = `${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][stmtMonth - 1]} ${stmtYear}`;
+      break;
+    }
+  }
+  if (!stmtMonth) throw new Error("Could not find closing date in Chase PDF");
+
+  const rows: ChaseRow[] = [];
+
+  for (const line of lines) {
+    const m = line.match(CHASE_TX_RE) ?? line.match(CHASE_PAYMENT_RE);
+    if (!m) continue;
+
+    const [, mmdd, desc, rawAmount] = m;
+    const description = desc.trim();
+
+    // Skip exchange rate / currency continuation lines that slipped through
+    if (/EXCHG RATE|POUND STERLING|ZLOTY|RINGGIT|EURO/i.test(description)) continue;
+    // Skip interest charges section rows (no merchant, just APR info)
+    if (/^\d+\.\d{2}%/.test(description)) continue;
+
+    const [mm, dd] = mmdd.split("/").map(Number);
+    const txMonthIdx = mm - 1;
+    const year = inferYear(txMonthIdx, stmtMonth, stmtYear);
+    const date = `${year}-${String(mm).padStart(2, "0")}-${String(dd).padStart(2, "0")}`;
+
+    const isCredit = rawAmount.startsWith("-");
+    const amount   = rawAmount.replace(/^-/, "").replace(/,/g, "");
+
+    rows.push({ date, description, amount, isCredit, statementDate });
+  }
+
+  return rows;
+}
+
+// ─── POST /api/admin/import/chase ────────────────────────────────────────────
+
+importRouter.post("/import/chase", upload.single("file"), async (req, res) => {
+  if (!req.file) { res.status(400).json({ error: "No file uploaded" }); return; }
+  const owner = VALID_OWNERS.has(req.body.owner) ? req.body.owner : "Casey";
+
+  let text: string;
+  try { text = (await pdfParse(req.file.buffer)).text; }
+  catch { res.status(400).json({ error: "Failed to extract text from PDF" }); return; }
+
+  let rows: ChaseRow[];
+  try { rows = parseChasePdf(text); }
+  catch (err) {
+    res.status(400).json({ error: err instanceof Error ? err.message : "Failed to parse Chase statement", raw: text.split("\n").slice(0, 80) });
+    return;
+  }
+
+  if (rows.length === 0) {
+    res.status(422).json({ error: "0 rows parsed from Chase PDF", raw: text.split("\n") });
+    return;
+  }
+
+
+  const existing = await db.chaseTransaction.findMany({ select: { transactionId: true } });
+  const existingIds = new Set(existing.map((r) => r.transactionId));
+  const batchCounts = new Map<string, number>();
+  const toInsert: (ChaseRow & { transactionId: string; owner: string })[] = [];
+  const duplicates: string[] = [];
+
+  for (const row of rows) {
+    const baseId = createHash("sha256")
+      .update(`${row.date}|${row.description}|${row.amount}|${row.isCredit}`)
+      .digest("hex")
+      .slice(0, 16);
+    const count = batchCounts.get(baseId) ?? 0;
+    batchCounts.set(baseId, count + 1);
+    const transactionId = count === 0 ? baseId : `${baseId}-${count}`;
+
+    if (existingIds.has(transactionId)) duplicates.push(transactionId);
+    else toInsert.push({ ...row, transactionId, owner });
+  }
+
+  if (toInsert.length > 0) await db.chaseTransaction.createMany({ data: toInsert });
+  res.json({ imported: toInsert.length, duplicates });
+});
+
 // ─── SoFi PDF parser ─────────────────────────────────────────────────────────
 //
 // SoFi statements are standard text PDFs with a simple table:
@@ -1027,13 +1146,14 @@ importRouter.post("/import/sofi", upload.single("file"), async (req, res) => {
 // ─── GET /api/admin/staged ───────────────────────────────────────────────────
 
 importRouter.get("/staged", async (_req, res) => {
-  const [monzo, amex, barclays, santander, hsbc, sofi] = await Promise.all([
+  const [monzo, amex, barclays, santander, hsbc, sofi, chase] = await Promise.all([
     db.monzoTransaction.groupBy({ by: ["status"], _count: true }),
     db.amexTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.barclaysTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.santanderTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.hsbcTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.sofiTransaction.groupBy({ by: ["status", "owner"], _count: true }),
+    db.chaseTransaction.groupBy({ by: ["status", "owner"], _count: true }),
   ]);
 
   function toCounts(rows: { status: string; _count: number }[]) {
@@ -1058,6 +1178,7 @@ importRouter.get("/staged", async (_req, res) => {
     santander: { ...toCounts(santander.map((r) => ({ status: r.status, _count: r._count }))), byOwner: toOwnerCounts(santander.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
     hsbc:      { ...toCounts(hsbc.map((r) => ({ status: r.status, _count: r._count }))),      byOwner: toOwnerCounts(hsbc.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
     sofi:      { ...toCounts(sofi.map((r) => ({ status: r.status, _count: r._count }))),      byOwner: toOwnerCounts(sofi.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
+    chase:     { ...toCounts(chase.map((r) => ({ status: r.status, _count: r._count }))),     byOwner: toOwnerCounts(chase.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
   });
 });
 
@@ -1274,6 +1395,40 @@ importRouter.post("/process", async (_req, res) => {
       processed++;
     }
     await db.sofiTransaction.update({ where: { id: row.id }, data: { status: next } });
+  }
+
+  // ── Chase ──────────────────────────────────────────────────────────────────
+  const pendingChase = await db.chaseTransaction.findMany({ where: { status: "pending" } });
+
+  for (const row of pendingChase) {
+    const amountNum = parseFloat(row.amount.replace(/,/g, ""));
+    let next: StagedStatus;
+    if (isNaN(amountNum)) {
+      next = "errored";
+      errored++;
+    } else if (amountNum === 0) {
+      next = "skipped";
+      skipped++;
+    } else {
+      const categoryName = resolveCategoryByMerchant(row.description);
+      const category = await findCategory(categoryName);
+      const chaseExtId = `chase:${row.transactionId}`;
+      const chaseExists = await db.transaction.findUnique({ where: { externalId: chaseExtId }, select: { id: true } });
+      if (!chaseExists) await db.transaction.create({
+        data: {
+          description: row.description,
+          amount:      amountNum,
+          type:        row.isCredit ? "Income" : "Expense",
+          date:        new Date(row.date),
+          categoryId:  category.id,
+          externalId:  chaseExtId,
+          owner:       row.owner as "Alex" | "Casey" | "Joint",
+        },
+      });
+      next = "processed";
+      processed++;
+    }
+    await db.chaseTransaction.update({ where: { id: row.id }, data: { status: next } });
   }
 
   res.json({ processed, skipped, errored });

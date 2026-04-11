@@ -51,7 +51,7 @@ type Owner = "Alex" | "Casey" | "Joint";
 
 interface Category { id: string; name: string; color: string; }
 
-type BankSource = "Monzo" | "Amex" | "Barclays" | "Santander" | "HSBC" | "SoFi" | "Manual";
+type BankSource = "Monzo" | "Amex" | "Barclays" | "Santander" | "HSBC" | "SoFi" | "Chase" | "Manual";
 
 interface Transaction {
   id: string;
@@ -89,6 +89,7 @@ function bankSource(externalId: string | null): BankSource {
   if (externalId.startsWith("santander:")) return "Santander";
   if (externalId.startsWith("hsbc:"))      return "HSBC";
   if (externalId.startsWith("sofi:"))      return "SoFi";
+  if (externalId.startsWith("chase:"))     return "Chase";
   return "Manual";
 }
 
@@ -99,6 +100,7 @@ const SOURCE_STYLES: Record<BankSource, string> = {
   Santander: "text-red-500 border-red-500",
   HSBC:      "text-purple-500 border-purple-500",
   SoFi:      "text-green-500 border-green-500",
+  Chase:     "text-blue-700 border-blue-700",
   Manual:    "text-muted-foreground border-muted-foreground/40",
 };
 
@@ -347,7 +349,7 @@ function OwnerFilter({ model, onModelChange }: CustomFilterProps<Transaction, an
   );
 }
 
-const SOURCES: BankSource[] = ["Monzo", "Amex", "Barclays", "Santander", "HSBC", "SoFi", "Manual"];
+const SOURCES: BankSource[] = ["Monzo", "Amex", "Barclays", "Santander", "HSBC", "SoFi", "Chase", "Manual"];
 
 function SourceFilter({ model, onModelChange }: CustomFilterProps<Transaction, any, FilterModel>) {
   useGridFilter({

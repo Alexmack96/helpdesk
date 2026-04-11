@@ -44,8 +44,8 @@ Supported: Monzo ✓ — Amex, Barclays, Santander, Caseys banks coming soon.
 ---
 
 ## Todo 11-April-2026
-[] Get Sofi parser 
-[] Check ALL txs.
+[X] Get Sofi parser 
+[X] Check ALL txs.
 [] feat(recurring task):Add an item to the monthly recurring to check Money Saving Expert newsletter
 
 [] Visual UI error for uploading wrong bank to tell you 'Cannot upload HSBC statement to SoFi' etc. I jsut did it myslef and realised its prone to user error. 

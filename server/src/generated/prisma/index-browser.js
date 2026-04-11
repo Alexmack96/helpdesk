@@ -226,6 +226,19 @@ exports.Prisma.HsbcTransactionScalarFieldEnum = {
   status: 'status'
 };
 
+exports.Prisma.ChaseTransactionScalarFieldEnum = {
+  id: 'id',
+  transactionId: 'transactionId',
+  date: 'date',
+  description: 'description',
+  amount: 'amount',
+  isCredit: 'isCredit',
+  statementDate: 'statementDate',
+  owner: 'owner',
+  importedAt: 'importedAt',
+  status: 'status'
+};
+
 exports.Prisma.SofiTransactionScalarFieldEnum = {
   id: 'id',
   transactionId: 'transactionId',
@@ -364,6 +377,7 @@ exports.Prisma.ModelName = {
   BarclaysTransaction: 'BarclaysTransaction',
   SantanderTransaction: 'SantanderTransaction',
   HsbcTransaction: 'HsbcTransaction',
+  ChaseTransaction: 'ChaseTransaction',
   SofiTransaction: 'SofiTransaction',
   Session: 'Session',
   Account: 'Account',

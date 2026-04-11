@@ -163,6 +163,21 @@ model HsbcTransaction {
   @@map("hsbc_transaction")
 }
 
+model ChaseTransaction {
+  id            Int      @id @default(autoincrement())
+  transactionId String   @unique
+  date          String
+  description   String
+  amount        String
+  isCredit      Boolean  @default(false)
+  statementDate String
+  owner         String   @default("Casey")
+  importedAt    DateTime @default(now())
+  status        String   @default("pending")
+
+  @@map("chase_transaction")
+}
+
 model SofiTransaction {
   id            Int      @id @default(autoincrement())
   transactionId String   @unique

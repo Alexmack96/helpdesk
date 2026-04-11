@@ -54,6 +54,11 @@ export type SantanderTransaction = $Result.DefaultSelection<Prisma.$SantanderTra
  */
 export type HsbcTransaction = $Result.DefaultSelection<Prisma.$HsbcTransactionPayload>
 /**
+ * Model ChaseTransaction
+ * 
+ */
+export type ChaseTransaction = $Result.DefaultSelection<Prisma.$ChaseTransactionPayload>
+/**
  * Model SofiTransaction
  * 
  */
@@ -360,6 +365,16 @@ export class PrismaClient<
     * ```
     */
   get hsbcTransaction(): Prisma.HsbcTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.chaseTransaction`: Exposes CRUD operations for the **ChaseTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChaseTransactions
+    * const chaseTransactions = await prisma.chaseTransaction.findMany()
+    * ```
+    */
+  get chaseTransaction(): Prisma.ChaseTransactionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.sofiTransaction`: Exposes CRUD operations for the **SofiTransaction** model.
@@ -882,6 +897,7 @@ export namespace Prisma {
     BarclaysTransaction: 'BarclaysTransaction',
     SantanderTransaction: 'SantanderTransaction',
     HsbcTransaction: 'HsbcTransaction',
+    ChaseTransaction: 'ChaseTransaction',
     SofiTransaction: 'SofiTransaction',
     Session: 'Session',
     Account: 'Account',
@@ -905,7 +921,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "hsbcTransaction" | "sofiTransaction" | "session" | "account" | "note" | "tab" | "investmentAccount" | "investmentSnapshot" | "verification"
+      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "hsbcTransaction" | "chaseTransaction" | "sofiTransaction" | "session" | "account" | "note" | "tab" | "investmentAccount" | "investmentSnapshot" | "verification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1498,6 +1514,80 @@ export namespace Prisma {
           count: {
             args: Prisma.HsbcTransactionCountArgs<ExtArgs>
             result: $Utils.Optional<HsbcTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
+      ChaseTransaction: {
+        payload: Prisma.$ChaseTransactionPayload<ExtArgs>
+        fields: Prisma.ChaseTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChaseTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChaseTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.ChaseTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChaseTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.ChaseTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.ChaseTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.ChaseTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChaseTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.ChaseTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload>
+          }
+          update: {
+            args: Prisma.ChaseTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ChaseTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChaseTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ChaseTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.ChaseTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChaseTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.ChaseTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChaseTransaction>
+          }
+          groupBy: {
+            args: Prisma.ChaseTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChaseTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChaseTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<ChaseTransactionCountAggregateOutputType> | number
           }
         }
       }
@@ -2209,6 +2299,7 @@ export namespace Prisma {
     barclaysTransaction?: BarclaysTransactionOmit
     santanderTransaction?: SantanderTransactionOmit
     hsbcTransaction?: HsbcTransactionOmit
+    chaseTransaction?: ChaseTransactionOmit
     sofiTransaction?: SofiTransactionOmit
     session?: SessionOmit
     account?: AccountOmit
@@ -11345,6 +11436,1103 @@ export namespace Prisma {
 
 
   /**
+   * Model ChaseTransaction
+   */
+
+  export type AggregateChaseTransaction = {
+    _count: ChaseTransactionCountAggregateOutputType | null
+    _avg: ChaseTransactionAvgAggregateOutputType | null
+    _sum: ChaseTransactionSumAggregateOutputType | null
+    _min: ChaseTransactionMinAggregateOutputType | null
+    _max: ChaseTransactionMaxAggregateOutputType | null
+  }
+
+  export type ChaseTransactionAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ChaseTransactionSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ChaseTransactionMinAggregateOutputType = {
+    id: number | null
+    transactionId: string | null
+    date: string | null
+    description: string | null
+    amount: string | null
+    isCredit: boolean | null
+    statementDate: string | null
+    owner: string | null
+    importedAt: Date | null
+    status: string | null
+  }
+
+  export type ChaseTransactionMaxAggregateOutputType = {
+    id: number | null
+    transactionId: string | null
+    date: string | null
+    description: string | null
+    amount: string | null
+    isCredit: boolean | null
+    statementDate: string | null
+    owner: string | null
+    importedAt: Date | null
+    status: string | null
+  }
+
+  export type ChaseTransactionCountAggregateOutputType = {
+    id: number
+    transactionId: number
+    date: number
+    description: number
+    amount: number
+    isCredit: number
+    statementDate: number
+    owner: number
+    importedAt: number
+    status: number
+    _all: number
+  }
+
+
+  export type ChaseTransactionAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type ChaseTransactionSumAggregateInputType = {
+    id?: true
+  }
+
+  export type ChaseTransactionMinAggregateInputType = {
+    id?: true
+    transactionId?: true
+    date?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    statementDate?: true
+    owner?: true
+    importedAt?: true
+    status?: true
+  }
+
+  export type ChaseTransactionMaxAggregateInputType = {
+    id?: true
+    transactionId?: true
+    date?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    statementDate?: true
+    owner?: true
+    importedAt?: true
+    status?: true
+  }
+
+  export type ChaseTransactionCountAggregateInputType = {
+    id?: true
+    transactionId?: true
+    date?: true
+    description?: true
+    amount?: true
+    isCredit?: true
+    statementDate?: true
+    owner?: true
+    importedAt?: true
+    status?: true
+    _all?: true
+  }
+
+  export type ChaseTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChaseTransaction to aggregate.
+     */
+    where?: ChaseTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChaseTransactions to fetch.
+     */
+    orderBy?: ChaseTransactionOrderByWithRelationInput | ChaseTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChaseTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChaseTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChaseTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChaseTransactions
+    **/
+    _count?: true | ChaseTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ChaseTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChaseTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChaseTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChaseTransactionMaxAggregateInputType
+  }
+
+  export type GetChaseTransactionAggregateType<T extends ChaseTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateChaseTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChaseTransaction[P]>
+      : GetScalarType<T[P], AggregateChaseTransaction[P]>
+  }
+
+
+
+
+  export type ChaseTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChaseTransactionWhereInput
+    orderBy?: ChaseTransactionOrderByWithAggregationInput | ChaseTransactionOrderByWithAggregationInput[]
+    by: ChaseTransactionScalarFieldEnum[] | ChaseTransactionScalarFieldEnum
+    having?: ChaseTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChaseTransactionCountAggregateInputType | true
+    _avg?: ChaseTransactionAvgAggregateInputType
+    _sum?: ChaseTransactionSumAggregateInputType
+    _min?: ChaseTransactionMinAggregateInputType
+    _max?: ChaseTransactionMaxAggregateInputType
+  }
+
+  export type ChaseTransactionGroupByOutputType = {
+    id: number
+    transactionId: string
+    date: string
+    description: string
+    amount: string
+    isCredit: boolean
+    statementDate: string
+    owner: string
+    importedAt: Date
+    status: string
+    _count: ChaseTransactionCountAggregateOutputType | null
+    _avg: ChaseTransactionAvgAggregateOutputType | null
+    _sum: ChaseTransactionSumAggregateOutputType | null
+    _min: ChaseTransactionMinAggregateOutputType | null
+    _max: ChaseTransactionMaxAggregateOutputType | null
+  }
+
+  type GetChaseTransactionGroupByPayload<T extends ChaseTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChaseTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChaseTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChaseTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], ChaseTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChaseTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["chaseTransaction"]>
+
+  export type ChaseTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["chaseTransaction"]>
+
+  export type ChaseTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["chaseTransaction"]>
+
+  export type ChaseTransactionSelectScalar = {
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    description?: boolean
+    amount?: boolean
+    isCredit?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }
+
+  export type ChaseTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "transactionId" | "date" | "description" | "amount" | "isCredit" | "statementDate" | "owner" | "importedAt" | "status", ExtArgs["result"]["chaseTransaction"]>
+
+  export type $ChaseTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChaseTransaction"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      transactionId: string
+      date: string
+      description: string
+      amount: string
+      isCredit: boolean
+      statementDate: string
+      owner: string
+      importedAt: Date
+      status: string
+    }, ExtArgs["result"]["chaseTransaction"]>
+    composites: {}
+  }
+
+  type ChaseTransactionGetPayload<S extends boolean | null | undefined | ChaseTransactionDefaultArgs> = $Result.GetResult<Prisma.$ChaseTransactionPayload, S>
+
+  type ChaseTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ChaseTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ChaseTransactionCountAggregateInputType | true
+    }
+
+  export interface ChaseTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChaseTransaction'], meta: { name: 'ChaseTransaction' } }
+    /**
+     * Find zero or one ChaseTransaction that matches the filter.
+     * @param {ChaseTransactionFindUniqueArgs} args - Arguments to find a ChaseTransaction
+     * @example
+     * // Get one ChaseTransaction
+     * const chaseTransaction = await prisma.chaseTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChaseTransactionFindUniqueArgs>(args: SelectSubset<T, ChaseTransactionFindUniqueArgs<ExtArgs>>): Prisma__ChaseTransactionClient<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ChaseTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ChaseTransactionFindUniqueOrThrowArgs} args - Arguments to find a ChaseTransaction
+     * @example
+     * // Get one ChaseTransaction
+     * const chaseTransaction = await prisma.chaseTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChaseTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, ChaseTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChaseTransactionClient<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChaseTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChaseTransactionFindFirstArgs} args - Arguments to find a ChaseTransaction
+     * @example
+     * // Get one ChaseTransaction
+     * const chaseTransaction = await prisma.chaseTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChaseTransactionFindFirstArgs>(args?: SelectSubset<T, ChaseTransactionFindFirstArgs<ExtArgs>>): Prisma__ChaseTransactionClient<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChaseTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChaseTransactionFindFirstOrThrowArgs} args - Arguments to find a ChaseTransaction
+     * @example
+     * // Get one ChaseTransaction
+     * const chaseTransaction = await prisma.chaseTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChaseTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, ChaseTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChaseTransactionClient<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ChaseTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChaseTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChaseTransactions
+     * const chaseTransactions = await prisma.chaseTransaction.findMany()
+     * 
+     * // Get first 10 ChaseTransactions
+     * const chaseTransactions = await prisma.chaseTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const chaseTransactionWithIdOnly = await prisma.chaseTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChaseTransactionFindManyArgs>(args?: SelectSubset<T, ChaseTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ChaseTransaction.
+     * @param {ChaseTransactionCreateArgs} args - Arguments to create a ChaseTransaction.
+     * @example
+     * // Create one ChaseTransaction
+     * const ChaseTransaction = await prisma.chaseTransaction.create({
+     *   data: {
+     *     // ... data to create a ChaseTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChaseTransactionCreateArgs>(args: SelectSubset<T, ChaseTransactionCreateArgs<ExtArgs>>): Prisma__ChaseTransactionClient<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ChaseTransactions.
+     * @param {ChaseTransactionCreateManyArgs} args - Arguments to create many ChaseTransactions.
+     * @example
+     * // Create many ChaseTransactions
+     * const chaseTransaction = await prisma.chaseTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChaseTransactionCreateManyArgs>(args?: SelectSubset<T, ChaseTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ChaseTransactions and returns the data saved in the database.
+     * @param {ChaseTransactionCreateManyAndReturnArgs} args - Arguments to create many ChaseTransactions.
+     * @example
+     * // Create many ChaseTransactions
+     * const chaseTransaction = await prisma.chaseTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ChaseTransactions and only return the `id`
+     * const chaseTransactionWithIdOnly = await prisma.chaseTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChaseTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, ChaseTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ChaseTransaction.
+     * @param {ChaseTransactionDeleteArgs} args - Arguments to delete one ChaseTransaction.
+     * @example
+     * // Delete one ChaseTransaction
+     * const ChaseTransaction = await prisma.chaseTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one ChaseTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChaseTransactionDeleteArgs>(args: SelectSubset<T, ChaseTransactionDeleteArgs<ExtArgs>>): Prisma__ChaseTransactionClient<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ChaseTransaction.
+     * @param {ChaseTransactionUpdateArgs} args - Arguments to update one ChaseTransaction.
+     * @example
+     * // Update one ChaseTransaction
+     * const chaseTransaction = await prisma.chaseTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChaseTransactionUpdateArgs>(args: SelectSubset<T, ChaseTransactionUpdateArgs<ExtArgs>>): Prisma__ChaseTransactionClient<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ChaseTransactions.
+     * @param {ChaseTransactionDeleteManyArgs} args - Arguments to filter ChaseTransactions to delete.
+     * @example
+     * // Delete a few ChaseTransactions
+     * const { count } = await prisma.chaseTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChaseTransactionDeleteManyArgs>(args?: SelectSubset<T, ChaseTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChaseTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChaseTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChaseTransactions
+     * const chaseTransaction = await prisma.chaseTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChaseTransactionUpdateManyArgs>(args: SelectSubset<T, ChaseTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChaseTransactions and returns the data updated in the database.
+     * @param {ChaseTransactionUpdateManyAndReturnArgs} args - Arguments to update many ChaseTransactions.
+     * @example
+     * // Update many ChaseTransactions
+     * const chaseTransaction = await prisma.chaseTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ChaseTransactions and only return the `id`
+     * const chaseTransactionWithIdOnly = await prisma.chaseTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ChaseTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, ChaseTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ChaseTransaction.
+     * @param {ChaseTransactionUpsertArgs} args - Arguments to update or create a ChaseTransaction.
+     * @example
+     * // Update or create a ChaseTransaction
+     * const chaseTransaction = await prisma.chaseTransaction.upsert({
+     *   create: {
+     *     // ... data to create a ChaseTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChaseTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChaseTransactionUpsertArgs>(args: SelectSubset<T, ChaseTransactionUpsertArgs<ExtArgs>>): Prisma__ChaseTransactionClient<$Result.GetResult<Prisma.$ChaseTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ChaseTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChaseTransactionCountArgs} args - Arguments to filter ChaseTransactions to count.
+     * @example
+     * // Count the number of ChaseTransactions
+     * const count = await prisma.chaseTransaction.count({
+     *   where: {
+     *     // ... the filter for the ChaseTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChaseTransactionCountArgs>(
+      args?: Subset<T, ChaseTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChaseTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChaseTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChaseTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChaseTransactionAggregateArgs>(args: Subset<T, ChaseTransactionAggregateArgs>): Prisma.PrismaPromise<GetChaseTransactionAggregateType<T>>
+
+    /**
+     * Group by ChaseTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChaseTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChaseTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChaseTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: ChaseTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChaseTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChaseTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChaseTransaction model
+   */
+  readonly fields: ChaseTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChaseTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChaseTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ChaseTransaction model
+   */
+  interface ChaseTransactionFieldRefs {
+    readonly id: FieldRef<"ChaseTransaction", 'Int'>
+    readonly transactionId: FieldRef<"ChaseTransaction", 'String'>
+    readonly date: FieldRef<"ChaseTransaction", 'String'>
+    readonly description: FieldRef<"ChaseTransaction", 'String'>
+    readonly amount: FieldRef<"ChaseTransaction", 'String'>
+    readonly isCredit: FieldRef<"ChaseTransaction", 'Boolean'>
+    readonly statementDate: FieldRef<"ChaseTransaction", 'String'>
+    readonly owner: FieldRef<"ChaseTransaction", 'String'>
+    readonly importedAt: FieldRef<"ChaseTransaction", 'DateTime'>
+    readonly status: FieldRef<"ChaseTransaction", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChaseTransaction findUnique
+   */
+  export type ChaseTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which ChaseTransaction to fetch.
+     */
+    where: ChaseTransactionWhereUniqueInput
+  }
+
+  /**
+   * ChaseTransaction findUniqueOrThrow
+   */
+  export type ChaseTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which ChaseTransaction to fetch.
+     */
+    where: ChaseTransactionWhereUniqueInput
+  }
+
+  /**
+   * ChaseTransaction findFirst
+   */
+  export type ChaseTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which ChaseTransaction to fetch.
+     */
+    where?: ChaseTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChaseTransactions to fetch.
+     */
+    orderBy?: ChaseTransactionOrderByWithRelationInput | ChaseTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChaseTransactions.
+     */
+    cursor?: ChaseTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChaseTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChaseTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChaseTransactions.
+     */
+    distinct?: ChaseTransactionScalarFieldEnum | ChaseTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * ChaseTransaction findFirstOrThrow
+   */
+  export type ChaseTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which ChaseTransaction to fetch.
+     */
+    where?: ChaseTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChaseTransactions to fetch.
+     */
+    orderBy?: ChaseTransactionOrderByWithRelationInput | ChaseTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChaseTransactions.
+     */
+    cursor?: ChaseTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChaseTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChaseTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChaseTransactions.
+     */
+    distinct?: ChaseTransactionScalarFieldEnum | ChaseTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * ChaseTransaction findMany
+   */
+  export type ChaseTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which ChaseTransactions to fetch.
+     */
+    where?: ChaseTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChaseTransactions to fetch.
+     */
+    orderBy?: ChaseTransactionOrderByWithRelationInput | ChaseTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChaseTransactions.
+     */
+    cursor?: ChaseTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChaseTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChaseTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChaseTransactions.
+     */
+    distinct?: ChaseTransactionScalarFieldEnum | ChaseTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * ChaseTransaction create
+   */
+  export type ChaseTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ChaseTransaction.
+     */
+    data: XOR<ChaseTransactionCreateInput, ChaseTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * ChaseTransaction createMany
+   */
+  export type ChaseTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChaseTransactions.
+     */
+    data: ChaseTransactionCreateManyInput | ChaseTransactionCreateManyInput[]
+  }
+
+  /**
+   * ChaseTransaction createManyAndReturn
+   */
+  export type ChaseTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many ChaseTransactions.
+     */
+    data: ChaseTransactionCreateManyInput | ChaseTransactionCreateManyInput[]
+  }
+
+  /**
+   * ChaseTransaction update
+   */
+  export type ChaseTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ChaseTransaction.
+     */
+    data: XOR<ChaseTransactionUpdateInput, ChaseTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which ChaseTransaction to update.
+     */
+    where: ChaseTransactionWhereUniqueInput
+  }
+
+  /**
+   * ChaseTransaction updateMany
+   */
+  export type ChaseTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChaseTransactions.
+     */
+    data: XOR<ChaseTransactionUpdateManyMutationInput, ChaseTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which ChaseTransactions to update
+     */
+    where?: ChaseTransactionWhereInput
+    /**
+     * Limit how many ChaseTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChaseTransaction updateManyAndReturn
+   */
+  export type ChaseTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update ChaseTransactions.
+     */
+    data: XOR<ChaseTransactionUpdateManyMutationInput, ChaseTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which ChaseTransactions to update
+     */
+    where?: ChaseTransactionWhereInput
+    /**
+     * Limit how many ChaseTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChaseTransaction upsert
+   */
+  export type ChaseTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ChaseTransaction to update in case it exists.
+     */
+    where: ChaseTransactionWhereUniqueInput
+    /**
+     * In case the ChaseTransaction found by the `where` argument doesn't exist, create a new ChaseTransaction with this data.
+     */
+    create: XOR<ChaseTransactionCreateInput, ChaseTransactionUncheckedCreateInput>
+    /**
+     * In case the ChaseTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChaseTransactionUpdateInput, ChaseTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * ChaseTransaction delete
+   */
+  export type ChaseTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+    /**
+     * Filter which ChaseTransaction to delete.
+     */
+    where: ChaseTransactionWhereUniqueInput
+  }
+
+  /**
+   * ChaseTransaction deleteMany
+   */
+  export type ChaseTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChaseTransactions to delete
+     */
+    where?: ChaseTransactionWhereInput
+    /**
+     * Limit how many ChaseTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChaseTransaction without action
+   */
+  export type ChaseTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChaseTransaction
+     */
+    select?: ChaseTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChaseTransaction
+     */
+    omit?: ChaseTransactionOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model SofiTransaction
    */
 
@@ -20266,6 +21454,22 @@ export namespace Prisma {
   export type HsbcTransactionScalarFieldEnum = (typeof HsbcTransactionScalarFieldEnum)[keyof typeof HsbcTransactionScalarFieldEnum]
 
 
+  export const ChaseTransactionScalarFieldEnum: {
+    id: 'id',
+    transactionId: 'transactionId',
+    date: 'date',
+    description: 'description',
+    amount: 'amount',
+    isCredit: 'isCredit',
+    statementDate: 'statementDate',
+    owner: 'owner',
+    importedAt: 'importedAt',
+    status: 'status'
+  };
+
+  export type ChaseTransactionScalarFieldEnum = (typeof ChaseTransactionScalarFieldEnum)[keyof typeof ChaseTransactionScalarFieldEnum]
+
+
   export const SofiTransactionScalarFieldEnum: {
     id: 'id',
     transactionId: 'transactionId',
@@ -21144,6 +22348,85 @@ export namespace Prisma {
     owner?: StringWithAggregatesFilter<"HsbcTransaction"> | string
     importedAt?: DateTimeWithAggregatesFilter<"HsbcTransaction"> | Date | string
     status?: StringWithAggregatesFilter<"HsbcTransaction"> | string
+  }
+
+  export type ChaseTransactionWhereInput = {
+    AND?: ChaseTransactionWhereInput | ChaseTransactionWhereInput[]
+    OR?: ChaseTransactionWhereInput[]
+    NOT?: ChaseTransactionWhereInput | ChaseTransactionWhereInput[]
+    id?: IntFilter<"ChaseTransaction"> | number
+    transactionId?: StringFilter<"ChaseTransaction"> | string
+    date?: StringFilter<"ChaseTransaction"> | string
+    description?: StringFilter<"ChaseTransaction"> | string
+    amount?: StringFilter<"ChaseTransaction"> | string
+    isCredit?: BoolFilter<"ChaseTransaction"> | boolean
+    statementDate?: StringFilter<"ChaseTransaction"> | string
+    owner?: StringFilter<"ChaseTransaction"> | string
+    importedAt?: DateTimeFilter<"ChaseTransaction"> | Date | string
+    status?: StringFilter<"ChaseTransaction"> | string
+  }
+
+  export type ChaseTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type ChaseTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    transactionId?: string
+    AND?: ChaseTransactionWhereInput | ChaseTransactionWhereInput[]
+    OR?: ChaseTransactionWhereInput[]
+    NOT?: ChaseTransactionWhereInput | ChaseTransactionWhereInput[]
+    date?: StringFilter<"ChaseTransaction"> | string
+    description?: StringFilter<"ChaseTransaction"> | string
+    amount?: StringFilter<"ChaseTransaction"> | string
+    isCredit?: BoolFilter<"ChaseTransaction"> | boolean
+    statementDate?: StringFilter<"ChaseTransaction"> | string
+    owner?: StringFilter<"ChaseTransaction"> | string
+    importedAt?: DateTimeFilter<"ChaseTransaction"> | Date | string
+    status?: StringFilter<"ChaseTransaction"> | string
+  }, "id" | "transactionId">
+
+  export type ChaseTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+    _count?: ChaseTransactionCountOrderByAggregateInput
+    _avg?: ChaseTransactionAvgOrderByAggregateInput
+    _max?: ChaseTransactionMaxOrderByAggregateInput
+    _min?: ChaseTransactionMinOrderByAggregateInput
+    _sum?: ChaseTransactionSumOrderByAggregateInput
+  }
+
+  export type ChaseTransactionScalarWhereWithAggregatesInput = {
+    AND?: ChaseTransactionScalarWhereWithAggregatesInput | ChaseTransactionScalarWhereWithAggregatesInput[]
+    OR?: ChaseTransactionScalarWhereWithAggregatesInput[]
+    NOT?: ChaseTransactionScalarWhereWithAggregatesInput | ChaseTransactionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ChaseTransaction"> | number
+    transactionId?: StringWithAggregatesFilter<"ChaseTransaction"> | string
+    date?: StringWithAggregatesFilter<"ChaseTransaction"> | string
+    description?: StringWithAggregatesFilter<"ChaseTransaction"> | string
+    amount?: StringWithAggregatesFilter<"ChaseTransaction"> | string
+    isCredit?: BoolWithAggregatesFilter<"ChaseTransaction"> | boolean
+    statementDate?: StringWithAggregatesFilter<"ChaseTransaction"> | string
+    owner?: StringWithAggregatesFilter<"ChaseTransaction"> | string
+    importedAt?: DateTimeWithAggregatesFilter<"ChaseTransaction"> | Date | string
+    status?: StringWithAggregatesFilter<"ChaseTransaction"> | string
   }
 
   export type SofiTransactionWhereInput = {
@@ -22498,6 +23781,94 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
   }
 
+  export type ChaseTransactionCreateInput = {
+    transactionId: string
+    date: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    statementDate: string
+    owner?: string
+    importedAt?: Date | string
+    status?: string
+  }
+
+  export type ChaseTransactionUncheckedCreateInput = {
+    id?: number
+    transactionId: string
+    date: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    statementDate: string
+    owner?: string
+    importedAt?: Date | string
+    status?: string
+  }
+
+  export type ChaseTransactionUpdateInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChaseTransactionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChaseTransactionCreateManyInput = {
+    id?: number
+    transactionId: string
+    date: string
+    description: string
+    amount: string
+    isCredit?: boolean
+    statementDate: string
+    owner?: string
+    importedAt?: Date | string
+    status?: string
+  }
+
+  export type ChaseTransactionUpdateManyMutationInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChaseTransactionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: StringFieldUpdateOperationsInput | string
+    isCredit?: BoolFieldUpdateOperationsInput | boolean
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
   export type SofiTransactionCreateInput = {
     transactionId: string
     date: string
@@ -23755,6 +25126,53 @@ export namespace Prisma {
   }
 
   export type HsbcTransactionSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ChaseTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type ChaseTransactionAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ChaseTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type ChaseTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    isCredit?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type ChaseTransactionSumOrderByAggregateInput = {
     id?: SortOrder
   }
 

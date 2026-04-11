@@ -9,7 +9,7 @@ type ImportResult = { imported: number; duplicates?: string[] };
 type ProcessResult = { processed: number; skipped: number; errored: number };
 type BankCounts = { pending: number; processed: number; skipped: number; errored: number };
 type BankCountsWithOwner = BankCounts & { byOwner: Record<string, Record<string, number>> };
-type StagedInfo = { monzo: BankCounts; amex: BankCountsWithOwner; barclays: BankCountsWithOwner; santander: BankCountsWithOwner; hsbc: BankCountsWithOwner; sofi: BankCountsWithOwner };
+type StagedInfo = { monzo: BankCounts; amex: BankCountsWithOwner; barclays: BankCountsWithOwner; santander: BankCountsWithOwner; hsbc: BankCountsWithOwner; sofi: BankCountsWithOwner; chase: BankCountsWithOwner };
 
 function BankUploadCard({
   title,
@@ -140,17 +140,20 @@ export function ImportPage() {
   const santanderFileRef = useRef<HTMLInputElement>(null);
   const hsbcFileRef = useRef<HTMLInputElement>(null);
   const sofiFileRef = useRef<HTMLInputElement>(null);
+  const chaseFileRef = useRef<HTMLInputElement>(null);
   const [monzoFile, setMonzoFile] = useState<File | null>(null);
   const [amexFile, setAmexFile] = useState<File | null>(null);
   const [barclaysFile, setBarclaysFile] = useState<File | null>(null);
   const [santanderFile, setSantanderFile] = useState<File | null>(null);
   const [hsbcFile, setHsbcFile] = useState<File | null>(null);
   const [sofiFile, setSofiFile] = useState<File | null>(null);
+  const [chaseFile, setChaseFile] = useState<File | null>(null);
   const [amexOwner, setAmexOwner] = useState("Alex");
   const [barclaysOwner, setBarclaysOwner] = useState("Alex");
   const [santanderOwner, setSantanderOwner] = useState("Alex");
   const [hsbcOwner, setHsbcOwner] = useState("Joint");
   const [sofiOwner, setSofiOwner] = useState("Casey");
+  const [chaseOwner, setChaseOwner] = useState("Casey");
 
   const { data: staged, refetch: refetchStaged } = useQuery<StagedInfo>({
     queryKey: ["staged"],
@@ -226,6 +229,20 @@ export function ImportPage() {
     },
   });
 
+  const chaseMutation = useMutation<ImportResult, Error, { file: File; owner: string }>({
+    mutationFn: ({ file, owner }) => {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("owner", owner);
+      return api.post("/api/admin/import/chase", form).then((r) => r.data);
+    },
+    onSuccess: () => {
+      refetchStaged();
+      setChaseFile(null);
+      if (chaseFileRef.current) chaseFileRef.current.value = "";
+    },
+  });
+
   const sofiMutation = useMutation<ImportResult, Error, { file: File; owner: string }>({
     mutationFn: ({ file, owner }) => {
       const form = new FormData();
@@ -250,7 +267,7 @@ export function ImportPage() {
   });
 
   const sum = (key: keyof BankCounts) =>
-    (staged?.monzo[key] ?? 0) + (staged?.amex[key] ?? 0) + (staged?.barclays[key] ?? 0) + (staged?.santander[key] ?? 0) + (staged?.hsbc[key] ?? 0) + (staged?.sofi[key] ?? 0);
+    (staged?.monzo[key] ?? 0) + (staged?.amex[key] ?? 0) + (staged?.barclays[key] ?? 0) + (staged?.santander[key] ?? 0) + (staged?.hsbc[key] ?? 0) + (staged?.sofi[key] ?? 0) + (staged?.chase[key] ?? 0);
   const totalPending   = sum("pending");
   const totalProcessed = sum("processed");
   const totalErrored   = sum("errored");
@@ -279,7 +296,7 @@ export function ImportPage() {
             <div className="space-y-3">
               {/* Per-bank breakdown */}
               <div className="flex flex-wrap gap-6 text-sm">
-                {(["monzo", "amex", "barclays", "santander", "hsbc", "sofi"] as const).map((bank) => {
+                {(["monzo", "amex", "barclays", "santander", "hsbc", "sofi", "chase"] as const).map((bank) => {
                   const counts = staged?.[bank];
                   if (!counts) return null;
                   const total = counts.pending + counts.processed + counts.skipped;
@@ -409,6 +426,22 @@ export function ImportPage() {
         error={hsbcMutation.error}
         owner={hsbcOwner}
         onOwnerChange={setHsbcOwner}
+      />
+
+      <BankUploadCard
+        title="Chase"
+        description="Download from Chase online → Statements → View statement → Save as PDF."
+        accept=".pdf"
+        file={chaseFile}
+        fileRef={chaseFileRef}
+        onFileChange={(f) => { setChaseFile(f); chaseMutation.reset(); }}
+        onUpload={() => chaseFile && chaseMutation.mutate({ file: chaseFile, owner: chaseOwner })}
+        result={chaseMutation.data}
+        isPending={chaseMutation.isPending}
+        isError={chaseMutation.isError}
+        error={chaseMutation.error}
+        owner={chaseOwner}
+        onOwnerChange={setChaseOwner}
       />
 
       <BankUploadCard
