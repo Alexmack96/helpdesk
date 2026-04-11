@@ -51,7 +51,7 @@ type Owner = "Alex" | "Casey" | "Joint";
 
 interface Category { id: string; name: string; color: string; }
 
-type BankSource = "Monzo" | "Amex" | "Barclays" | "Santander" | "Manual";
+type BankSource = "Monzo" | "Amex" | "Barclays" | "Santander" | "HSBC" | "Manual";
 
 interface Transaction {
   id: string;
@@ -87,6 +87,7 @@ function bankSource(externalId: string | null): BankSource {
   if (externalId.startsWith("amex:"))      return "Amex";
   if (externalId.startsWith("barclays:"))  return "Barclays";
   if (externalId.startsWith("santander:")) return "Santander";
+  if (externalId.startsWith("hsbc:"))      return "HSBC";
   return "Manual";
 }
 
@@ -95,6 +96,7 @@ const SOURCE_STYLES: Record<BankSource, string> = {
   Amex:      "text-blue-500 border-blue-500",
   Barclays:  "text-sky-500 border-sky-500",
   Santander: "text-red-500 border-red-500",
+  HSBC:      "text-purple-500 border-purple-500",
   Manual:    "text-muted-foreground border-muted-foreground/40",
 };
 
@@ -165,10 +167,16 @@ function CategoryCell({ tx, categories, onSave }: { tx: Transaction; categories:
     return () => document.removeEventListener("mousedown", handle);
   }, [open]);
 
+  const DROPDOWN_HEIGHT = categories.length * 32 + 8;
+
   function handleClick() {
     if (triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
-      setPos({ top: rect.bottom + 4, left: rect.left });
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const top = spaceBelow >= DROPDOWN_HEIGHT + 4
+        ? rect.bottom + 4
+        : rect.top - DROPDOWN_HEIGHT - 4;
+      setPos({ top, left: rect.left });
     }
     setOpen((o) => !o);
   }
@@ -215,10 +223,16 @@ function OwnerCell({ tx, onSave }: { tx: Transaction; onSave: (owner: Owner) => 
     return () => document.removeEventListener("mousedown", handle);
   }, [open]);
 
+  const OWNER_DROPDOWN_HEIGHT = 3 * 32 + 8;
+
   function handleClick() {
     if (triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
-      setPos({ top: rect.bottom + 4, left: rect.left });
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const top = spaceBelow >= OWNER_DROPDOWN_HEIGHT + 4
+        ? rect.bottom + 4
+        : rect.top - OWNER_DROPDOWN_HEIGHT - 4;
+      setPos({ top, left: rect.left });
     }
     setOpen((o) => !o);
   }
@@ -331,7 +345,7 @@ function OwnerFilter({ model, onModelChange }: CustomFilterProps<Transaction, an
   );
 }
 
-const SOURCES: BankSource[] = ["Monzo", "Amex", "Barclays", "Santander", "Manual"];
+const SOURCES: BankSource[] = ["Monzo", "Amex", "Barclays", "Santander", "HSBC", "Manual"];
 
 function SourceFilter({ model, onModelChange }: CustomFilterProps<Transaction, any, FilterModel>) {
   useGridFilter({

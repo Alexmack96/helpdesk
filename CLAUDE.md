@@ -181,4 +181,84 @@ Two-step pipeline: **stage → process**.
 
 `externalId` is namespaced (`monzo:tx_...`, `amex:ref_...`) to prevent cross-bank collisions.
 
-Planned banks: Monzo ✓, Amex (coming), Barclays (coming), Santander (coming).
+Planned banks: Monzo ✓, Amex ✓, Barclays ✓, Santander ✓, HSBC (coming).
+
+## Adding a New Bank via Image Upload (fast path)
+
+Use this for any bank where `pdf-parse` text extraction is unreliable (HSBC, etc.). Instead of writing regex parsers, accept a JPEG/PNG screenshot of the statement and call Claude vision to extract structured data.
+
+### Implementation checklist
+
+**1. Schema + migration** — add a `<Bank>Transaction` model matching the bank's fields. Minimum: `id`, `transactionId` (unique, SHA-256 hash), `date`, `description`, `amount`, `isCredit`/`moneyIn`/`moneyOut` (whichever fits), `status` (default `"pending"`), `owner`, `statementDate`. Write SQL migration manually, then `bun run db:migrate:deploy && bun run db:generate`.
+
+**2. Upload route** — `POST /api/admin/import/<bank>`:
+```ts
+importRouter.post("/import/hsbc", upload.single("file"), async (req, res) => {
+  if (!req.file) { res.status(400).json({ error: "No file uploaded" }); return; }
+  const owner = VALID_OWNERS.has(req.body.owner) ? req.body.owner : "Alex";
+
+  // Send image to Claude vision
+  const anthropic = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+  const base64 = req.file.buffer.toString("base64");
+  const mediaType = (req.file.mimetype as "image/jpeg" | "image/png" | "image/webp");
+
+  const message = await anthropic.messages.create({
+    model: "claude-opus-4-6",
+    max_tokens: 4096,
+    messages: [{
+      role: "user",
+      content: [
+        { type: "image", source: { type: "base64", media_type: mediaType, data: base64 } },
+        { type: "text", text: `Extract all transactions from this bank statement page as a JSON array.
+Each object must have: date (YYYY-MM-DD), description (string), amount (string, digits and dots only),
+isCredit (boolean — true for money in/payments received), statementDate (string, e.g. "March 2025").
+Return ONLY the JSON array, no prose.` },
+      ],
+    }],
+  });
+
+  const raw = (message.content[0] as { type: "text"; text: string }).text;
+  let rows: { date: string; description: string; amount: string; isCredit: boolean; statementDate: string }[];
+  try {
+    const jsonMatch = raw.match(/\[[\s\S]*\]/);
+    rows = JSON.parse(jsonMatch ? jsonMatch[0] : raw);
+  } catch {
+    res.status(422).json({ error: "Claude could not parse transactions from image", raw });
+    return;
+  }
+
+  // Dedup by hash
+  const existing = await db.hsbcTransaction.findMany({ select: { transactionId: true } });
+  const existingIds = new Set(existing.map((r) => r.transactionId));
+  const batchCounts = new Map<string, number>();
+  const toInsert = [];
+  const duplicates = [];
+
+  for (const row of rows) {
+    const baseId = createHash("sha256")
+      .update(`${row.date}|${row.description}|${row.amount}|${row.isCredit}`)
+      .digest("hex").slice(0, 16);
+    const count = batchCounts.get(baseId) ?? 0;
+    batchCounts.set(baseId, count + 1);
+    const transactionId = count === 0 ? baseId : `${baseId}-${count}`;
+    if (existingIds.has(transactionId)) duplicates.push(transactionId);
+    else toInsert.push({ ...row, transactionId, owner });
+  }
+
+  if (toInsert.length > 0) await db.hsbcTransaction.createMany({ data: toInsert });
+  res.json({ imported: toInsert.length, duplicates });
+});
+```
+
+**3. Process step** — add an `── HSBC ──` block in the `/process` route, same pattern as Barclays/Santander.
+
+**4. Staged count** — add `db.hsbcTransaction.groupBy(...)` to `GET /api/admin/staged`.
+
+**5. Client** — add a `BankUploadCard` for HSBC on `ImportPage`. Accept `image/jpeg,image/png,image/webp`. Pass `owner` in the form body.
+
+### Tips for iteration
+
+- If Claude misparses a page, tweak the prompt text in the route — no regex changes needed.
+- For multi-page statements, have the user upload one page at a time, or accept multiple files and loop.
+- If the image is a PDF, convert it to images server-side with a tool like `sharp` or ask the user to screenshot each page.
+- Always return `raw` in the 422 error response so you can inspect what Claude actually returned.

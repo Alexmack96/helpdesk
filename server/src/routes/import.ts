@@ -13,7 +13,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const MONZO_CATEGORY_MAP: Record<string, string> = {
   "Eating out":     "Food & Social",
-  "Entertainment":  "Activities",
+  "Entertainment":  "Entertainment",
   "Groceries":      "Groceries",
   "Holidays":       "Vacation",
   "Income":         "Bank Sauce",
@@ -167,7 +167,7 @@ importRouter.post("/import/monzo", upload.single("file"), async (req, res) => {
 // Amount block (after "Amount  £") contains foreign amounts first, then N GBP amounts.
 // We take the last N numbers as GBP amounts for N descriptions on that page.
 
-const AMEX_PAGE_HEADER_RE = /^(MR|MRS|MS|MISS)\s+[A-Z].*\d{2}\/\d{2}\/\d{2}$/;
+const AMEX_PAGE_HEADER_RE = /^(?:(?:MR|MRS|MS|MISS|DR)\s+)?[A-Z].*\d{2}\/\d{2}\/\d{2}$/;
 const AMEX_TX_LINE_RE = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\d{1,2})(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\d{1,2})(.+)/;
 const AMEX_PURE_AMOUNT_RE = /^[\d,]+\.\d{2}$/;
 const AMEX_AMOUNT_HEADER = "Amount  £";
@@ -510,7 +510,7 @@ function parseSantanderPdf(text: string): SantanderRow[] {
     const m = line.match(SANTANDER_PERIOD_RE);
     if (m) {
       // Use end date (m[4], m[5], m[6]) for year inference
-      stmtMonth = FULL_MONTH[m[5]] ?? MONTH_IDX[m[5].slice(0,3)] + 1 ?? 0;
+      stmtMonth = FULL_MONTH[m[5]] ?? 0;
       stmtYear  = parseInt(m[6], 10);
       statementDate = `${m[1]} ${m[2]} ${m[3]} to ${m[4]} ${m[5]} ${m[6]}`;
       break;
@@ -619,14 +619,250 @@ importRouter.post("/import/santander", upload.single("file"), async (req, res) =
   res.json({ imported: rows.length });
 });
 
+// ─── HSBC PDF parser ──────────────────────────────────────────────────────────
+//
+// pdf-parse reads HSBC statements column by column, so transactions appear
+// BEFORE "BALANCE BROUGHT FORWARD" in the extracted text.
+// Transaction lines: "DD Mon YY TYPE Description" — date optional (inherited when absent).
+// Multi-line entries: name on one line, reference+amount on the next.
+// CR type = money in; all other types = money out.
+// Balance (when present) = last number on the final line of a transaction group.
+
+const HSBC_DATE_RE   = /^(\d{2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{2})\s*(.*)/;
+const HSBC_TYPE_RE   = /^(BP|OBP|CR|DD|SO|TFR|VIS|ATM|CHQ|FP|DEB|BGC|STO|DR)\s*(.*)/;
+// Properly-formatted currency: 1-3 digits, optional comma-thousand groups, 2 decimal places.
+// This avoids matching reference numbers (e.g. "00021370249583") that don't follow the 1-3 digit prefix rule.
+const HSBC_CCY_RE    = /\d{1,3}(?:,\d{3})*\.\d{2}/g;
+const HSBC_PERIOD_RE = /(\d{1,2})\s+(\w+)(?:\s+(\d{4}))?\s+to\s+(\d{1,2})\s+(\w+)\s+(\d{4})/i;
+const HSBC_SENTINEL  = "BALANCE BROUGHT FORWARD";
+
+// Extract the last two properly-formatted currency amounts from a line.
+// Primary: split on whitespace and find tokens that are exactly a currency value.
+// This prevents reference numbers whose trailing digits fuse with an amount
+// (e.g. "vrp0002137024958 3,000.00 5,144.88" → tokens → "3,000.00", "5,144.88").
+// Fallback: scan for the pattern anywhere in the string, requiring the last match to
+// reach end-of-string. Handles amounts fused directly to descriptions with no space
+// (e.g. "SKY TV51.0011,867.05").
+const HSBC_CCY_EXACT = /^\d{1,3}(?:,\d{3})*\.\d{2}$/;
+
+function extractHsbcAmounts(s: string): { desc: string; amount: string | null; balance: string | null } {
+  // Primary: token-based (requires spaces between columns)
+  const tokens = s.split(/\s+/);
+  const amtIdxs = tokens.reduce<number[]>((acc, t, i) => (HSBC_CCY_EXACT.test(t) ? [...acc, i] : acc), []);
+
+  if (amtIdxs.length >= 2) {
+    const desc = tokens.slice(0, amtIdxs.at(-2)!).join(" ").trim();
+    return { desc: desc || s.trim(), amount: tokens[amtIdxs.at(-2)!], balance: tokens[amtIdxs.at(-1)!] };
+  }
+  if (amtIdxs.length === 1) {
+    const desc = tokens.slice(0, amtIdxs[0]).join(" ").trim();
+    return { desc: desc || s.trim(), amount: tokens[amtIdxs[0]], balance: null };
+  }
+
+  // Fallback: scan (handles fused descriptions like "SKY TV51.0011,867.05")
+  const matches = [...s.matchAll(new RegExp(HSBC_CCY_RE.source, "g"))];
+  if (matches.length === 0) return { desc: s.trim(), amount: null, balance: null };
+
+  const last = matches.at(-1)!;
+  if (last.index! + last[0].length !== s.length) return { desc: s.trim(), amount: null, balance: null };
+
+  if (matches.length >= 2) {
+    const second = matches.at(-2)!;
+    const desc = s.slice(0, second.index!).trim();
+    return { desc: desc || s.trim(), amount: second[0], balance: last[0] };
+  }
+
+  const desc = s.slice(0, last.index!).trim();
+  return { desc: desc || s.trim(), amount: last[0], balance: null };
+}
+
+interface HsbcRow {
+  date:          string;
+  paymentType:   string;
+  description:   string;
+  moneyOut:      string | null;
+  moneyIn:       string | null;
+  balance:       string | null;
+  statementDate: string;
+}
+
+interface HsbcPending {
+  date:        string;
+  paymentType: string;
+  lines:       string[];  // raw text lines accumulated (date+type prefix already stripped)
+}
+
+function parseHsbcPdf(text: string): HsbcRow[] {
+  const allLines = text.split("\n").map((l) => l.trim()).filter((l) => l.length > 0);
+
+  // Statement date appears after the transactions in pdf-parse output
+  let statementDate = "";
+  let stmtMonth = 0;
+  let stmtYear  = 0;
+  for (const line of allLines) {
+    const m = line.match(HSBC_PERIOD_RE);
+    if (m) {
+      stmtMonth    = FULL_MONTH[m[5]] ?? 0;
+      stmtYear     = parseInt(m[6], 10);
+      statementDate = m[3]
+        ? `${m[1]} ${m[2]} ${m[3]} to ${m[4]} ${m[5]} ${m[6]}`
+        : `${m[1]} ${m[2]} to ${m[4]} ${m[5]} ${m[6]}`;
+      break;
+    }
+  }
+  if (!stmtMonth) throw new Error("Could not find statement period in HSBC PDF");
+
+  const rows: HsbcRow[] = [];
+  let current: HsbcPending | null = null;
+  let currentDate = "";
+
+  function flush() {
+    if (!current || current.lines.length === 0) { current = null; return; }
+
+    // Combine all lines; extract trailing currency amounts
+    const full = current.lines.join(" ");
+    const { desc: rawDesc, amount, balance } = extractHsbcAmounts(full);
+    const desc = rawDesc.replace(/\s+/g, " ").trim();
+
+    const isCredit = current.paymentType === "CR";
+    rows.push({
+      date:          current.date,
+      paymentType:   current.paymentType,
+      description:   desc || current.paymentType,
+      moneyOut:      !isCredit && amount ? amount : null,
+      moneyIn:       isCredit && amount  ? amount : null,
+      balance,
+      statementDate,
+    });
+    current = null;
+  }
+
+  for (const line of allLines) {
+    if (line.includes(HSBC_SENTINEL)) { flush(); break; }
+
+    // Skip noise lines (table header, address, etc.) before transactions start
+    if (/^(Date\s+Paym|Opening Balance|Payments In|Payments Out|Closing Balance|Your HSBC|Contact tel|Text phone|www\.|Account Summary|International Bank|Bank Identifier|Account Name)/i.test(line)) continue;
+
+    // Check for date prefix
+    const dateMatch = line.match(HSBC_DATE_RE);
+    if (dateMatch) {
+      const [, day, month, yr, rest] = dateMatch;
+      currentDate = toIsoDateShort(month, day, stmtMonth, stmtYear);
+      // Ignore override: 2-digit year → 2000+yr
+      const fullYear = 2000 + parseInt(yr, 10);
+      const monthIdx = MONTH_IDX[month];
+      currentDate = `${fullYear}-${String(monthIdx + 1).padStart(2, "0")}-${String(+day).padStart(2, "0")}`;
+
+      const typeMatch = rest.match(HSBC_TYPE_RE);
+      if (typeMatch) {
+        flush();
+        const [, type, remainder] = typeMatch;
+        current = { date: currentDate, paymentType: type, lines: remainder ? [remainder] : [] };
+      } else if (/^BALANCE/.test(rest)) {
+        // BALANCE BROUGHT/CARRIED FORWARD lines — skip
+        continue;
+      } else if (rest.length > 0) {
+        // Date line with no type code — unlikely but append to current
+        if (current) current.lines.push(rest);
+      }
+      continue;
+    }
+
+    // Check for type-only line (no date)
+    const typeMatch = line.match(HSBC_TYPE_RE);
+    if (typeMatch) {
+      flush();
+      const [, type, remainder] = typeMatch;
+      current = { date: currentDate, paymentType: type, lines: remainder ? [remainder] : [] };
+      continue;
+    }
+
+    // Continuation line
+    if (current) current.lines.push(line);
+  }
+
+  flush();
+  return rows;
+}
+
+// ─── POST /api/admin/import/hsbc ─────────────────────────────────────────────
+
+// Custom pdf-parse renderer for HSBC statements.
+// The default renderer concatenates same-line items with no separator, causing
+// reference numbers (e.g. vrp0002137024958) to fuse with the amount column.
+// This renderer inserts a space whenever the X gap between adjacent items on
+// the same line exceeds the width of the previous item (i.e. there's a column gap).
+async function hsbcPageRender(pageData: { getTextContent: (opts?: object) => Promise<{ items: Array<{ str: string; transform: number[]; width?: number }> }> }) {
+  const textContent = await pageData.getTextContent({ normalizeWhitespace: false, disableCombineTextItems: false });
+  let lastY: number | null = null;
+  let lastX: number | null = null;
+  let lastWidth = 0;
+  let text = "";
+  for (const item of textContent.items) {
+    const x = item.transform[4];
+    const y = item.transform[5];
+    if (lastY === null) {
+      text += item.str;
+    } else if (Math.abs(y - lastY) > 1) {
+      text += "\n" + item.str;
+    } else {
+      const gap = x - (lastX! + lastWidth);
+      text += (gap > 1 ? " " : "") + item.str;
+    }
+    lastY = y;
+    lastX = x;
+    lastWidth = item.width ?? 0;
+  }
+  return text;
+}
+
+importRouter.post("/import/hsbc", upload.single("file"), async (req, res) => {
+  if (!req.file) { res.status(400).json({ error: "No file uploaded" }); return; }
+  const owner = VALID_OWNERS.has(req.body.owner) ? req.body.owner : "Joint";
+
+  let text: string;
+  try { text = (await pdfParse(req.file.buffer, { pagerender: hsbcPageRender })).text; }
+  catch { res.status(400).json({ error: "Failed to extract text from PDF" }); return; }
+
+  let rows: HsbcRow[];
+  try { rows = parseHsbcPdf(text); }
+  catch (err) {
+    res.status(400).json({ error: err instanceof Error ? err.message : "Failed to parse HSBC statement" });
+    return;
+  }
+
+  const existing = await db.hsbcTransaction.findMany({ select: { transactionId: true } });
+  const existingIds = new Set(existing.map((r) => r.transactionId));
+  const batchCounts = new Map<string, number>();
+  const toInsert: (HsbcRow & { transactionId: string; owner: string })[] = [];
+  const duplicates: string[] = [];
+
+  for (const row of rows) {
+    const amount = row.moneyIn ?? row.moneyOut ?? "";
+    const baseId = createHash("sha256")
+      .update(`${row.date}|${row.paymentType}|${row.description}|${amount}`)
+      .digest("hex")
+      .slice(0, 16);
+    const count = batchCounts.get(baseId) ?? 0;
+    batchCounts.set(baseId, count + 1);
+    const transactionId = count === 0 ? baseId : `${baseId}-${count}`;
+    if (existingIds.has(transactionId)) duplicates.push(transactionId);
+    else toInsert.push({ ...row, transactionId, owner });
+  }
+
+  if (toInsert.length > 0) await db.hsbcTransaction.createMany({ data: toInsert });
+  res.json({ imported: toInsert.length, duplicates });
+});
+
 // ─── GET /api/admin/staged ───────────────────────────────────────────────────
 
 importRouter.get("/staged", async (_req, res) => {
-  const [monzo, amex, barclays, santander] = await Promise.all([
+  const [monzo, amex, barclays, santander, hsbc] = await Promise.all([
     db.monzoTransaction.groupBy({ by: ["status"], _count: true }),
     db.amexTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.barclaysTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.santanderTransaction.groupBy({ by: ["status", "owner"], _count: true }),
+    db.hsbcTransaction.groupBy({ by: ["status", "owner"], _count: true }),
   ]);
 
   function toCounts(rows: { status: string; _count: number }[]) {
@@ -646,9 +882,10 @@ importRouter.get("/staged", async (_req, res) => {
 
   res.json({
     monzo:     toCounts(monzo.map((r) => ({ status: r.status, _count: r._count }))),
-    amex:      { ...toCounts(amex.map((r) => ({ status: r.status, _count: r._count }))), byOwner: toOwnerCounts(amex.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
-    barclays:  { ...toCounts(barclays.map((r) => ({ status: r.status, _count: r._count }))), byOwner: toOwnerCounts(barclays.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
+    amex:      { ...toCounts(amex.map((r) => ({ status: r.status, _count: r._count }))),      byOwner: toOwnerCounts(amex.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
+    barclays:  { ...toCounts(barclays.map((r) => ({ status: r.status, _count: r._count }))),  byOwner: toOwnerCounts(barclays.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
     santander: { ...toCounts(santander.map((r) => ({ status: r.status, _count: r._count }))), byOwner: toOwnerCounts(santander.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
+    hsbc:      { ...toCounts(hsbc.map((r) => ({ status: r.status, _count: r._count }))),      byOwner: toOwnerCounts(hsbc.map((r) => ({ status: r.status, owner: r.owner, _count: r._count }))) },
   });
 });
 
@@ -678,8 +915,10 @@ importRouter.post("/process", async (_req, res) => {
       const categoryName = resolveCategory(row.category, row.name);
       const category = await findCategory(categoryName);
       const owner = resolveOwner(categoryName, row.name);
-      await db.transaction.create({
-        data: { description: row.name, amount, type, date, categoryId: category.id, externalId: `monzo:${row.transactionId}`, owner },
+      const monzoExtId = `monzo:${row.transactionId}`;
+      const monzoExists = await db.transaction.findUnique({ where: { externalId: monzoExtId }, select: { id: true } });
+      if (!monzoExists) await db.transaction.create({
+        data: { description: row.name, amount, type, date, categoryId: category.id, externalId: monzoExtId, owner },
       });
       next = "processed";
       processed++;
@@ -699,14 +938,16 @@ importRouter.post("/process", async (_req, res) => {
     } else {
       const categoryName = resolveCategoryByMerchant(row.description);
       const category = await findCategory(categoryName);
-      await db.transaction.create({
+      const amexExtId = `amex:${row.transactionId}`;
+      const amexExists = await db.transaction.findUnique({ where: { externalId: amexExtId }, select: { id: true } });
+      if (!amexExists) await db.transaction.create({
         data: {
           description: row.description,
           amount:      amountNum,
           type:        row.isCredit ? "Income" : "Expense",
           date:        new Date(row.transactionDate),
           categoryId:  category.id,
-          externalId:  `amex:${row.transactionId}`,
+          externalId:  amexExtId,
           owner:       row.owner as "Alex" | "Casey" | "Joint",
         },
       });
@@ -732,14 +973,16 @@ importRouter.post("/process", async (_req, res) => {
       } else {
         const categoryName = resolveCategoryByMerchant(row.description);
         const category = await findCategory(categoryName);
-        await db.transaction.create({
+        const barclaysExtId = `barclays:${row.id}`;
+        const barclaysExists = await db.transaction.findUnique({ where: { externalId: barclaysExtId }, select: { id: true } });
+        if (!barclaysExists) await db.transaction.create({
           data: {
             description: row.description,
             amount:      amountNum,
             type:        "Expense",
             date:        new Date(row.date),
             categoryId:  category.id,
-            externalId:  `barclays:${row.id}`,
+            externalId:  barclaysExtId,
             owner:       row.owner as "Alex" | "Casey" | "Joint",
           },
         });
@@ -764,14 +1007,16 @@ importRouter.post("/process", async (_req, res) => {
     } else {
       const categoryName = resolveCategoryByMerchant(row.description);
       const category = await findCategory(categoryName);
-      await db.transaction.create({
+      const santanderExtId = `santander:${row.id}`;
+      const santanderExists = await db.transaction.findUnique({ where: { externalId: santanderExtId }, select: { id: true } });
+      if (!santanderExists) await db.transaction.create({
         data: {
           description: row.description,
           amount:      amountNum,
           type:        isIncome ? "Income" : "Expense",
           date:        new Date(row.date),
           categoryId:  category.id,
-          externalId:  `santander:${row.id}`,
+          externalId:  santanderExtId,
           owner:       row.owner as "Alex" | "Casey" | "Joint",
         },
       });
@@ -779,6 +1024,39 @@ importRouter.post("/process", async (_req, res) => {
       processed++;
     }
     await db.santanderTransaction.update({ where: { id: row.id }, data: { status: next } });
+  }
+
+  // ── HSBC ───────────────────────────────────────────────────────────────────
+  const pendingHsbc = await db.hsbcTransaction.findMany({ where: { status: "pending" } });
+
+  for (const row of pendingHsbc) {
+    const isIncome = row.moneyIn !== null;
+    const amountStr = row.moneyIn ?? row.moneyOut ?? "";
+    const amountNum = parseFloat(amountStr.replace(/,/g, ""));
+    let next: StagedStatus;
+    if (isNaN(amountNum) || amountNum === 0) {
+      next = "skipped";
+      skipped++;
+    } else {
+      const categoryName = resolveCategoryByMerchant(row.description);
+      const category = await findCategory(categoryName);
+      const hsbcExtId = `hsbc:${row.transactionId}`;
+      const hsbcExists = await db.transaction.findUnique({ where: { externalId: hsbcExtId }, select: { id: true } });
+      if (!hsbcExists) await db.transaction.create({
+        data: {
+          description: row.description,
+          amount:      amountNum,
+          type:        isIncome ? "Income" : "Expense",
+          date:        new Date(row.date),
+          categoryId:  category.id,
+          externalId:  hsbcExtId,
+          owner:       row.owner as "Alex" | "Casey" | "Joint",
+        },
+      });
+      next = "processed";
+      processed++;
+    }
+    await db.hsbcTransaction.update({ where: { id: row.id }, data: { status: next } });
   }
 
   res.json({ processed, skipped });

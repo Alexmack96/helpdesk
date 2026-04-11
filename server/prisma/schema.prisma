@@ -146,6 +146,23 @@ model SantanderTransaction {
   @@map("santander_transaction")
 }
 
+model HsbcTransaction {
+  id            Int      @id @default(autoincrement())
+  transactionId String   @unique
+  date          String
+  paymentType   String
+  description   String
+  moneyOut      String?
+  moneyIn       String?
+  balance       String?
+  statementDate String
+  owner         String   @default("Joint")
+  importedAt    DateTime @default(now())
+  status        String   @default("pending")
+
+  @@map("hsbc_transaction")
+}
+
 model Session {
   id        String   @id
   expiresAt DateTime

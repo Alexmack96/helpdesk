@@ -5,6 +5,7 @@ import { db } from "../db/client.js";
 const SYSTEM_CATEGORIES: Record<string, { color: string; isFixed: boolean; isDirectDebit?: boolean }> = {
   "Activities":     { color: "#8b5cf6", isFixed: false },
   "Bank Sauce":     { color: "#0ea5e9", isFixed: false },
+  "Entertainment":  { color: "#7C3AED", isFixed: false },
   "Food & Social":  { color: "#fb923c", isFixed: false },
   "Groceries":      { color: "#22c55e", isFixed: false },
   "Takeout":        { color: "#ef4444", isFixed: false },
@@ -18,18 +19,23 @@ const SYSTEM_CATEGORIES: Record<string, { color: string; isFixed: boolean; isDir
 
 export async function initSystemCategories() {
   for (const [name, { color, isFixed, isDirectDebit }] of Object.entries(SYSTEM_CATEGORIES)) {
-    await db.category.upsert({
-      where: { name },
-      create: { name, color, isFixed, isDirectDebit: isDirectDebit ?? false },
-      update: { isFixed, isDirectDebit: isDirectDebit ?? false },
-    });
+    try {
+      await db.category.upsert({
+        where: { name },
+        create: { name, color, isFixed, isDirectDebit: isDirectDebit ?? false },
+        update: { isFixed, isDirectDebit: isDirectDebit ?? false },
+      });
+      console.log(`[initSystemCategories] upserted: ${name}`);
+    } catch (err) {
+      console.error(`[initSystemCategories] failed for ${name}:`, err);
+    }
   }
 }
 
 export async function mapMonzoCategories() {
   const monzoMap: Record<string, string> = {
     "Eating out":    "Food & Social",
-    "Entertainment": "Activities",
+    "Entertainment": "Entertainment",
     "Golf":          "Activities",
     "Holidays":      "Vacation",
     "Income":        "Bank Sauce",

@@ -49,6 +49,11 @@ export type BarclaysTransaction = $Result.DefaultSelection<Prisma.$BarclaysTrans
  */
 export type SantanderTransaction = $Result.DefaultSelection<Prisma.$SantanderTransactionPayload>
 /**
+ * Model HsbcTransaction
+ * 
+ */
+export type HsbcTransaction = $Result.DefaultSelection<Prisma.$HsbcTransactionPayload>
+/**
  * Model Session
  * 
  */
@@ -340,6 +345,16 @@ export class PrismaClient<
     * ```
     */
   get santanderTransaction(): Prisma.SantanderTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.hsbcTransaction`: Exposes CRUD operations for the **HsbcTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HsbcTransactions
+    * const hsbcTransactions = await prisma.hsbcTransaction.findMany()
+    * ```
+    */
+  get hsbcTransaction(): Prisma.HsbcTransactionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.session`: Exposes CRUD operations for the **Session** model.
@@ -851,6 +866,7 @@ export namespace Prisma {
     AmexTransaction: 'AmexTransaction',
     BarclaysTransaction: 'BarclaysTransaction',
     SantanderTransaction: 'SantanderTransaction',
+    HsbcTransaction: 'HsbcTransaction',
     Session: 'Session',
     Account: 'Account',
     Note: 'Note',
@@ -873,7 +889,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "session" | "account" | "note" | "tab" | "investmentAccount" | "investmentSnapshot" | "verification"
+      modelProps: "user" | "category" | "transaction" | "monzoTransaction" | "amexTransaction" | "barclaysTransaction" | "santanderTransaction" | "hsbcTransaction" | "session" | "account" | "note" | "tab" | "investmentAccount" | "investmentSnapshot" | "verification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1392,6 +1408,80 @@ export namespace Prisma {
           count: {
             args: Prisma.SantanderTransactionCountArgs<ExtArgs>
             result: $Utils.Optional<SantanderTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
+      HsbcTransaction: {
+        payload: Prisma.$HsbcTransactionPayload<ExtArgs>
+        fields: Prisma.HsbcTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HsbcTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HsbcTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.HsbcTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HsbcTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.HsbcTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.HsbcTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.HsbcTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HsbcTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.HsbcTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload>
+          }
+          update: {
+            args: Prisma.HsbcTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.HsbcTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HsbcTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HsbcTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.HsbcTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HsbcTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.HsbcTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHsbcTransaction>
+          }
+          groupBy: {
+            args: Prisma.HsbcTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HsbcTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HsbcTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<HsbcTransactionCountAggregateOutputType> | number
           }
         }
       }
@@ -2028,6 +2118,7 @@ export namespace Prisma {
     amexTransaction?: AmexTransactionOmit
     barclaysTransaction?: BarclaysTransactionOmit
     santanderTransaction?: SantanderTransactionOmit
+    hsbcTransaction?: HsbcTransactionOmit
     session?: SessionOmit
     account?: AccountOmit
     note?: NoteOmit
@@ -10040,6 +10131,1129 @@ export namespace Prisma {
 
 
   /**
+   * Model HsbcTransaction
+   */
+
+  export type AggregateHsbcTransaction = {
+    _count: HsbcTransactionCountAggregateOutputType | null
+    _avg: HsbcTransactionAvgAggregateOutputType | null
+    _sum: HsbcTransactionSumAggregateOutputType | null
+    _min: HsbcTransactionMinAggregateOutputType | null
+    _max: HsbcTransactionMaxAggregateOutputType | null
+  }
+
+  export type HsbcTransactionAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type HsbcTransactionSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type HsbcTransactionMinAggregateOutputType = {
+    id: number | null
+    transactionId: string | null
+    date: string | null
+    paymentType: string | null
+    description: string | null
+    moneyOut: string | null
+    moneyIn: string | null
+    balance: string | null
+    statementDate: string | null
+    owner: string | null
+    importedAt: Date | null
+    status: string | null
+  }
+
+  export type HsbcTransactionMaxAggregateOutputType = {
+    id: number | null
+    transactionId: string | null
+    date: string | null
+    paymentType: string | null
+    description: string | null
+    moneyOut: string | null
+    moneyIn: string | null
+    balance: string | null
+    statementDate: string | null
+    owner: string | null
+    importedAt: Date | null
+    status: string | null
+  }
+
+  export type HsbcTransactionCountAggregateOutputType = {
+    id: number
+    transactionId: number
+    date: number
+    paymentType: number
+    description: number
+    moneyOut: number
+    moneyIn: number
+    balance: number
+    statementDate: number
+    owner: number
+    importedAt: number
+    status: number
+    _all: number
+  }
+
+
+  export type HsbcTransactionAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type HsbcTransactionSumAggregateInputType = {
+    id?: true
+  }
+
+  export type HsbcTransactionMinAggregateInputType = {
+    id?: true
+    transactionId?: true
+    date?: true
+    paymentType?: true
+    description?: true
+    moneyOut?: true
+    moneyIn?: true
+    balance?: true
+    statementDate?: true
+    owner?: true
+    importedAt?: true
+    status?: true
+  }
+
+  export type HsbcTransactionMaxAggregateInputType = {
+    id?: true
+    transactionId?: true
+    date?: true
+    paymentType?: true
+    description?: true
+    moneyOut?: true
+    moneyIn?: true
+    balance?: true
+    statementDate?: true
+    owner?: true
+    importedAt?: true
+    status?: true
+  }
+
+  export type HsbcTransactionCountAggregateInputType = {
+    id?: true
+    transactionId?: true
+    date?: true
+    paymentType?: true
+    description?: true
+    moneyOut?: true
+    moneyIn?: true
+    balance?: true
+    statementDate?: true
+    owner?: true
+    importedAt?: true
+    status?: true
+    _all?: true
+  }
+
+  export type HsbcTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HsbcTransaction to aggregate.
+     */
+    where?: HsbcTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HsbcTransactions to fetch.
+     */
+    orderBy?: HsbcTransactionOrderByWithRelationInput | HsbcTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HsbcTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HsbcTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HsbcTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HsbcTransactions
+    **/
+    _count?: true | HsbcTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HsbcTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HsbcTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HsbcTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HsbcTransactionMaxAggregateInputType
+  }
+
+  export type GetHsbcTransactionAggregateType<T extends HsbcTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateHsbcTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHsbcTransaction[P]>
+      : GetScalarType<T[P], AggregateHsbcTransaction[P]>
+  }
+
+
+
+
+  export type HsbcTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HsbcTransactionWhereInput
+    orderBy?: HsbcTransactionOrderByWithAggregationInput | HsbcTransactionOrderByWithAggregationInput[]
+    by: HsbcTransactionScalarFieldEnum[] | HsbcTransactionScalarFieldEnum
+    having?: HsbcTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HsbcTransactionCountAggregateInputType | true
+    _avg?: HsbcTransactionAvgAggregateInputType
+    _sum?: HsbcTransactionSumAggregateInputType
+    _min?: HsbcTransactionMinAggregateInputType
+    _max?: HsbcTransactionMaxAggregateInputType
+  }
+
+  export type HsbcTransactionGroupByOutputType = {
+    id: number
+    transactionId: string
+    date: string
+    paymentType: string
+    description: string
+    moneyOut: string | null
+    moneyIn: string | null
+    balance: string | null
+    statementDate: string
+    owner: string
+    importedAt: Date
+    status: string
+    _count: HsbcTransactionCountAggregateOutputType | null
+    _avg: HsbcTransactionAvgAggregateOutputType | null
+    _sum: HsbcTransactionSumAggregateOutputType | null
+    _min: HsbcTransactionMinAggregateOutputType | null
+    _max: HsbcTransactionMaxAggregateOutputType | null
+  }
+
+  type GetHsbcTransactionGroupByPayload<T extends HsbcTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HsbcTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HsbcTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HsbcTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], HsbcTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HsbcTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    paymentType?: boolean
+    description?: boolean
+    moneyOut?: boolean
+    moneyIn?: boolean
+    balance?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["hsbcTransaction"]>
+
+  export type HsbcTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    paymentType?: boolean
+    description?: boolean
+    moneyOut?: boolean
+    moneyIn?: boolean
+    balance?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["hsbcTransaction"]>
+
+  export type HsbcTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    paymentType?: boolean
+    description?: boolean
+    moneyOut?: boolean
+    moneyIn?: boolean
+    balance?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["hsbcTransaction"]>
+
+  export type HsbcTransactionSelectScalar = {
+    id?: boolean
+    transactionId?: boolean
+    date?: boolean
+    paymentType?: boolean
+    description?: boolean
+    moneyOut?: boolean
+    moneyIn?: boolean
+    balance?: boolean
+    statementDate?: boolean
+    owner?: boolean
+    importedAt?: boolean
+    status?: boolean
+  }
+
+  export type HsbcTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "transactionId" | "date" | "paymentType" | "description" | "moneyOut" | "moneyIn" | "balance" | "statementDate" | "owner" | "importedAt" | "status", ExtArgs["result"]["hsbcTransaction"]>
+
+  export type $HsbcTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HsbcTransaction"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      transactionId: string
+      date: string
+      paymentType: string
+      description: string
+      moneyOut: string | null
+      moneyIn: string | null
+      balance: string | null
+      statementDate: string
+      owner: string
+      importedAt: Date
+      status: string
+    }, ExtArgs["result"]["hsbcTransaction"]>
+    composites: {}
+  }
+
+  type HsbcTransactionGetPayload<S extends boolean | null | undefined | HsbcTransactionDefaultArgs> = $Result.GetResult<Prisma.$HsbcTransactionPayload, S>
+
+  type HsbcTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HsbcTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HsbcTransactionCountAggregateInputType | true
+    }
+
+  export interface HsbcTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HsbcTransaction'], meta: { name: 'HsbcTransaction' } }
+    /**
+     * Find zero or one HsbcTransaction that matches the filter.
+     * @param {HsbcTransactionFindUniqueArgs} args - Arguments to find a HsbcTransaction
+     * @example
+     * // Get one HsbcTransaction
+     * const hsbcTransaction = await prisma.hsbcTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HsbcTransactionFindUniqueArgs>(args: SelectSubset<T, HsbcTransactionFindUniqueArgs<ExtArgs>>): Prisma__HsbcTransactionClient<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HsbcTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HsbcTransactionFindUniqueOrThrowArgs} args - Arguments to find a HsbcTransaction
+     * @example
+     * // Get one HsbcTransaction
+     * const hsbcTransaction = await prisma.hsbcTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HsbcTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, HsbcTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HsbcTransactionClient<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HsbcTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HsbcTransactionFindFirstArgs} args - Arguments to find a HsbcTransaction
+     * @example
+     * // Get one HsbcTransaction
+     * const hsbcTransaction = await prisma.hsbcTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HsbcTransactionFindFirstArgs>(args?: SelectSubset<T, HsbcTransactionFindFirstArgs<ExtArgs>>): Prisma__HsbcTransactionClient<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HsbcTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HsbcTransactionFindFirstOrThrowArgs} args - Arguments to find a HsbcTransaction
+     * @example
+     * // Get one HsbcTransaction
+     * const hsbcTransaction = await prisma.hsbcTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HsbcTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, HsbcTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__HsbcTransactionClient<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HsbcTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HsbcTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HsbcTransactions
+     * const hsbcTransactions = await prisma.hsbcTransaction.findMany()
+     * 
+     * // Get first 10 HsbcTransactions
+     * const hsbcTransactions = await prisma.hsbcTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const hsbcTransactionWithIdOnly = await prisma.hsbcTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HsbcTransactionFindManyArgs>(args?: SelectSubset<T, HsbcTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HsbcTransaction.
+     * @param {HsbcTransactionCreateArgs} args - Arguments to create a HsbcTransaction.
+     * @example
+     * // Create one HsbcTransaction
+     * const HsbcTransaction = await prisma.hsbcTransaction.create({
+     *   data: {
+     *     // ... data to create a HsbcTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends HsbcTransactionCreateArgs>(args: SelectSubset<T, HsbcTransactionCreateArgs<ExtArgs>>): Prisma__HsbcTransactionClient<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HsbcTransactions.
+     * @param {HsbcTransactionCreateManyArgs} args - Arguments to create many HsbcTransactions.
+     * @example
+     * // Create many HsbcTransactions
+     * const hsbcTransaction = await prisma.hsbcTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HsbcTransactionCreateManyArgs>(args?: SelectSubset<T, HsbcTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HsbcTransactions and returns the data saved in the database.
+     * @param {HsbcTransactionCreateManyAndReturnArgs} args - Arguments to create many HsbcTransactions.
+     * @example
+     * // Create many HsbcTransactions
+     * const hsbcTransaction = await prisma.hsbcTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HsbcTransactions and only return the `id`
+     * const hsbcTransactionWithIdOnly = await prisma.hsbcTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HsbcTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, HsbcTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HsbcTransaction.
+     * @param {HsbcTransactionDeleteArgs} args - Arguments to delete one HsbcTransaction.
+     * @example
+     * // Delete one HsbcTransaction
+     * const HsbcTransaction = await prisma.hsbcTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one HsbcTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HsbcTransactionDeleteArgs>(args: SelectSubset<T, HsbcTransactionDeleteArgs<ExtArgs>>): Prisma__HsbcTransactionClient<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HsbcTransaction.
+     * @param {HsbcTransactionUpdateArgs} args - Arguments to update one HsbcTransaction.
+     * @example
+     * // Update one HsbcTransaction
+     * const hsbcTransaction = await prisma.hsbcTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HsbcTransactionUpdateArgs>(args: SelectSubset<T, HsbcTransactionUpdateArgs<ExtArgs>>): Prisma__HsbcTransactionClient<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HsbcTransactions.
+     * @param {HsbcTransactionDeleteManyArgs} args - Arguments to filter HsbcTransactions to delete.
+     * @example
+     * // Delete a few HsbcTransactions
+     * const { count } = await prisma.hsbcTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HsbcTransactionDeleteManyArgs>(args?: SelectSubset<T, HsbcTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HsbcTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HsbcTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HsbcTransactions
+     * const hsbcTransaction = await prisma.hsbcTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HsbcTransactionUpdateManyArgs>(args: SelectSubset<T, HsbcTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HsbcTransactions and returns the data updated in the database.
+     * @param {HsbcTransactionUpdateManyAndReturnArgs} args - Arguments to update many HsbcTransactions.
+     * @example
+     * // Update many HsbcTransactions
+     * const hsbcTransaction = await prisma.hsbcTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HsbcTransactions and only return the `id`
+     * const hsbcTransactionWithIdOnly = await prisma.hsbcTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HsbcTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, HsbcTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HsbcTransaction.
+     * @param {HsbcTransactionUpsertArgs} args - Arguments to update or create a HsbcTransaction.
+     * @example
+     * // Update or create a HsbcTransaction
+     * const hsbcTransaction = await prisma.hsbcTransaction.upsert({
+     *   create: {
+     *     // ... data to create a HsbcTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HsbcTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HsbcTransactionUpsertArgs>(args: SelectSubset<T, HsbcTransactionUpsertArgs<ExtArgs>>): Prisma__HsbcTransactionClient<$Result.GetResult<Prisma.$HsbcTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HsbcTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HsbcTransactionCountArgs} args - Arguments to filter HsbcTransactions to count.
+     * @example
+     * // Count the number of HsbcTransactions
+     * const count = await prisma.hsbcTransaction.count({
+     *   where: {
+     *     // ... the filter for the HsbcTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends HsbcTransactionCountArgs>(
+      args?: Subset<T, HsbcTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HsbcTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HsbcTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HsbcTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HsbcTransactionAggregateArgs>(args: Subset<T, HsbcTransactionAggregateArgs>): Prisma.PrismaPromise<GetHsbcTransactionAggregateType<T>>
+
+    /**
+     * Group by HsbcTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HsbcTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HsbcTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HsbcTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: HsbcTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HsbcTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHsbcTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HsbcTransaction model
+   */
+  readonly fields: HsbcTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HsbcTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HsbcTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HsbcTransaction model
+   */
+  interface HsbcTransactionFieldRefs {
+    readonly id: FieldRef<"HsbcTransaction", 'Int'>
+    readonly transactionId: FieldRef<"HsbcTransaction", 'String'>
+    readonly date: FieldRef<"HsbcTransaction", 'String'>
+    readonly paymentType: FieldRef<"HsbcTransaction", 'String'>
+    readonly description: FieldRef<"HsbcTransaction", 'String'>
+    readonly moneyOut: FieldRef<"HsbcTransaction", 'String'>
+    readonly moneyIn: FieldRef<"HsbcTransaction", 'String'>
+    readonly balance: FieldRef<"HsbcTransaction", 'String'>
+    readonly statementDate: FieldRef<"HsbcTransaction", 'String'>
+    readonly owner: FieldRef<"HsbcTransaction", 'String'>
+    readonly importedAt: FieldRef<"HsbcTransaction", 'DateTime'>
+    readonly status: FieldRef<"HsbcTransaction", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HsbcTransaction findUnique
+   */
+  export type HsbcTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which HsbcTransaction to fetch.
+     */
+    where: HsbcTransactionWhereUniqueInput
+  }
+
+  /**
+   * HsbcTransaction findUniqueOrThrow
+   */
+  export type HsbcTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which HsbcTransaction to fetch.
+     */
+    where: HsbcTransactionWhereUniqueInput
+  }
+
+  /**
+   * HsbcTransaction findFirst
+   */
+  export type HsbcTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which HsbcTransaction to fetch.
+     */
+    where?: HsbcTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HsbcTransactions to fetch.
+     */
+    orderBy?: HsbcTransactionOrderByWithRelationInput | HsbcTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HsbcTransactions.
+     */
+    cursor?: HsbcTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HsbcTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HsbcTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HsbcTransactions.
+     */
+    distinct?: HsbcTransactionScalarFieldEnum | HsbcTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * HsbcTransaction findFirstOrThrow
+   */
+  export type HsbcTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which HsbcTransaction to fetch.
+     */
+    where?: HsbcTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HsbcTransactions to fetch.
+     */
+    orderBy?: HsbcTransactionOrderByWithRelationInput | HsbcTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HsbcTransactions.
+     */
+    cursor?: HsbcTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HsbcTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HsbcTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HsbcTransactions.
+     */
+    distinct?: HsbcTransactionScalarFieldEnum | HsbcTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * HsbcTransaction findMany
+   */
+  export type HsbcTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * Filter, which HsbcTransactions to fetch.
+     */
+    where?: HsbcTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HsbcTransactions to fetch.
+     */
+    orderBy?: HsbcTransactionOrderByWithRelationInput | HsbcTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HsbcTransactions.
+     */
+    cursor?: HsbcTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HsbcTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HsbcTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HsbcTransactions.
+     */
+    distinct?: HsbcTransactionScalarFieldEnum | HsbcTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * HsbcTransaction create
+   */
+  export type HsbcTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a HsbcTransaction.
+     */
+    data: XOR<HsbcTransactionCreateInput, HsbcTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * HsbcTransaction createMany
+   */
+  export type HsbcTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HsbcTransactions.
+     */
+    data: HsbcTransactionCreateManyInput | HsbcTransactionCreateManyInput[]
+  }
+
+  /**
+   * HsbcTransaction createManyAndReturn
+   */
+  export type HsbcTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many HsbcTransactions.
+     */
+    data: HsbcTransactionCreateManyInput | HsbcTransactionCreateManyInput[]
+  }
+
+  /**
+   * HsbcTransaction update
+   */
+  export type HsbcTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a HsbcTransaction.
+     */
+    data: XOR<HsbcTransactionUpdateInput, HsbcTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which HsbcTransaction to update.
+     */
+    where: HsbcTransactionWhereUniqueInput
+  }
+
+  /**
+   * HsbcTransaction updateMany
+   */
+  export type HsbcTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HsbcTransactions.
+     */
+    data: XOR<HsbcTransactionUpdateManyMutationInput, HsbcTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which HsbcTransactions to update
+     */
+    where?: HsbcTransactionWhereInput
+    /**
+     * Limit how many HsbcTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HsbcTransaction updateManyAndReturn
+   */
+  export type HsbcTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update HsbcTransactions.
+     */
+    data: XOR<HsbcTransactionUpdateManyMutationInput, HsbcTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which HsbcTransactions to update
+     */
+    where?: HsbcTransactionWhereInput
+    /**
+     * Limit how many HsbcTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HsbcTransaction upsert
+   */
+  export type HsbcTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the HsbcTransaction to update in case it exists.
+     */
+    where: HsbcTransactionWhereUniqueInput
+    /**
+     * In case the HsbcTransaction found by the `where` argument doesn't exist, create a new HsbcTransaction with this data.
+     */
+    create: XOR<HsbcTransactionCreateInput, HsbcTransactionUncheckedCreateInput>
+    /**
+     * In case the HsbcTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HsbcTransactionUpdateInput, HsbcTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * HsbcTransaction delete
+   */
+  export type HsbcTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+    /**
+     * Filter which HsbcTransaction to delete.
+     */
+    where: HsbcTransactionWhereUniqueInput
+  }
+
+  /**
+   * HsbcTransaction deleteMany
+   */
+  export type HsbcTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HsbcTransactions to delete
+     */
+    where?: HsbcTransactionWhereInput
+    /**
+     * Limit how many HsbcTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HsbcTransaction without action
+   */
+  export type HsbcTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HsbcTransaction
+     */
+    select?: HsbcTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HsbcTransaction
+     */
+    omit?: HsbcTransactionOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model Session
    */
 
@@ -17807,6 +19021,24 @@ export namespace Prisma {
   export type SantanderTransactionScalarFieldEnum = (typeof SantanderTransactionScalarFieldEnum)[keyof typeof SantanderTransactionScalarFieldEnum]
 
 
+  export const HsbcTransactionScalarFieldEnum: {
+    id: 'id',
+    transactionId: 'transactionId',
+    date: 'date',
+    paymentType: 'paymentType',
+    description: 'description',
+    moneyOut: 'moneyOut',
+    moneyIn: 'moneyIn',
+    balance: 'balance',
+    statementDate: 'statementDate',
+    owner: 'owner',
+    importedAt: 'importedAt',
+    status: 'status'
+  };
+
+  export type HsbcTransactionScalarFieldEnum = (typeof HsbcTransactionScalarFieldEnum)[keyof typeof HsbcTransactionScalarFieldEnum]
+
+
   export const SessionScalarFieldEnum: {
     id: 'id',
     expiresAt: 'expiresAt',
@@ -18577,6 +19809,95 @@ export namespace Prisma {
     owner?: StringWithAggregatesFilter<"SantanderTransaction"> | string
     importedAt?: DateTimeWithAggregatesFilter<"SantanderTransaction"> | Date | string
     status?: StringWithAggregatesFilter<"SantanderTransaction"> | string
+  }
+
+  export type HsbcTransactionWhereInput = {
+    AND?: HsbcTransactionWhereInput | HsbcTransactionWhereInput[]
+    OR?: HsbcTransactionWhereInput[]
+    NOT?: HsbcTransactionWhereInput | HsbcTransactionWhereInput[]
+    id?: IntFilter<"HsbcTransaction"> | number
+    transactionId?: StringFilter<"HsbcTransaction"> | string
+    date?: StringFilter<"HsbcTransaction"> | string
+    paymentType?: StringFilter<"HsbcTransaction"> | string
+    description?: StringFilter<"HsbcTransaction"> | string
+    moneyOut?: StringNullableFilter<"HsbcTransaction"> | string | null
+    moneyIn?: StringNullableFilter<"HsbcTransaction"> | string | null
+    balance?: StringNullableFilter<"HsbcTransaction"> | string | null
+    statementDate?: StringFilter<"HsbcTransaction"> | string
+    owner?: StringFilter<"HsbcTransaction"> | string
+    importedAt?: DateTimeFilter<"HsbcTransaction"> | Date | string
+    status?: StringFilter<"HsbcTransaction"> | string
+  }
+
+  export type HsbcTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    paymentType?: SortOrder
+    description?: SortOrder
+    moneyOut?: SortOrderInput | SortOrder
+    moneyIn?: SortOrderInput | SortOrder
+    balance?: SortOrderInput | SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type HsbcTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    transactionId?: string
+    AND?: HsbcTransactionWhereInput | HsbcTransactionWhereInput[]
+    OR?: HsbcTransactionWhereInput[]
+    NOT?: HsbcTransactionWhereInput | HsbcTransactionWhereInput[]
+    date?: StringFilter<"HsbcTransaction"> | string
+    paymentType?: StringFilter<"HsbcTransaction"> | string
+    description?: StringFilter<"HsbcTransaction"> | string
+    moneyOut?: StringNullableFilter<"HsbcTransaction"> | string | null
+    moneyIn?: StringNullableFilter<"HsbcTransaction"> | string | null
+    balance?: StringNullableFilter<"HsbcTransaction"> | string | null
+    statementDate?: StringFilter<"HsbcTransaction"> | string
+    owner?: StringFilter<"HsbcTransaction"> | string
+    importedAt?: DateTimeFilter<"HsbcTransaction"> | Date | string
+    status?: StringFilter<"HsbcTransaction"> | string
+  }, "id" | "transactionId">
+
+  export type HsbcTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    paymentType?: SortOrder
+    description?: SortOrder
+    moneyOut?: SortOrderInput | SortOrder
+    moneyIn?: SortOrderInput | SortOrder
+    balance?: SortOrderInput | SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+    _count?: HsbcTransactionCountOrderByAggregateInput
+    _avg?: HsbcTransactionAvgOrderByAggregateInput
+    _max?: HsbcTransactionMaxOrderByAggregateInput
+    _min?: HsbcTransactionMinOrderByAggregateInput
+    _sum?: HsbcTransactionSumOrderByAggregateInput
+  }
+
+  export type HsbcTransactionScalarWhereWithAggregatesInput = {
+    AND?: HsbcTransactionScalarWhereWithAggregatesInput | HsbcTransactionScalarWhereWithAggregatesInput[]
+    OR?: HsbcTransactionScalarWhereWithAggregatesInput[]
+    NOT?: HsbcTransactionScalarWhereWithAggregatesInput | HsbcTransactionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"HsbcTransaction"> | number
+    transactionId?: StringWithAggregatesFilter<"HsbcTransaction"> | string
+    date?: StringWithAggregatesFilter<"HsbcTransaction"> | string
+    paymentType?: StringWithAggregatesFilter<"HsbcTransaction"> | string
+    description?: StringWithAggregatesFilter<"HsbcTransaction"> | string
+    moneyOut?: StringNullableWithAggregatesFilter<"HsbcTransaction"> | string | null
+    moneyIn?: StringNullableWithAggregatesFilter<"HsbcTransaction"> | string | null
+    balance?: StringNullableWithAggregatesFilter<"HsbcTransaction"> | string | null
+    statementDate?: StringWithAggregatesFilter<"HsbcTransaction"> | string
+    owner?: StringWithAggregatesFilter<"HsbcTransaction"> | string
+    importedAt?: DateTimeWithAggregatesFilter<"HsbcTransaction"> | Date | string
+    status?: StringWithAggregatesFilter<"HsbcTransaction"> | string
   }
 
   export type SessionWhereInput = {
@@ -19735,6 +21056,108 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
   }
 
+  export type HsbcTransactionCreateInput = {
+    transactionId: string
+    date: string
+    paymentType: string
+    description: string
+    moneyOut?: string | null
+    moneyIn?: string | null
+    balance?: string | null
+    statementDate: string
+    owner?: string
+    importedAt?: Date | string
+    status?: string
+  }
+
+  export type HsbcTransactionUncheckedCreateInput = {
+    id?: number
+    transactionId: string
+    date: string
+    paymentType: string
+    description: string
+    moneyOut?: string | null
+    moneyIn?: string | null
+    balance?: string | null
+    statementDate: string
+    owner?: string
+    importedAt?: Date | string
+    status?: string
+  }
+
+  export type HsbcTransactionUpdateInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    paymentType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    balance?: NullableStringFieldUpdateOperationsInput | string | null
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HsbcTransactionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    paymentType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    balance?: NullableStringFieldUpdateOperationsInput | string | null
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HsbcTransactionCreateManyInput = {
+    id?: number
+    transactionId: string
+    date: string
+    paymentType: string
+    description: string
+    moneyOut?: string | null
+    moneyIn?: string | null
+    balance?: string | null
+    statementDate: string
+    owner?: string
+    importedAt?: Date | string
+    status?: string
+  }
+
+  export type HsbcTransactionUpdateManyMutationInput = {
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    paymentType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    balance?: NullableStringFieldUpdateOperationsInput | string | null
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HsbcTransactionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transactionId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    paymentType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    moneyOut?: NullableStringFieldUpdateOperationsInput | string | null
+    moneyIn?: NullableStringFieldUpdateOperationsInput | string | null
+    balance?: NullableStringFieldUpdateOperationsInput | string | null
+    statementDate?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    importedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
   export type SessionCreateInput = {
     id: string
     expiresAt: Date | string
@@ -20830,6 +22253,59 @@ export namespace Prisma {
   }
 
   export type SantanderTransactionSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type HsbcTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    paymentType?: SortOrder
+    description?: SortOrder
+    moneyOut?: SortOrder
+    moneyIn?: SortOrder
+    balance?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type HsbcTransactionAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type HsbcTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    paymentType?: SortOrder
+    description?: SortOrder
+    moneyOut?: SortOrder
+    moneyIn?: SortOrder
+    balance?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type HsbcTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    transactionId?: SortOrder
+    date?: SortOrder
+    paymentType?: SortOrder
+    description?: SortOrder
+    moneyOut?: SortOrder
+    moneyIn?: SortOrder
+    balance?: SortOrder
+    statementDate?: SortOrder
+    owner?: SortOrder
+    importedAt?: SortOrder
+    status?: SortOrder
+  }
+
+  export type HsbcTransactionSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
