@@ -182,6 +182,13 @@ investmentsRouter.put("/snapshots", async (req, res) => {
   res.json({ ...snapshot, date: snapshot.date.toISOString() });
 });
 
+// ─── DELETE /api/investments/snapshots/date/:date — all snapshots on a date ──
+
+investmentsRouter.delete("/snapshots/date/:date", async (req, res) => {
+  await db.investmentSnapshot.deleteMany({ where: { date: new Date(req.params.date) } });
+  res.status(204).end();
+});
+
 // ─── DELETE /api/investments/snapshots/:id ───────────────────────────────────
 
 investmentsRouter.delete("/snapshots/:id", async (req, res) => {

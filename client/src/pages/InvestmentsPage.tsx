@@ -122,6 +122,21 @@ const gridTheme = themeQuartz.withParams({
 
 // ─── Cell renderers ───────────────────────────────────────────────────────────
 
+function DateColumnHeader({ displayName, onDelete }: { displayName: string; onDelete: () => void }) {
+  return (
+    <div className="flex items-center justify-between w-full gap-1 group">
+      <span>{displayName}</span>
+      <button
+        onClick={(e) => { e.stopPropagation(); onDelete(); }}
+        className="opacity-0 group-hover:opacity-100 text-muted-foreground/60 hover:text-red-500 transition-all"
+        title="Delete snapshot date"
+      >
+        <Trash2 className="w-3 h-3" />
+      </button>
+    </div>
+  );
+}
+
 function CategoryBadge({ value }: { value: InvCategory | "__total" }) {
   const cfg = CAT_CONFIG[value] ?? CAT_CONFIG.__total;
   if (value === "__total") return <span className="text-xs text-muted-foreground font-semibold">—</span>;
@@ -240,6 +255,17 @@ export function InvestmentsPage() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["investments"] }),
   });
 
+  const deleteSnapshotDateMutation = useMutation({
+    mutationFn: (day: string) => api.delete(`/api/investments/snapshots/date/${day}`),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["investments"] }),
+  });
+
+  function deleteSnapshotDate(iso: string) {
+    const day = iso.slice(0, 10);
+    setLocalDates((prev) => prev.filter((d) => d !== day));
+    deleteSnapshotDateMutation.mutate(day);
+  }
+
   // ── Chart data ──────────────────────────────────────────────────────────────
 
   const chartData = useMemo(() => {
@@ -336,6 +362,8 @@ export function InvestmentsPage() {
     const dateCols: ColDef[] = allDates.map((iso) => ({
       field: fieldKey(iso),
       headerName: labelDate(iso),
+      headerComponent: DateColumnHeader,
+      headerComponentParams: { onDelete: () => deleteSnapshotDate(iso) },
       width: 105,
       editable: (p: any) => p.data?.id !== "__total",
       cellEditor: "agNumberCellEditor",

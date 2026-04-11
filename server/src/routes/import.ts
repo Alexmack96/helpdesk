@@ -456,16 +456,21 @@ importRouter.post("/import/barclays", upload.single("file"), async (req, res) =>
 // Current account (not credit card) — has both money in and money out.
 // Transaction lines: "DDth MonDESCRIPTION[amount][balance]" all concatenated.
 // Some entries span multiple lines (long descriptions).
-// Amounts are determined by tracking the running balance:
-//   if prevBalance + amount ≈ newBalance → money in
-//   if prevBalance - amount ≈ newBalance → money out
-// Skip: opening/closing balance markers.
+//
+// The PDF concatenates mandate numbers directly into amounts (e.g. "MANDATE NO
+// 0023257.003,898.99" where the true amount is 257.00). We sidestep this by
+// extracting only the balance (last [\d,]+\.\d{2}) and deriving the transaction
+// amount from the running balance difference instead of parsing it from text.
 
 const SANTANDER_TX_RE = /^(\d{1,2})(?:st|nd|rd|th)\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(.*)/;
 const SANTANDER_PERIOD_RE = /Your transactions.*?(\d{1,2})\w{2}\s+(\w+)\s+(\d{4})\s+to\s+(\d{1,2})\w{2}\s+(\w+)\s+(\d{4})/i;
-const SANTANDER_TWO_AMOUNTS_RE = /([\d,]+\.\d{2})([\d,]+\.\d{2})$/;
 const SANTANDER_ONE_AMOUNT_RE = /([\d,]+\.\d{2})$/;
 const SANTANDER_SKIP_RE = /^(Balance brought forward|Balance carried forward|Average credit balance)/i;
+
+// Match a single properly-formatted currency amount: 1–3 digits, optional comma-thousands groups, decimal.
+// Used to find the LAST (rightmost) amount in a concatenated string so we can extract the balance
+// without being confused by mandate numbers (e.g. "0023257.003,898.99" → balance is "3,898.99").
+const SANTANDER_CCY_RE = /\d{1,3}(?:,\d{3})*\.\d{2}/g;
 
 interface SantanderRow {
   date:          string;
@@ -478,6 +483,20 @@ interface SantanderRow {
 
 function parseAmount(s: string): number {
   return Math.round(parseFloat(s.replace(/,/g, "")) * 100);
+}
+
+// Find the last properly-formatted currency amount in s and treat it as the balance.
+// Uses SANTANDER_CCY_RE to avoid matching mandate numbers (e.g. "0023") as part of
+// the amount — "0023257.003,898.99" correctly yields balance "3,898.99".
+// Strips any trailing digits/commas/dots from the pre-balance text to remove the
+// parsed transaction amount, leaving a clean description.
+function splitDescBalance(s: string): { desc: string; balance: string } | null {
+  const matches = [...s.matchAll(new RegExp(SANTANDER_CCY_RE.source, "g"))];
+  const last    = matches.at(-1);
+  if (!last || last.index! + last[0].length !== s.length) return null;
+  const pre  = s.slice(0, last.index!);
+  const desc = pre.replace(/[\d,.]+$/, "").trim();
+  return { desc, balance: last[0] };
 }
 
 function parseSantanderPdf(text: string): SantanderRow[] {
@@ -504,23 +523,13 @@ function parseSantanderPdf(text: string): SantanderRow[] {
   let prevBalance = 0; // in pence
   let inTransactions = false;
 
-  function flush(amountStr: string, balanceStr: string) {
+  // Derive amount from balance difference — avoids parsing mandate-prefixed amounts.
+  function flush(balanceStr: string) {
     if (!current) return;
-    const amount  = parseAmount(amountStr);
     const balance = parseAmount(balanceStr);
-
-    // Determine direction by comparing with previous balance
-    let moneyIn: string | null = null;
-    let moneyOut: string | null = null;
-    if (Math.abs(prevBalance + amount - balance) <= 1) {
-      moneyIn = amountStr;
-    } else if (Math.abs(prevBalance - amount - balance) <= 1) {
-      moneyOut = amountStr;
-    } else {
-      // Ambiguous — treat as money out (conservative)
-      moneyOut = amountStr;
-    }
-
+    const diff    = balance - prevBalance;
+    const moneyIn  = diff > 0 ? (diff  / 100).toFixed(2) : null;
+    const moneyOut = diff < 0 ? (-diff / 100).toFixed(2) : null;
     prevBalance = balance;
     rows.push({
       date:          current.date,
@@ -548,13 +557,7 @@ function parseSantanderPdf(text: string): SantanderRow[] {
     }
 
     // Closing balance — stop
-    if (/Balance carried forward/.test(line)) {
-      if (current) {
-        // Shouldn't happen, but flush if pending
-        current = null;
-      }
-      break;
-    }
+    if (/Balance carried forward/.test(line)) { current = null; break; }
 
     // Skip average balance line
     if (SANTANDER_SKIP_RE.test(line)) continue;
@@ -563,41 +566,30 @@ function parseSantanderPdf(text: string): SantanderRow[] {
     const txMatch = line.match(SANTANDER_TX_RE);
     if (txMatch) {
       const [, day, month, rest] = txMatch;
-      const date = toIsoDateShort(month, day, stmtMonth, stmtYear);
-
-      // Try to extract trailing amounts from rest
-      const twoAmts = rest.match(SANTANDER_TWO_AMOUNTS_RE);
-      if (twoAmts) {
-        // Flush any pending
-        if (current) {
-          // Shouldn't have a pending without amounts, but discard it
-          current = null;
-        }
-        const amtStr  = twoAmts[1];
-        const balStr  = twoAmts[2];
-        const desc    = rest.slice(0, rest.length - twoAmts[0].length).trim();
-        if (!SANTANDER_SKIP_RE.test(desc)) {
-          current = { date, description: desc };
-          flush(amtStr, balStr);
-        }
+      const date   = toIsoDateShort(month, day, stmtMonth, stmtYear);
+      const parsed = splitDescBalance(rest);
+      if (parsed && !SANTANDER_SKIP_RE.test(parsed.desc)) {
+        current = { date, description: parsed.desc };
+        flush(parsed.balance);
       } else {
-        // No amounts yet — could be multi-line entry (only date on this line)
-        // Flush any previous current
-        current = null;
-        const desc = rest.trim();
-        current = { date, description: desc };
+        // No amounts yet — multi-line entry (description continues on next lines)
+        current = { date, description: rest.trim() };
       }
       continue;
     }
 
-    // Not a date line — could be description continuation or amounts-only line
+    // Not a date line — description continuation or standalone amounts line
     if (current) {
-      const twoAmts = line.match(SANTANDER_TWO_AMOUNTS_RE);
-      if (twoAmts) {
-        // This line is just amounts (e.g., "2,400.003,475.57")
-        flush(twoAmts[1], twoAmts[2]);
-      } else if (!/^[\d,]+\.\d{2}$/.test(line)) {
-        // Description continuation
+      if (!/[a-zA-Z]/.test(line)) {
+        // No letters — could be a pure-amounts line (e.g. "2,400.003,475.57") or a
+        // mandate/reference number on its own line (e.g. "0101"). Try to extract balance.
+        const parsed = splitDescBalance(line);
+        if (parsed) {
+          flush(parsed.balance);
+        } else {
+          current.description += " " + line;
+        }
+      } else {
         current.description += " " + line;
       }
     }

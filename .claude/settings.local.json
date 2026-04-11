@@ -19,7 +19,9 @@
       "Bash(sqlite3 dev.db \"SELECT id, name FROM Category WHERE name LIKE '%aving%' OR name LIKE '%nvestment%';\")",
       "Bash(sqlite3 prisma/dev.db \"SELECT name, colour FROM Category ORDER BY name;\")",
       "Bash(node -e ':*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(grep -E \"\\\\.ts$\")",
+      "Bash(node:*)"
     ]
   }
 }

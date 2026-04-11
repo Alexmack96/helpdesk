@@ -181,6 +181,17 @@ model Account {
   @@map("account")
 }
 
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  body      String?
+  pinned    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("note")
+}
+
 model Tab {
   id          String       @id @default(cuid())
   person      String

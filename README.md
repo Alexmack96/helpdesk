@@ -39,12 +39,18 @@ npx playwright test            # e2e tests
 2. Hit "Process" → staged rows normalise into `Transaction` records
 3. Duplicate `externalId`s are skipped automatically
 
-Supported: Monzo ✓ — Amex, Barclays, Santander (coming)
+Supported: Monzo ✓ — Amex, Barclays, Santander, Caseys banks coming soon. 
 
 ---
 
 ## Todo
+[] Verify santander and do the upload for Jan
+[] Upload the rest
 
-- [ ] **Notes page** — reminders and tips; e.g. periodic prompt to check for duplicate payments (ref: Finsbury Park Tennis incident)
-- [ ] **Goals page: transaction-only mode** — strip out investment value fluctuations; goals should reflect actual cash moved, not market swings
-- [ ] **"In my control" tagging** — mark transactions as outside my control (e.g. a £100 BA charge I don't regret because I made the right call at the time); exclude or surface separately so they don't distort how I feel about spending
+[] Verify barclays and do the upload
+
+[] Add automated stream of monzo transactions via webhooks :D
+[X] **Notes page** — Rename it to Tasks and make a monthly recurring for checking 
+[] **Goals page: transaction-only mode** — strip out investment value fluctuations; goals should reflect actual cash moved, not market swings
+[] **"In my control" tagging** — mark transactions as outside my control (e.g. a £100 BA charge I don't regret because I made the right call at the time); exclude or surface separately so they don't distort how I feel about spending
+[]  Shortcut:  In my VS code user settings, change ctrl+/ to be the shortcut to collapse everything in the VS code explorer window

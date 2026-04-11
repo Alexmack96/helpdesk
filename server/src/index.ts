@@ -17,6 +17,7 @@ import { dashboardRouter } from "./routes/dashboard.js";
 import { utilitiesRouter } from "./routes/utilities.js";
 import { investmentsRouter } from "./routes/investments.js";
 import { tabsRouter } from "./routes/tabs.js";
+import { notesRouter } from "./routes/notes.js";
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.use("/api/dashboard", requireAuth, dashboardRouter);
 app.use("/api/utilities", requireAuth, utilitiesRouter);
 app.use("/api/investments", requireAuth, investmentsRouter);
 app.use("/api/tabs", requireAuth, tabsRouter);
+app.use("/api/notes", requireAuth, notesRouter);
 
 app.use(errorHandler);
 

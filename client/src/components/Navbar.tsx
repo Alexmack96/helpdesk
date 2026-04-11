@@ -35,13 +35,7 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
         >
           Analytics
         </Link>
-        <Link
-          to="/utilities"
-          className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
-        >
-          Utilities
-        </Link>
-        <Link
+<Link
           to="/savings"
           className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
         >
@@ -58,6 +52,12 @@ export function Navbar({ onSignOut }: { onSignOut: () => void }) {
           className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
         >
           Tabs
+        </Link>
+        <Link
+          to="/tasks"
+          className="text-sm text-primary-foreground/80 hover:text-primary-foreground underline-offset-4 hover:underline"
+        >
+          Tasks
         </Link>
 {session?.user.role === "Admin" && (
           <>

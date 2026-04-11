@@ -238,6 +238,15 @@ exports.Prisma.AccountScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.NoteScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  body: 'body',
+  pinned: 'pinned',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.TabScalarFieldEnum = {
   id: 'id',
   person: 'person',
@@ -325,6 +334,7 @@ exports.Prisma.ModelName = {
   SantanderTransaction: 'SantanderTransaction',
   Session: 'Session',
   Account: 'Account',
+  Note: 'Note',
   Tab: 'Tab',
   InvestmentAccount: 'InvestmentAccount',
   InvestmentSnapshot: 'InvestmentSnapshot',
