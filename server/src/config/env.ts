@@ -11,6 +11,7 @@ const envSchema = z.object({
   SENDGRID_FROM_EMAIL: z.string().optional(),
   SENDGRID_WEBHOOK_KEY: z.string().optional(),
   ANTHROPIC_API_KEY: z.string().optional(),
+  MONZO_ACCESS_TOKEN: z.string().optional(),
   ADMIN_EMAIL: z.string().email(),
   ADMIN_PASSWORD: z.string().min(8),
 });

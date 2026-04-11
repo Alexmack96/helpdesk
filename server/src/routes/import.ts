@@ -1,7 +1,6 @@
 import { createHash } from "crypto";
 import { Router } from "express";
 import multer from "multer";
-import { parse } from "csv-parse/sync";
 import pdfParse from "pdf-parse";
 import { db } from "../db/client.js";
 
@@ -9,19 +8,22 @@ export const importRouter = Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-// ─── Monzo category → system category ───────────────────────────────────────
+// ─── Monzo API category slug → system category ──────────────────────────────
 
-const MONZO_CATEGORY_MAP: Record<string, string> = {
-  "Eating out":     "Food & Social",
-  "Entertainment":  "Entertainment",
-  "Groceries":      "Groceries",
-  "Holidays":       "Vacation",
-  "Income":         "Bank Sauce",
-  "Personal care":  "Personal Care",
-  "Savings":        "Investments",
-  "Shopping":       "Uncategorised",
-  "Transfers":      "Bank Sauce",
-  "Transport":      "Transport",
+const MONZO_API_CATEGORY_MAP: Record<string, string> = {
+  eating_out:   "Food & Social",
+  entertainment:"Entertainment",
+  groceries:    "Groceries",
+  holidays:     "Vacation",
+  income:       "Bank Sauce",
+  personal_care:"Personal Care",
+  savings:      "Investments",
+  shopping:     "Uncategorised",
+  transfers:    "Bank Sauce",
+  transport:    "Transport",
+  bills:        "Uncategorised",
+  finances:     "Bank Sauce",
+  general:      "Uncategorised",
 };
 
 // ─── Merchant name overrides ─────────────────────────────────────────────────
@@ -49,7 +51,7 @@ function resolveCategory(monzoCategory: string, merchantName: string): string {
   for (const { pattern, category } of MERCHANT_OVERRIDES) {
     if (pattern.test(merchantName)) return category;
   }
-  return MONZO_CATEGORY_MAP[monzoCategory] ?? "Uncategorised";
+  return MONZO_API_CATEGORY_MAP[monzoCategory] ?? "Uncategorised";
 }
 
 function resolveCategoryByMerchant(merchantName: string): string {
@@ -97,67 +99,6 @@ function toIsoDateShort(month: string, day: string | number, stmtMonth: number, 
   return `${year}-${String(idx + 1).padStart(2, "0")}-${String(+day).padStart(2, "0")}`;
 }
 
-// ─── POST /api/admin/import/monzo ────────────────────────────────────────────
-
-importRouter.post("/import/monzo", upload.single("file"), async (req, res) => {
-  if (!req.file) {
-    res.status(400).json({ error: "No file uploaded" });
-    return;
-  }
-
-  let rows: Record<string, string>[];
-  try {
-    rows = parse(req.file.buffer, {
-      columns: true,
-      skip_empty_lines: true,
-      trim: true,
-      bom: true,
-    }) as Record<string, string>[];
-  } catch {
-    res.status(400).json({ error: "Failed to parse CSV — check the file format" });
-    return;
-  }
-
-  const existing = await db.monzoTransaction.findMany({ select: { transactionId: true } });
-  const existingIds = new Set(existing.map((r) => r.transactionId));
-
-  const duplicates: string[] = [];
-  const toInsert: typeof rows = [];
-
-  for (const row of rows) {
-    const id = row["Transaction ID"];
-    if (!id) continue;
-    if (existingIds.has(id)) duplicates.push(id);
-    else toInsert.push(row);
-  }
-
-  if (toInsert.length > 0) {
-    await db.monzoTransaction.createMany({
-      data: toInsert.map((row) => ({
-        transactionId: row["Transaction ID"],
-        date:          row["Date"] ?? "",
-        time:          row["Time"] ?? "",
-        type:          row["Type"] ?? "",
-        name:          row["Name"] ?? "",
-        emoji:         row["Emoji"] || null,
-        category:      row["Category"] ?? "",
-        amount:        row["Amount"] ?? "",
-        currency:      row["Currency"] ?? "",
-        localAmount:   row["Local amount"] ?? "",
-        localCurrency: row["Local currency"] ?? "",
-        notesAndTags:  row["Notes and #tags"] || null,
-        address:       row["Address"] || null,
-        receipt:       row["Receipt"] || null,
-        description:   row["Description"] ?? "",
-        categorySplit: row["Category split"] || null,
-        moneyOut:      row["Money Out"] || null,
-        moneyIn:       row["Money In"] || null,
-      })),
-    });
-  }
-
-  res.json({ imported: toInsert.length, duplicates });
-});
 
 // ─── Amex PDF parser ─────────────────────────────────────────────────────────
 //
@@ -1147,7 +1088,7 @@ importRouter.post("/import/sofi", upload.single("file"), async (req, res) => {
 
 importRouter.get("/staged", async (_req, res) => {
   const [monzo, amex, barclays, santander, hsbc, sofi, chase] = await Promise.all([
-    db.monzoTransaction.groupBy({ by: ["status"], _count: true }),
+    db.monzoApiTransaction.groupBy({ by: ["status"], _count: true }),
     db.amexTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.barclaysTransaction.groupBy({ by: ["status", "owner"], _count: true }),
     db.santanderTransaction.groupBy({ by: ["status", "owner"], _count: true }),
@@ -1192,32 +1133,22 @@ importRouter.post("/process", async (_req, res) => {
   let errored = 0;
 
   // ── Monzo ──────────────────────────────────────────────────────────────────
-  const pendingMonzo = await db.monzoTransaction.findMany({ where: { status: "pending" } });
+  const pendingMonzo = await db.monzoApiTransaction.findMany({ where: { status: "pending" } });
 
   for (const row of pendingMonzo) {
-    const amountNum = parseFloat(row.amount);
-    let next: StagedStatus;
-    if (isNaN(amountNum)) {
-      next = "errored";
-      errored++;
-    } else {
-      const type = amountNum >= 0 ? "Income" : "Expense";
-      const amount = Math.abs(amountNum);
-      const [day, month, year] = row.date.split("/").map(Number);
-      const [hh, mm, ss] = row.time.split(":").map(Number);
-      const date = new Date(year, month - 1, day, hh, mm, ss);
-      const categoryName = resolveCategory(row.category, row.name);
-      const category = await findCategory(categoryName);
-      const owner = resolveOwner(categoryName, row.name);
-      const monzoExtId = `monzo:${row.transactionId}`;
-      const monzoExists = await db.transaction.findUnique({ where: { externalId: monzoExtId }, select: { id: true } });
-      if (!monzoExists) await db.transaction.create({
-        data: { description: row.name, amount, type, date, categoryId: category.id, externalId: monzoExtId, owner },
-      });
-      next = "processed";
-      processed++;
-    }
-    await db.monzoTransaction.update({ where: { transactionId: row.transactionId }, data: { status: next } });
+    const type = row.amountPence >= 0 ? "Income" : "Expense";
+    const amount = Math.abs(row.amountPence) / 100;
+    const name = row.merchantName ?? row.description;
+    const categoryName = resolveCategory(row.monzoCategory, name);
+    const category = await findCategory(categoryName);
+    const owner = resolveOwner(categoryName, name);
+    const externalId = `monzo:${row.monzoId}`;
+    const exists = await db.transaction.findUnique({ where: { externalId }, select: { id: true } });
+    if (!exists) await db.transaction.create({
+      data: { description: name, amount, type, date: row.created, categoryId: category.id, externalId, owner },
+    });
+    await db.monzoApiTransaction.update({ where: { id: row.id }, data: { status: "processed" } });
+    processed++;
   }
 
   // ── Amex ───────────────────────────────────────────────────────────────────

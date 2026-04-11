@@ -74,29 +74,30 @@ model Transaction {
 // One staging model per bank — each preserves that bank's raw CSV schema exactly.
 // The process step normalises all of them into the shared Transaction model.
 
-model MonzoTransaction {
-  transactionId String   @id
-  date          String
-  time          String
-  type          String
-  name          String
-  emoji         String?
-  category      String
-  amount        String
-  currency      String
-  localAmount   String
-  localCurrency String
-  notesAndTags  String?
-  address       String?
-  receipt       String?
-  description   String
-  categorySplit String?
-  moneyOut      String?
-  moneyIn       String?
-  importedAt    DateTime @default(now())
-  status        String   @default("pending")
+// Monzo: synced directly from the Monzo Developer API.
+// Fields mirror the API response — no CSV quirks.
+model MonzoApiTransaction {
+  id                String    @id @default(cuid())
+  monzoId           String    @unique // tx_xxx from the API
+  created           DateTime
+  settled           DateTime?
+  amountPence       Int // pence; negative = expense
+  currency          String
+  localAmountPence  Int
+  localCurrency     String
+  description       String // Monzo raw description field
+  notes             String?
+  monzoCategory     String // raw slug e.g. "eating_out"
+  merchantName      String?
+  merchantEmoji     String?
+  merchantAddress   String?
+  scheme            String?
+  includeInSpending Boolean
+  accountId         String
+  importedAt        DateTime  @default(now())
+  status            String    @default("pending")
 
-  @@map("monzo_transaction")
+  @@map("monzo_api_transaction")
 }
 
 model AmexTransaction {

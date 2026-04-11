@@ -44,12 +44,14 @@ Supported: Monzo ✓ — Amex, Barclays, Santander, Caseys banks coming soon.
 ---
 
 ## Todo 11-April-2026
-[X] Get Sofi parser 
-[X] Check ALL txs.
+[] feat Add automated stream of monzo transactions via webhooks
+
+
 [] feat(recurring task):Add an item to the monthly recurring to check Money Saving Expert newsletter
 
 [] Visual UI error for uploading wrong bank to tell you 'Cannot upload HSBC statement to SoFi' etc. I jsut did it myslef and realised its prone to user error. 
 
-[] Add automated stream of monzo transactions via webhooks
+
 [] **Goals page** — strip out investment value fluctuations; goals should reflect actual cash moved, not market swings
 [] **"In my control" tagging** — mark transactions as outside my control (e.g. a £100 BA charge I don't regret because I made the right call at the time); exclude or surface separately so they don't distort how I feel about spending
+

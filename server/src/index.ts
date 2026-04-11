@@ -18,6 +18,7 @@ import { utilitiesRouter } from "./routes/utilities.js";
 import { investmentsRouter } from "./routes/investments.js";
 import { tabsRouter } from "./routes/tabs.js";
 import { notesRouter } from "./routes/notes.js";
+import { monzoRouter } from "./routes/monzo.js";
 
 const app = express();
 
@@ -64,6 +65,7 @@ app.use("/api/utilities", requireAuth, utilitiesRouter);
 app.use("/api/investments", requireAuth, investmentsRouter);
 app.use("/api/tabs", requireAuth, tabsRouter);
 app.use("/api/notes", requireAuth, notesRouter);
+app.use("/api/admin/monzo", monzoRouter);
 
 app.use(errorHandler);
 

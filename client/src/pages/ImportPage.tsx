@@ -132,16 +132,17 @@ function BankUploadCard({
   );
 }
 
+type MonzoStatus = { configured: boolean; lastSyncedAt: string | null; totalStaged: number };
+type MonzoSyncResult = { imported: number; duplicates: number };
+
 export function ImportPage() {
   const queryClient = useQueryClient();
-  const monzoFileRef = useRef<HTMLInputElement>(null);
   const amexFileRef = useRef<HTMLInputElement>(null);
   const barclaysFileRef = useRef<HTMLInputElement>(null);
   const santanderFileRef = useRef<HTMLInputElement>(null);
   const hsbcFileRef = useRef<HTMLInputElement>(null);
   const sofiFileRef = useRef<HTMLInputElement>(null);
   const chaseFileRef = useRef<HTMLInputElement>(null);
-  const [monzoFile, setMonzoFile] = useState<File | null>(null);
   const [amexFile, setAmexFile] = useState<File | null>(null);
   const [barclaysFile, setBarclaysFile] = useState<File | null>(null);
   const [santanderFile, setSantanderFile] = useState<File | null>(null);
@@ -160,17 +161,14 @@ export function ImportPage() {
     queryFn: () => api.get("/api/admin/staged").then((r) => r.data),
   });
 
-  const monzoMutation = useMutation<ImportResult, Error, File>({
-    mutationFn: (f) => {
-      const form = new FormData();
-      form.append("file", f);
-      return api.post("/api/admin/import/monzo", form).then((r) => r.data);
-    },
-    onSuccess: () => {
-      refetchStaged();
-      setMonzoFile(null);
-      if (monzoFileRef.current) monzoFileRef.current.value = "";
-    },
+  const { data: monzoStatus, refetch: refetchMonzoStatus } = useQuery<MonzoStatus>({
+    queryKey: ["monzo-status"],
+    queryFn: () => api.get("/api/admin/monzo/status").then((r) => r.data),
+  });
+
+  const monzoSyncMutation = useMutation<MonzoSyncResult, Error>({
+    mutationFn: () => api.post("/api/admin/monzo/sync").then((r) => r.data),
+    onSuccess: () => { refetchStaged(); refetchMonzoStatus(); },
   });
 
   const amexMutation = useMutation<ImportResult, Error, { file: File; owner: string }>({
@@ -351,18 +349,47 @@ export function ImportPage() {
       </Card>
 
       {/* Active bank upload cards */}
-      <BankUploadCard
-        title="Monzo"
-        description="Export from Monzo → Account → Statements → Download CSV."
-        file={monzoFile}
-        fileRef={monzoFileRef}
-        onFileChange={(f) => { setMonzoFile(f); monzoMutation.reset(); }}
-        onUpload={() => monzoFile && monzoMutation.mutate(monzoFile)}
-        result={monzoMutation.data}
-        isPending={monzoMutation.isPending}
-        isError={monzoMutation.isError}
-        error={monzoMutation.error}
-      />
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Monzo</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {!monzoStatus?.configured ? (
+            <p className="text-sm text-muted-foreground">
+              Set <span className="font-mono">MONZO_ACCESS_TOKEN</span> in <span className="font-mono">server/.env</span> — grab it from{" "}
+              <span className="font-mono">developers.monzo.com</span>.
+            </p>
+          ) : (
+            <>
+              <p className="text-sm text-muted-foreground">
+                {monzoStatus.lastSyncedAt
+                  ? <>Last synced {new Date(monzoStatus.lastSyncedAt).toLocaleString()} · {monzoStatus.totalStaged.toLocaleString()} staged</>
+                  : "Not yet synced."}
+              </p>
+              <Button disabled={monzoSyncMutation.isPending} onClick={() => monzoSyncMutation.mutate()}>
+                {monzoSyncMutation.isPending ? "Syncing…" : "Sync now"}
+              </Button>
+              {monzoSyncMutation.isSuccess && (
+                <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+                  <CheckCircle className="h-4 w-4" />
+                  {monzoSyncMutation.data.imported.toLocaleString()} rows staged
+                  {monzoSyncMutation.data.duplicates > 0 && (
+                    <span className="text-muted-foreground">
+                      · {monzoSyncMutation.data.duplicates.toLocaleString()} already existed
+                    </span>
+                  )}
+                </div>
+              )}
+              {monzoSyncMutation.isError && (
+                <div className="flex items-center gap-2 text-sm text-destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  {monzoSyncMutation.error.message}
+                </div>
+              )}
+            </>
+          )}
+        </CardContent>
+      </Card>
 
       <BankUploadCard
         title="Amex"
